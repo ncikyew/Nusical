@@ -311,7 +311,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
     <label for="fInst">Instrument</label>
     <select id="fInst" style="font:500 1rem Figtree,sans-serif"></select>
     <div id="fLinks"></div>
-    <p class="legend" style="margin-top:1rem">These links open trusted outside charts in a new tab. Charts belong to their publishers: the Woodwind Fingering Guide (wfg.woodwind.org), Mouthpiece Express and StepWise Publications.</p>
+    <p class="legend" style="margin-top:1rem">These links open trusted outside charts in a new tab. Charts belong to their publishers: the Woodwind Fingering Guide (wfg.woodwind.org), Mouthpiece Express, Brass Techniques and Pedagogy by Brian N. Weidner (PALNI Open Press) and StepWise Publications.</p>
   </section>
 
   <section id="viewAbout" hidden>
@@ -1592,6 +1592,7 @@ window.tunerReady = true;
 /* ---------- fingering (links to trusted charts) ---------- */
 const WFG = 'https://www.wfg.woodwind.org/', ME = 'https://mouthpieceexpress.com/blogs/resources/';
 const SW = 'https://www.stepwisepublications.com/storage/19387/a1f47e4a-6b77-49c0-a962-43303a425908/', SWP = 'https://www.stepwisepublications.com/free-fingering-charts';
+const BTP = 'https://pressbooks.palni.org/brasstechniquesandpedagogy/wp-content/uploads/sites/4/', BTPAGE = 'https://pressbooks.palni.org/brasstechniquesandpedagogy/chapter/fingering-charts/';
 const reg = (path, names) => names.map((n,i) => [n, WFG + path.replace('#', i+1)]);
 const OCT = ['1st octave','2nd octave','3rd octave','4th octave'];
 const CL = ['Chalumeau','Clarion','Altissimo'];
@@ -1633,11 +1634,11 @@ const FINGER = [
     ['Printable charts', [['Bassoon chart (PDF)', ME+'free-bassoon-fingering-chart']]]]},
   {id:'cbsn', fam:'Woodwind', name:'Contrabassoon', groups:[
     ['Alternate fingerings', reg('bassoon/cbasn_alt_#.html', OCT.slice(0,3))]]},
-  {id:'tpt', fam:'Brass', name:'Trumpet / cornet', groups:[['Printable charts', [['Trumpet & cornet chart (PDF)', ME+'free-trumpet-cornet-fingering-chart']]]]},
-  {id:'hn', fam:'Brass', name:'Horn (single & double)', groups:[['Printable charts', [['Single and double horn charts (PDF)', ME+'free-french-horn-fingering-chart']]]]},
-  {id:'tbn', fam:'Brass', name:'Trombone (incl. F attachment)', groups:[['Printable charts', [['Slide position chart (PDF)', ME+'free-trombone-fingering-chart']]]]},
-  {id:'euph', fam:'Brass', name:'Euphonium / baritone', groups:[['Printable charts', [['Euphonium & baritone chart (PDF)', ME+'free-euphonium-baritone-fingering-chart']]]]},
-  {id:'tuba', fam:'Brass', name:'Tuba / sousaphone', groups:[['Printable charts', [['Tuba chart, 3 & 4 valves (PDF)', ME+'free-tuba-sousaphone-fingering-chart']]]]},
+  {id:'tpt', fam:'Brass', name:'Trumpet / cornet', groups:[['Fingering chart', [['Trumpet fingering chart (PDF)', BTP+'2020/08/Trumpet-fingering-chart.pdf'], ['All brass charts', BTPAGE]]]]},
+  {id:'hn', fam:'Brass', name:'Horn', groups:[['Fingering chart', [['Horn fingering chart (PDF)', BTP+'2020/08/Horn-Fingering-Chart-Full-Score.pdf'], ['All brass charts', BTPAGE]]]]},
+  {id:'tbn', fam:'Brass', name:'Trombone', groups:[['Fingering chart', [['Trombone position chart (PDF)', BTP+'2020/08/Trombone-Fingering-Chart-Full-Score.pdf'], ['All brass charts', BTPAGE]]]]},
+  {id:'euph', fam:'Brass', name:'Euphonium / baritone', groups:[['Fingering chart', [['Euphonium fingering chart (PDF)', BTP+'2020/08/Euphonium-fingering-chart-Full-Score.pdf'], ['All brass charts', BTPAGE]]]]},
+  {id:'tuba', fam:'Brass', name:'Tuba', groups:[['Fingering chart', [['Tuba fingering chart (PDF)', BTP+'2021/08/tuba-fingering-chart.pdf'], ['All brass charts', BTPAGE]]]]},
   {id:'vn', fam:'Strings', name:'Violin', groups:[['Printable charts', [['Violin fingering chart (PDF)', SW+'_____violin_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]},
   {id:'va', fam:'Strings', name:'Viola', groups:[['Printable charts', [['Viola fingering chart (PDF)', SW+'____viola_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]},
   {id:'vc', fam:'Strings', name:'Cello', groups:[['Printable charts', [['Cello fingering chart (PDF)', SW+'____cello_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]},
