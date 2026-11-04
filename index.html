@@ -451,6 +451,19 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
 
 <script>
 /* ---------- config ---------- */
+// Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ'. Leave empty to turn analytics off.
+const GA_ID = 'G-2BGMDTN6J7';
+function track(name, params){ try{ if(window.gtag) window.gtag('event', name, params || {}); }catch(e){} }
+if(GA_ID){
+  try{
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID, {send_page_view: false});   // page views are sent per feature below
+    const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+  }catch(e){}
+}
 // Address of your PDF recognition server (see omr-server/README.md). Leave empty to disable PDF upload.
 const OMR_URL = 'https://transpose-1.onrender.com';
 const OMR_TOKEN = 'nusical-halabobo';
@@ -592,6 +605,7 @@ function route(){
   $('interval').hidden = solo;
   if(v==='scales') renderScale();
   $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Fingering', score:'Score', about:'About'}[v];
+  if(window.lastTracked !== v){ window.lastTracked = v; track('page_view', {page_title: 'Nusical – ' + $('title').textContent, page_location: location.href, page_path: '/' + v}); }
   $('tagline').textContent = {
     notes:'Convert notes between instruments in different keys.',
     chords:'Find a chord’s notes and the scales to ad lib over it.',
@@ -671,6 +685,7 @@ async function renderScore(){
 }
 
 async function handleFile(f){
+  if(f) track('score_upload', {file_type: f.name.toLowerCase().split('.').pop()});
   if(!f) return;
   $('pages').innerHTML=''; $('dl').disabled = true; score = null;
   $('fname').textContent = f.name; $('scoreTools').hidden = false; $('drop').classList.add('small'); defaultDir();
@@ -890,6 +905,7 @@ function updatePick(){
 }
 $('cclear').addEventListener('click', () => { picked = []; matches = null; updatePick(); renderChords(); });
 $('analyse').addEventListener('click', () => {
+  track('chord_analyse', {notes: picked.length});
   if(picked.length < 2){ matches = []; chordMsg('Pick at least two notes.'); $('matches').innerHTML=''; return; }
   const S = new Set(picked.map(p => p.pc)), bassPc = picked[0].pc, res = [];
   for(let rp=0; rp<12; rp++) for(const type of TYPES){
@@ -1444,6 +1460,7 @@ function animate(){
 }
 let wake = null;
 async function startMetro(){
+  track('metronome_start', {bpm: metro.bpm});
   if(!metro.ctx) metro.ctx = new (window.AudioContext || window.webkitAudioContext)();
   await metro.ctx.resume();
   metro.playing = true; metro.step = 0; metro.queue = []; metro.next = metro.ctx.currentTime + 0.06;
@@ -1539,6 +1556,7 @@ function tunerLoop(){
   showPitch(detectPitch(tuner.buf, tuner.ctx.sampleRate));
 }
 async function startTuner(){
+  track('tuner_start', {a4: tuner.a4});
   $('tStatus').textContent = '';
   if(!navigator.mediaDevices?.getUserMedia){ $('tStatus').textContent = 'This browser can’t use the microphone.'; return; }
   try{
