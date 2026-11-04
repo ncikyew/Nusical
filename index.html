@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nusical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F4; --surface:#FFFFFF; --ink:#1C2333; --muted:#5A6475;
+  --line:#C9D0DA; --brass:#9A6E1C; --brass-soft:#F3E7CC; --paper:#FFFFFF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151A24; --surface:#1E2533; --ink:#E6E9EF; --muted:#9AA3B5;
+    --line:#333C4D; --brass:#D9A84A; --brass-soft:#3A3222; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151A24; --surface:#1E2533; --ink:#E6E9EF; --muted:#9AA3B5;
+  --line:#333C4D; --brass:#D9A84A; --brass-soft:#3A3222; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:400 16px/1.5 Figtree,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:720px;margin:0 auto;padding:1rem 1rem 1.5rem}
+header{display:flex;flex-direction:column;gap:.9rem;margin-bottom:.3rem}
+.appbar{order:-2;display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding-bottom:.7rem;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--ink)}
+.logo{width:30px;height:30px;flex:none}
+.logo rect{fill:var(--brass)}
+.logo path{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.logo ellipse{fill:#fff}
+.wordmark{font:600 1.3rem/1 Spectral,Georgia,serif;letter-spacing:.01em}
+.appbar .about-link{padding:.3rem .75rem .3rem .55rem;font-size:.82rem}
+.appbar .about-link svg{width:18px;height:18px}
+.tagline{color:var(--muted);font-size:.88rem;margin:0 0 .8rem}
+h1{font:600 1.8rem/1.1 Spectral,Georgia,serif;margin:0;letter-spacing:-.01em}
+.tabs{order:-1;display:grid;grid-template-columns:repeat(8,1fr);gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:3px}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:.15rem;color:var(--muted);text-decoration:none;font-weight:600;font-size:.74rem;padding:.4rem .1rem;border-radius:10px;-webkit-tap-highlight-color:transparent}
+.tabs a:hover{color:var(--ink)}
+.tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs a[aria-current="page"]{background:var(--brass-soft);color:var(--ink)}
+.tabs a[aria-current="page"] svg{stroke:var(--brass)}
+.keys{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:.5rem;align-items:center}
+label{display:block;font-weight:600;font-size:.85rem;margin-bottom:.2rem}
+select,input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--surface);
+  border:1px solid var(--line);border-radius:10px;padding:.45rem .6rem}
+select{font:600 1.1rem Spectral,Georgia,serif}
+.hint{font-size:.78rem;color:var(--muted);margin:.2rem 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button,.btn{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);
+  border-radius:10px;cursor:pointer;padding:.45rem .7rem;display:inline-block}
+button:hover,.btn:hover{border-color:var(--brass)}
+button:disabled{opacity:.5;cursor:default}
+button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font-weight:600}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.swap{font-size:1.05rem;width:2.4rem;height:2.4rem;padding:0}
+.interval{margin:.7rem 0 .9rem;padding:.45rem .75rem;font-size:.88rem;border-left:3px solid var(--brass);
+  background:var(--brass-soft);border-radius:0 10px 10px 0}
+[hidden]{display:none !important}
+.entry{display:flex;gap:.4rem}
+.entry input{flex:1;min-width:0}
+.pad{display:grid;grid-template-columns:repeat(13,1fr);gap:.3rem;margin:.4rem 0 0}
+.pad button{font:600 .95rem Spectral,Georgia,serif;padding:.4rem 0}
+.strip{margin:.8rem 0;padding:.6rem 0;display:flex;flex-wrap:wrap;gap:1.4rem 1.6rem;
+  background:repeating-linear-gradient(to bottom,transparent 0 13px,var(--line) 13px 14px);
+  background-size:100% 70px;background-position:0 .7rem;min-height:4.5rem}
+.pair{text-align:center;min-width:2.6rem}
+.from{color:var(--muted);font-size:.9rem}
+.to{font:600 2.4rem/1.1 Spectral,Georgia,serif;color:var(--ink)}
+.pair.bad .to{color:var(--muted);font-size:1.2rem}
+.empty{color:var(--muted);align-self:center}
+.sig-section{border-top:1px solid var(--line);padding-top:.8rem;margin-top:.4rem}
+.sec{font:600 1.15rem Spectral,Georgia,serif;margin:0}
+.sig{display:grid;grid-template-columns:auto minmax(0,10rem) 1fr;gap:.6rem;align-items:center;margin-top:.4rem}
+.sig label{margin:0}
+.sig-out{font:600 1.2rem/1.2 Spectral,Georgia,serif}
+.sig-out small{font:400 .8rem Figtree,sans-serif;color:var(--muted);margin-left:.4rem}
+/* score view */
+.row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.file{position:relative;overflow:hidden}
+.file input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.fname{font-size:.9rem;color:var(--muted);flex:1;min-width:8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dir{display:flex;gap:.3rem;flex-wrap:wrap}
+.dir label{font-weight:500;font-size:.88rem;margin:0;display:flex;gap:.3rem;align-items:center;
+  border:1px solid var(--line);border-radius:999px;padding:.25rem .7rem;background:var(--surface);cursor:pointer}
+.dir label:has(input:checked){border-color:var(--brass);background:var(--brass-soft)}
+.check{font-weight:500;font-size:.88rem;display:flex;gap:.35rem;align-items:center;margin:0}
+.status{font-size:.88rem;color:var(--muted);margin:.6rem 0;min-height:1.3em}
+.status.err{color:#B3261E}
+.pages{display:grid;gap:.8rem;margin:.4rem 0 1rem}
+.page{background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.page svg{display:block;width:100%;height:auto;color:#000}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:.92rem}
+.drop.small{padding:.6rem}
+.drop.small p{display:none}
+.drop.over{border-color:var(--brass);background:var(--brass-soft)}
+/* chords view */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:.6rem;background:var(--surface)}
+.seg button{border:0;border-radius:0;font-size:.88rem;font-weight:600;color:var(--muted);background:transparent}
+.seg button[aria-pressed="true"]{background:var(--brass-soft);color:var(--ink)}
+.pad.cpad{grid-template-columns:repeat(7,1fr)}
+.cpad button.acc{font-size:.85rem;padding:.3rem 0;color:var(--muted)}
+.cpad button.acc.on{color:#fff}
+.cpad button.on{background:var(--brass);border-color:var(--brass);color:#fff}
+.cpad button.bass{box-shadow:inset 0 -4px 0 var(--ink)}
+.matches{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0}
+.chip{font:600 1rem Spectral,Georgia,serif;border-radius:999px;padding:.3rem .8rem}
+.chip small{font:400 .75rem Figtree,sans-serif;color:var(--muted);margin-left:.3rem}
+.chip[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+.chord-name{font:600 2rem/1.1 Spectral,Georgia,serif;margin:.9rem 0 .1rem}
+.chord-sub{color:var(--muted);font-size:.85rem;margin:0}
+.tones{display:flex;flex-wrap:wrap;gap:.4rem 1.3rem;margin:.5rem 0 .6rem}
+.tone{text-align:center}
+.tone .n{font:600 1.8rem/1.1 Spectral,Georgia,serif;color:var(--brass)}
+.tone .d{font-size:.78rem;color:var(--muted)}
+.scale{border-top:1px solid var(--line);padding:.5rem 0}
+.scale h3{font:600 .92rem Figtree,sans-serif;margin:0}
+.scale .ns{font:600 1.15rem Spectral,Georgia,serif}
+.scale .ns span{margin-right:.55rem}
+.scale .ns span.ct{color:var(--brass);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.scale p{margin:.05rem 0 0;font-size:.82rem;color:var(--muted)}
+.legend{font-size:.8rem;color:var(--muted);margin:.2rem 0 .3rem}
+/* scales view */
+.scale-pick{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem}
+.notation{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin:.8rem 0 .5rem;min-height:5rem;overflow:hidden}
+.notation svg{display:block;width:100%;height:auto;color:#000}
+.formula{font:600 1.05rem Spectral,Georgia,serif;margin:.2rem 0 0}
+.formula span{margin-right:.6rem}
+/* metronome view */
+.bpm-row{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:.4rem}
+.bpm-wrap{text-align:center;min-width:9rem}
+.bpm{font:600 4.2rem/1 Spectral,Georgia,serif;font-variant-numeric:tabular-nums}
+.bpm-name{color:var(--brass);font:600 1.05rem Spectral,Georgia,serif;min-height:1.4em}
+.bpm-step{width:3rem;height:3rem;border-radius:50%;font-size:1.5rem;padding:0;line-height:1}
+input[type=range]{width:100%;accent-color:var(--brass);margin:.8rem 0}
+.metro-opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.dots{display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0}
+.dot{width:1.1rem;height:1.1rem;border-radius:50%;border:2px solid var(--line);transition:background .05s}
+.dot.first{width:1.4rem;height:1.4rem}
+.dot.on{background:var(--brass);border-color:var(--brass)}
+.metro-btns{display:grid;grid-template-columns:2fr 1fr;gap:.5rem}
+.metro-btns button{padding:.8rem;font-size:1.05rem}
+/* tuner view */
+.a4{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:.15rem}
+.a4 button{border:0;width:2.2rem;padding:.3rem 0;font-size:1.1rem;background:transparent}
+.a4 span{font:600 1rem Spectral,Georgia,serif}
+.tuner{text-align:center;margin:1.2rem 0 1rem}
+.t-note{font:600 5rem/1 Spectral,Georgia,serif;transition:color .15s}
+.t-note sub{font-size:1.6rem;vertical-align:baseline;margin-left:.1rem;color:var(--muted)}
+.tuner.good .t-note{color:#2F9E5B}
+.t-concert{color:var(--muted);font-size:.88rem;min-height:1.3em}
+.meter{position:relative;height:2.6rem;margin:1rem 0 .3rem;border-radius:10px;background:
+  repeating-linear-gradient(to right,var(--line) 0 2px,transparent 2px 10%) 0 100%/100% 35% no-repeat,var(--surface);
+  border:1px solid var(--line);overflow:hidden}
+.meter .zone{position:absolute;left:45%;width:10%;top:0;bottom:0;background:rgba(47,158,91,.18)}
+.needle{position:absolute;top:0;bottom:0;left:50%;width:4px;margin-left:-2px;border-radius:2px;background:var(--ink);transition:left .1s linear;opacity:.25}
+.tuner.live .needle{opacity:1}
+.tuner.good .needle{background:#2F9E5B}
+.t-row{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}
+.t-row span:nth-child(2){font-weight:600;color:var(--ink)}
+.t-freq{color:var(--muted);font-size:.85rem;margin-top:.3rem}
+/* fingering view */
+.note-pick{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.5rem;margin-top:.6rem}
+.note-pick button{width:2.8rem;font-size:1rem;padding:0}
+.note-pick select{font:600 1.15rem Spectral,Georgia,serif;text-align:center}
+.fstaff{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin:.7rem auto;max-width:420px;min-height:3rem;overflow:hidden}
+.fstaff svg{display:block;width:100%;height:auto;color:#000}
+.fsound{text-align:center;color:var(--muted);font-size:.85rem;margin:0}
+.fcard{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:.6rem .7rem;margin:.6rem 0}
+.fcard h3{font:600 .95rem Figtree,sans-serif;margin:0 0 .2rem}
+.fcard h3 small{font-weight:400;color:var(--muted);margin-left:.3rem}
+.fcard .diag{width:100%;height:auto;display:block;max-width:420px;margin:0 auto}
+.fkeys{font-size:.82rem;color:var(--muted);margin:.25rem 0 0}
+.fnote{font-size:.82rem;margin:.25rem 0 0}
+.trill-pair{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.trill-pair .fcard{margin:0}
+.trill-sum{font-size:.95rem;margin:.8rem 0 .4rem}
+.diag .body{fill:var(--bg);stroke:var(--line)}
+.diag .k{fill:var(--surface);stroke:var(--ink);stroke-width:1.5}
+.diag .k.on{fill:var(--ink)}
+.diag .k.mv{stroke:var(--brass);stroke-width:3.2}
+.diag .k.on.mv{fill:var(--brass)}
+.diag text{font:600 8px Figtree,sans-serif;fill:var(--muted);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.diag text.in.on{fill:var(--surface)}
+.diag text.big{font-size:15px}
+.diag text.hand{font-size:9px;fill:var(--muted)}
+.diag .slide{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.diag .tick{stroke:var(--line);stroke-width:2}
+.diag .pos{fill:var(--brass)}
+@media (max-width:520px){ .trill-pair:not(.small){grid-template-columns:1fr} }
+/* about */
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.about-link{display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .8rem .4rem .6rem;border-radius:999px;border:1.5px solid var(--brass);background:var(--brass-soft);color:var(--ink);font-weight:600;font-size:.88rem;text-decoration:none;white-space:nowrap;transition:background .2s,color .2s}
+.about-link:hover{background:var(--brass);color:#fff}
+.about-link svg{width:20px;height:20px;fill:none;stroke:var(--brass);stroke-width:2;stroke-linecap:round}
+.about-link:hover svg{stroke:#fff}
+.about-link[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.about-link[aria-current="page"] svg{stroke:var(--bg)}
+body{transition:background .3s}
+body.about-open{background:color-mix(in srgb, var(--bg) 65%, var(--brass-soft))}
+.about-lead{font:400 1.2rem/1.45 Spectral,Georgia,serif;margin:.2rem 0 1rem}
+.feat{display:grid;grid-template-columns:2rem 1fr;gap:.15rem .6rem;align-items:start;margin:0 0 1rem;padding:0;list-style:none}
+.feat li{display:contents}
+.feat svg{width:22px;height:22px;fill:none;stroke:var(--brass);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:.15rem}
+.feat p{margin:0 0 .55rem;font-size:.92rem}
+.feat b{display:block;font-weight:600}
+.donate{border:1px solid var(--brass);background:var(--brass-soft);border-radius:14px;padding:1rem;margin:0 0 1.4rem}
+.pp-btn{display:block;text-align:center;background:#FFC439;color:#003087;font-weight:700;font-size:1.05rem;text-decoration:none;border-radius:999px;padding:.75rem 1rem;margin:0 0 .8rem}
+.pp-btn:hover{filter:brightness(.96)}
+.pp-btn:focus-visible{outline:3px solid #003087;outline-offset:2px}
+.donate h2{font:600 1.2rem Spectral,Georgia,serif;margin:0 0 .3rem}
+.donate p{margin:0 0 .7rem;font-size:.92rem}
+.pay{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.pay code{font:600 1rem Figtree,sans-serif;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.45rem .7rem;user-select:all}
+.link-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
+.link-chip{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem;color:var(--ink);text-decoration:none;font-size:.9rem;background:var(--bg)}
+.link-chip::after{content:"↗";color:var(--brass);font-size:.8rem}
+.link-chip:hover{border-color:var(--brass);background:var(--brass-soft)}
+/* terms view */
+input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.55rem .7rem}
+.sugg{display:grid;gap:.35rem;margin:.7rem 0 0}
+.sugg button{text-align:left;display:block;width:100%;padding:.5rem .7rem}
+.sugg b{font:600 1.05rem Spectral,Georgia,serif;margin-right:.4rem}
+.sugg span{color:var(--muted);font-size:.85rem}
+.term-card{margin-top:.9rem}
+.term-name{font:600 2rem/1.1 Spectral,Georgia,serif;margin:0}
+.term-meta{color:var(--muted);font-size:.82rem;margin:.15rem 0 .5rem}
+.term-def{font-size:1.05rem;margin:0 0 .4rem}
+.term-extra{font-size:.88rem;margin:.2rem 0}
+.related{margin-top:.8rem}
+.related .matches{margin-top:.3rem}
+@media (max-width:520px){
+  /* phone: feature bar fixed at the bottom, within thumb reach */
+  main{padding-bottom:5.5rem}
+  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;border:0;border-top:1px solid var(--line);border-radius:0;
+    padding:4px 2px calc(4px + env(safe-area-inset-bottom,0px));gap:0;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+  .tabs a{font-size:.56rem;padding:.35rem 0;letter-spacing:-.02em}
+  .tabs a[aria-current="page"]{background:transparent;color:var(--brass)}
+  h1{font-size:1.5rem}
+  .pad{grid-template-columns:repeat(7,1fr)}
+  .pad.cpad{grid-template-columns:repeat(7,1fr)}
+  .sig{grid-template-columns:auto 1fr}
+  .sig-out{grid-column:1 / -1}
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="appbar">
+      <a href="#notes" class="brand" aria-label="Nusical home">
+        <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M11 22.5V9.5l10 13V9.5"/><ellipse cx="8.6" cy="22.6" rx="3" ry="2.2" transform="rotate(-20 8.6 22.6)"/><ellipse cx="18.6" cy="22.6" rx="3" ry="2.2" transform="rotate(-20 18.6 22.6)"/></svg>
+        <span class="wordmark">Nusical</span>
+      </a>
+      <a href="#about" id="tabAbout" class="about-link" title="About this app"><svg viewBox="0 0 24 24" id="aboutIcon"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span id="aboutTxt">About</span></a>
+    </div>
+    <div class="title-row">
+      <h1 id="title">Transpose</h1>
+    </div>
+    <nav class="tabs" aria-label="Features">
+      <a href="#notes" id="tabNotes"><svg viewBox="0 0 24 24"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg><span>Transpose</span></a>
+      <a href="#chords" id="tabChords"><svg viewBox="0 0 24 24"><ellipse cx="10" cy="18" rx="3" ry="2.2"/><ellipse cx="10" cy="12" rx="3" ry="2.2"/><ellipse cx="10" cy="6" rx="3" ry="2.2"/><path d="M13 18V3"/></svg><span>Chords</span></a>
+      <a href="#scales" id="tabScales"><svg viewBox="0 0 24 24"><path d="M3 20h4.5v-4.5H12V11h4.5V6.5H21"/></svg><span>Scales</span></a>
+      <a href="#terms" id="tabTerms"><svg viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 8h6"/></svg><span>Terms</span></a>
+      <a href="#metronome" id="tabMetro"><svg viewBox="0 0 24 24"><path d="M10 3h4l4 18H6zM12 16l6-9M8.5 16h7"/></svg><span>Metronome</span></a>
+      <a href="#tuner" id="tabTuner"><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><span>Tuner</span></a>
+      <a href="#fingering" id="tabFinger"><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><span>Fingering</span></a>
+      <a href="#score" id="tabScore"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14.5 3v4.5H19M9 11h7M9 14.5h7M9 18h4"/></svg><span>Score</span></a>
+    </nav>
+  </header>
+  <p class="tagline" id="tagline"></p>
+
+  <div class="keys">
+    <label for="src">From</label><span></span><label for="tgt">To</label>
+    <select id="src"></select>
+    <button class="swap" id="swap" aria-label="Swap instruments" title="Swap">⇄</button>
+    <select id="tgt"></select>
+    <p class="hint" id="srcHint"></p><span></span><p class="hint" id="tgtHint"></p>
+  </div>
+
+  <div class="interval" id="interval" aria-live="polite"></div>
+
+  <section id="viewNotes">
+    <div class="entry">
+      <input type="text" id="notes" aria-label="Written notes" autocomplete="off" spellcheck="false" placeholder="Notes, e.g. C D Eb F# G">
+      <button id="back" aria-label="Delete last note" title="Delete last">⌫</button>
+      <button id="clear">Clear</button>
+    </div>
+    <div class="pad" id="pad"></div>
+    <div class="strip" id="strip" aria-live="polite"></div>
+    <div class="sig-section">
+      <h2 class="sec">Key signature</h2>
+      <p class="legend">Pick the key the piece is written in on the From part to see which key the To part should use.</p>
+      <div class="sig">
+        <label for="sigIn">Written in</label>
+        <select id="sigIn"></select>
+        <div class="sig-out" id="sigOut"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="viewFinger" hidden>
+    <label for="fInst">Instrument</label>
+    <select id="fInst" style="font:500 1rem Figtree,sans-serif"></select>
+    <div id="fLinks"></div>
+    <p class="legend" style="margin-top:1rem">These links open trusted outside charts in a new tab. Charts belong to their publishers: the Woodwind Fingering Guide (wfg.woodwind.org), Mouthpiece Express and StepWise Publications.</p>
+  </section>
+
+  <section id="viewAbout" hidden>
+    <p class="about-lead">A pocket companion for musicians: everything you reach for in the practice room, at rehearsal and on the gig, in one place.</p>
+    <div class="donate">
+      <h2>Free for every musician</h2>
+      <p>This app is free to use. If it has saved you time in a rehearsal or helped you practise, a small donation keeps it alive and pays for new features.</p>
+      <a class="pp-btn" href="https://www.paypal.com/paypalme/ncikyew" target="_blank" rel="noopener">Donate with PayPal</a>
+      <div class="pay">
+        <span class="legend" style="margin:0">Or send to</span>
+        <code id="payEmail">Nkxt82@gmail.com</code>
+        <button id="copyPay">Copy</button>
+      </div>
+    </div>
+    <ul class="feat">
+      <li><svg viewBox="0 0 24 24"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg><p><b>Transpose</b>Rewrite notes and key signatures for B♭, E♭, F and other instruments.</p></li>
+      <li><svg viewBox="0 0 24 24"><ellipse cx="10" cy="18" rx="3" ry="2.2"/><ellipse cx="10" cy="12" rx="3" ry="2.2"/><ellipse cx="10" cy="6" rx="3" ry="2.2"/><path d="M13 18V3"/></svg><p><b>Chords</b>Name a chord or tap its notes to see what it is and which scales to ad lib over it.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M3 20h4.5v-4.5H12V11h4.5V6.5H21"/></svg><p><b>Scales</b>Any scale written out on the staff, at concert pitch or for your instrument.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 8h6"/></svg><p><b>Terms</b>Look up Italian, German, French and Latin markings, including long phrases word by word.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M10 3h4l4 18H6zM12 16l6-9M8.5 16h7"/></svg><p><b>Metronome</b>Steady clicks with accents, subdivisions and tap tempo.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><p><b>Tuner</b>Tune with your microphone, shown in your instrument’s key.</p></li>
+      <li><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><p><b>Fingering</b>Quick links to trusted fingering, alternate and trill charts for woodwind, brass and strings.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14.5 3v4.5H19M9 11h7M9 14.5h7M9 18h4"/></svg><p><b>Score</b>Upload sheet music and get it back transposed for another instrument.</p></li>
+    </ul>
+    <p class="legend">Fingerings, terms and tunings are checked carefully, but your teacher and your ears always have the final say. Music notation is drawn with the open-source Verovio engraver.</p>
+    <p class="legend">Thank you for playing. 🎶</p>
+  </section>
+
+  <section id="viewScore" hidden>
+    <div class="drop" id="drop">
+      <div class="row" style="justify-content:center">
+        <span class="btn file">Choose score
+          <input type="file" id="fileIn" accept=".pdf,.musicxml,.xml,.mxl,application/pdf">
+        </span>
+      </div>
+      <p style="margin:.6rem 0 0">PDF, MusicXML or .mxl. You can also drop a file here.</p>
+    </div>
+
+    <div id="scoreTools" hidden>
+      <div class="row" style="margin-top:.8rem">
+        <span class="fname" id="fname"></span>
+        <button class="primary" id="dl" disabled>Download PDF</button>
+      </div>
+      <div class="row" style="margin-top:.6rem;justify-content:space-between">
+        <div class="dir" role="radiogroup" aria-label="Direction">
+          <label><input type="radio" name="dir" value="up" id="dirUp"><span id="dirUpTxt">Up</span></label>
+          <label><input type="radio" name="dir" value="down" id="dirDown"><span id="dirDownTxt">Down</span></label>
+        </div>
+        <label class="check"><input type="checkbox" id="showOrig"> Show original</label>
+      </div>
+    </div>
+
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="pages" id="pages"></div>
+  </section>
+
+  <section id="viewChords" hidden>
+    <div class="seg">
+      <button id="modeName" aria-pressed="true">Name a chord</button>
+      <button id="modePick" aria-pressed="false">Pick notes</button>
+    </div>
+    <div id="nameBox">
+      <input type="text" id="chordIn" aria-label="Chord symbol" autocomplete="off" spellcheck="false" placeholder="Chord symbol, e.g. F7, Bbm7, C#m7b5">
+    </div>
+    <div id="pickBox" hidden>
+      <div class="pad cpad" id="cpad"></div>
+      <div class="row" style="margin-top:.5rem">
+        <span class="fname" id="pickInfo"></span>
+        <button id="cclear">Clear</button>
+        <button class="primary" id="analyse">Analyse</button>
+      </div>
+      <div class="matches" id="matches"></div>
+    </div>
+    <div id="chordOut" aria-live="polite"></div>
+  </section>
+
+  <section id="viewScales" hidden>
+    <div class="scale-pick">
+      <div><label for="sRoot">Concert key</label><select id="sRoot"></select></div>
+      <div><label for="sType">Scale</label><select id="sType" style="font:500 1rem Figtree,sans-serif"></select></div>
+      <div><label for="sInst">Your instrument</label><select id="sInst" style="font:500 1rem Figtree,sans-serif"></select></div>
+      <div><label for="sClef">Clef</label><select id="sClef" style="font:500 1rem Figtree,sans-serif"><option value="treble">Treble</option><option value="bass">Bass</option></select></div>
+    </div>
+    <div class="interval" id="sMap" style="margin:.7rem 0 0"></div>
+    <div class="notation" id="notation"></div>
+    <p class="status" id="sStatus" style="margin:.2rem 0"></p>
+    <div class="formula" id="formula"></div>
+    <p class="legend" id="sTip"></p>
+  </section>
+
+  <section id="viewTerms" hidden>
+    <input type="search" id="termIn" aria-label="Search music terms" autocomplete="off" spellcheck="false" placeholder="Search a term, e.g. allegro, rit., D.S. al coda">
+    <div id="termOut" aria-live="polite"></div>
+  </section>
+
+  <section id="viewMetro" hidden>
+    <div class="bpm-row">
+      <button class="bpm-step" id="bpmDown" aria-label="Slower">−</button>
+      <div class="bpm-wrap">
+        <div class="bpm" id="bpmVal">100</div>
+        <div class="bpm-name" id="bpmName"></div>
+      </div>
+      <button class="bpm-step" id="bpmUp" aria-label="Faster">+</button>
+    </div>
+    <input type="range" id="bpmIn" min="20" max="300" value="100" aria-label="Beats per minute">
+    <div class="metro-opts">
+      <div><label for="mBeats">Beats per bar</label><select id="mBeats" style="font:500 1rem Figtree,sans-serif"></select></div>
+      <div><label for="mSub">Clicks per beat</label><select id="mSub" style="font:500 1rem Figtree,sans-serif">
+        <option value="1">1 (beat only)</option><option value="2">2 (quavers)</option><option value="3">3 (triplets)</option><option value="4">4 (semiquavers)</option></select></div>
+    </div>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <div class="metro-btns">
+      <button class="primary" id="mStart">Start</button>
+      <button id="mTap">Tap tempo</button>
+    </div>
+    <p class="legend" style="text-align:center">Tip: press the space bar to start or stop. On iPhone, turn off silent mode to hear the click.</p>
+  </section>
+
+  <section id="viewTuner" hidden>
+    <div class="metro-opts">
+      <div><label for="tInst">Your instrument</label><select id="tInst" style="font:500 1rem Figtree,sans-serif"></select></div>
+      <div><label>Tuning (A4)</label>
+        <div class="a4"><button id="a4Down" aria-label="Lower reference">−</button><span id="a4Val">442 Hz</span><button id="a4Up" aria-label="Raise reference">+</button></div>
+      </div>
+    </div>
+    <div class="tuner" id="tuner">
+      <div class="t-note"><span id="tNote">–</span><sub id="tOct"></sub></div>
+      <div class="t-concert" id="tConcert"></div>
+      <div class="meter"><div class="zone"></div><div class="needle" id="tNeedle"></div></div>
+      <div class="t-row"><span>♭ Flat</span><span id="tCents"> </span><span>Sharp ♯</span></div>
+      <div class="t-freq" id="tFreq"> </div>
+    </div>
+    <button class="primary" id="tStart" style="width:100%;padding:.8rem;font-size:1.05rem">Start tuner</button>
+    <p class="status" id="tStatus" style="text-align:center"></p>
+  </section>
+</main>
+
+<script>
+/* ---------- config ---------- */
+// Address of your PDF recognition server (see omr-server/README.md). Leave empty to disable PDF upload.
+const OMR_URL = 'https://transpose-1.onrender.com';
+const OMR_TOKEN = 'nusical-halabobo';
+
+/* ---------- music logic ---------- */
+const LETTERS = ['C','D','E','F','G','A','B'];
+const NAT = [0,2,4,5,7,9,11];
+const KEYS = [
+  ['C','Concert pitch: piano, flute, oboe, violin, voice'],
+  ['Db','D♭ piccolo'],
+  ['D','D trumpet'],
+  ['Eb','Alto and baritone sax, E♭ clarinet'],
+  ['E','E trumpet'],
+  ['F','French horn, English horn'],
+  ['Gb','Rarely used'],
+  ['G','Alto flute'],
+  ['Ab','A♭ piccolo clarinet'],
+  ['A','A clarinet'],
+  ['Bb','Clarinet, trumpet, tenor and soprano sax'],
+  ['B','B trumpet']
+];
+const MAJORS = ['C','G','D','A','E','B','F#','C#','F','Bb','Eb','Ab','Db','Gb','Cb'];
+const SIG = {C:0,G:1,D:2,A:3,E:4,B:5,'F#':6,'C#':7,F:-1,Bb:-2,Eb:-3,Ab:-4,Db:-5,Gb:-6,Cb:-7};
+const PAD = ['C','C#','Db','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
+const IV = {'0,0':['unison','P1'],'1,1':['minor second','m2'],'1,2':['major second','M2'],'2,3':['minor third','m3'],
+  '2,4':['major third','M3'],'3,5':['perfect fourth','P4'],'3,6':['augmented fourth','A4'],'4,6':['diminished fifth','d5'],
+  '4,7':['perfect fifth','P5'],'5,8':['minor sixth','m6'],'5,9':['major sixth','M6'],'6,10':['minor seventh','m7'],'6,11':['major seventh','M7']};
+
+function parse(tok){
+  const m = tok.trim().match(/^([A-Ga-g])((?:#|♯|x|𝄪|b|♭|𝄫)*)$/);
+  if(!m) return null;
+  let acc = 0;
+  for(const c of m[2]){ if(c==='#'||c==='♯') acc++; else if(c==='x'||c==='𝄪') acc+=2;
+    else if(c==='b'||c==='♭') acc--; else if(c==='𝄫') acc-=2; }
+  const L = LETTERS.indexOf(m[1].toUpperCase());
+  return {L, acc, pc: ((NAT[L]+acc)%12+12)%12};
+}
+function fmt(n, pretty=true){
+  const a = n.acc;
+  const s = a===0?'':a===1?'♯':a===2?'𝄪':a===-1?'♭':a===-2?'𝄫':(a>0?'♯'.repeat(a):'♭'.repeat(-a));
+  const plain = a===0?'':a>0?'#'.repeat(a):'b'.repeat(-a);
+  return LETTERS[n.L] + (pretty ? s : plain);
+}
+function shiftOf(src,tgt){
+  const s = parse(src), t = parse(tgt);
+  return { letters: ((s.L - t.L)%7+7)%7, semis: ((s.pc - t.pc)%12+12)%12 };
+}
+function transpose(n, sh){
+  const L = (n.L + sh.letters)%7;
+  const pc = (n.pc + sh.semis)%12;
+  const acc = ((pc - NAT[L])%12+18)%12 - 6;
+  return {L, acc, pc};
+}
+const ivUp = sh => IV[sh.letters+','+sh.semis] || [sh.semis+' semitones', ''];
+const ivDown = sh => IV[((7-sh.letters)%7)+','+((12-sh.semis)%12)] || ['', ''];
+
+/* ---------- shared UI ---------- */
+const $ = id => document.getElementById(id);
+const pretty = k => fmt(parse(k));
+for(const [k] of KEYS) for(const sel of [$('src'),$('tgt')]) sel.add(new Option(pretty(k), k));
+for(const k of MAJORS) $('sigIn').add(new Option(pretty(k)+' major', k));
+for(const p of PAD){
+  const b = document.createElement('button'); b.textContent = pretty(p);
+  b.addEventListener('click', () => { const v = $('notes').value.trim(); $('notes').value = (v? v+' ' : '') + p; render(); });
+  $('pad').appendChild(b);
+}
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem('transpose') || 'null');
+    if(s){ $('src').value=s.src; $('tgt').value=s.tgt; $('notes').value=s.notes; $('sigIn').value=s.sig||'C'; return; } }catch(e){}
+  $('src').value='Bb'; $('tgt').value='Eb'; $('notes').value='C D E F G'; $('sigIn').value='C';
+}
+function save(){
+  try{ localStorage.setItem('transpose', JSON.stringify({src:$('src').value,tgt:$('tgt').value,notes:$('notes').value,sig:$('sigIn').value})); }catch(e){}
+}
+
+function render(){
+  const src = $('src').value, tgt = $('tgt').value;
+  $('srcHint').textContent = KEYS.find(k=>k[0]===src)[1];
+  $('tgtHint').textContent = KEYS.find(k=>k[0]===tgt)[1];
+  const sh = shiftOf(src,tgt);
+  const up = ivUp(sh)[0], down = ivDown(sh)[0];
+  $('interval').textContent = sh.semis===0 ? 'Same key, so the written notes don’t change.'
+    : `Write up a ${up} (or down a ${down}). A written C for ${pretty(src)} becomes ${fmt(transpose(parse('C'),sh))} for ${pretty(tgt)}.`;
+
+  const strip = $('strip'); strip.innerHTML='';
+  const toks = $('notes').value.split(/[\s,]+/).filter(Boolean);
+  if(!toks.length){ const p=document.createElement('p'); p.className='empty'; p.textContent='Tap a note above or type one to start.'; strip.appendChild(p); }
+  for(const t of toks){
+    const n = parse(t); const d = document.createElement('div'); d.className='pair';
+    if(n){ d.innerHTML = `<div class="from">${fmt(n)}</div><div class="to">${fmt(transpose(n,sh))}</div>`; }
+    else { d.classList.add('bad'); d.innerHTML = `<div class="from"></div><div class="to">not a note</div>`; d.firstChild.textContent = t; }
+    strip.appendChild(d);
+  }
+
+  let k = transpose(parse($('sigIn').value), sh);
+  let name = fmt(k,false);
+  if(!(name in SIG)){
+    const flats = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+    name = k.pc===6 ? (k.acc>0?'F#':'Gb') : flats[k.pc];
+  }
+  const c = SIG[name];
+  $('sigOut').innerHTML = `→ ${pretty(name)} major<small>${c===0?'No sharps or flats':Math.abs(c)+(c>0?' sharp':' flat')+(Math.abs(c)>1?'s':'')}</small>`;
+
+  // score direction labels
+  $('dirUpTxt').textContent = sh.semis===0 ? 'No change' : `Up a ${up}`;
+  $('dirDownTxt').textContent = sh.semis===0 ? 'No change' : `Down a ${down}`;
+  $('dirDown').closest('label').hidden = sh.semis===0;
+  save();
+}
+
+$('swap').addEventListener('click',()=>{ const a=$('src').value; $('src').value=$('tgt').value; $('tgt').value=a; keysChanged(); });
+$('back').addEventListener('click',()=>{ const t=$('notes').value.trim().split(/\s+/); t.pop(); $('notes').value=t.join(' '); render(); });
+$('clear').addEventListener('click',()=>{ $('notes').value=''; render(); $('notes').focus(); });
+for(const id of ['src','tgt']) $(id).addEventListener('change',keysChanged);
+$('sigIn').addEventListener('change',render);
+$('notes').addEventListener('input',render);
+
+/* ---------- views ---------- */
+function route(){
+  const v = ['#score','#chords','#scales','#terms','#metronome','#tuner','#fingering','#about'].includes(location.hash) ? location.hash.slice(1) : 'notes';
+  for(const [k,sec,tab] of [['notes','viewNotes','tabNotes'],['score','viewScore','tabScore'],['chords','viewChords','tabChords'],['scales','viewScales','tabScales'],['terms','viewTerms','tabTerms'],['metronome','viewMetro','tabMetro'],['tuner','viewTuner','tabTuner'],['fingering','viewFinger','tabFinger'],['about','viewAbout','tabAbout']]){
+    $(sec).hidden = v!==k;
+    if(v===k) $(tab).setAttribute('aria-current','page'); else $(tab).removeAttribute('aria-current');
+  }
+  // About opens like a panel: the button becomes Close and returns to the last feature
+  const isAbout = v==='about';
+  if(!window.prevTab){ try{ window.prevTab = localStorage.getItem('lastTab'); }catch(e){} }
+  document.body.classList.toggle('about-open', isAbout);
+  if(!isAbout){ window.prevTab = v; try{ localStorage.setItem('lastTab', v); }catch(e){} }
+  $('tabAbout').href = isAbout ? '#' + (window.prevTab || 'notes') : '#about';
+  $('aboutTxt').textContent = isAbout ? 'Close' : 'About';
+  $('aboutIcon').innerHTML = isAbout ? '<path d="M6 6l12 12M18 6L6 18"/>' : '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>';
+  // Chords and scales work on their own, without instrument keys.
+  const solo = ['chords','scales','terms','metronome','tuner','fingering','about'].includes(v);
+  if(v==='fingering' && window.fingerReady) renderFinger();
+  if(v!=='tuner' && window.tunerReady) stopTuner();
+  if(v!=='metronome' && window.metroReady && metro.playing) stopMetro();
+  document.querySelector('.keys').hidden = solo;
+  $('interval').hidden = solo;
+  if(v==='scales') renderScale();
+  $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Fingering', score:'Score', about:'About'}[v];
+  $('tagline').textContent = {
+    notes:'Convert notes between instruments in different keys.',
+    chords:'Find a chord’s notes and the scales to ad lib over it.',
+    scales:'See any scale written out so you can learn to play it.',
+    terms:'Look up what a music term or marking on your part means.',
+    metronome:'Keep steady time while you practise.',
+    fingering:'Trusted fingering charts for woodwind, brass and strings, including alternates and trills.',
+    about:'What this app does, and how to support it.',
+    tuner:'Play a note and see if you’re in tune, using your microphone.',
+    score:'Upload sheet music and get it rewritten for another instrument.'
+  }[v];
+}
+window.addEventListener('hashchange', () => { route(); window.scrollTo(0,0); });
+document.addEventListener('keydown', e => { if(e.key==='Escape' && location.hash==='#about') location.hash = '#' + (window.prevTab || 'notes'); });
+// open on the About page once per visit, even if the viewer restored an old #feature from last time
+(function land(){
+  let first = true;
+  try{ first = !sessionStorage.getItem('nusicalLanded'); sessionStorage.setItem('nusicalLanded', '1'); }catch(e){}
+  if(first && location.hash !== '#about'){
+    try{ if(location.hash) localStorage.setItem('lastTab', location.hash.slice(1)); }catch(e){}
+    try{ location.hash = 'about'; }catch(e){}
+  }
+})();
+
+/* ---------- score ---------- */
+let tk = null, score = null; // score = {kind:'xml'|'mxl', data, name}
+function loadScript(src){
+  return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=()=>rej(new Error('Could not load '+src)); document.head.appendChild(s); });
+}
+let vrvReady = null;
+function getToolkit(){
+  if(!vrvReady) vrvReady = loadScript('https://cdn.jsdelivr.net/npm/verovio@6.3.0/dist/verovio-toolkit-wasm.js')
+    .then(()=> new Promise(res=>{ const m = window.verovio.module; if(m.calledRun) res(); else m.onRuntimeInitialized = res; }))
+    .then(()=> { tk = new window.verovio.toolkit(); return tk; });
+  return vrvReady;
+}
+let pdfReady = null;
+function getPdfLibs(){
+  if(!pdfReady) pdfReady = loadScript('https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js')
+    .then(()=> loadScript('https://cdn.jsdelivr.net/npm/svg2pdf.js@2.8.1/dist/svg2pdf.umd.min.js'));
+  return pdfReady;
+}
+function status(msg, err=false){ $('status').textContent = msg; $('status').classList.toggle('err', err); }
+
+function defaultDir(){
+  const sh = shiftOf($('src').value,$('tgt').value);
+  (sh.semis <= 6 ? $('dirUp') : $('dirDown')).checked = true;
+}
+function keysChanged(){ defaultDir(); render(); renderScore(); renderChords(); }
+
+function transposeOpt(){
+  const sh = shiftOf($('src').value,$('tgt').value);
+  if(sh.semis===0 || $('showOrig').checked) return '';
+  return $('dirDown').checked ? '-'+ivDown(sh)[1] : '+'+ivUp(sh)[1];
+}
+function loadIntoToolkit(t, forPdf=false){
+  // Preview pages fit the screen width; PDF pages are A4.
+  const w = forPdf ? 2100 : Math.round(Math.min(2100, Math.max(800, $('pages').clientWidth * 2.2)));
+  t.setOptions({transpose: transposeOpt(), pageWidth:w, pageHeight:2970, scale:100, adjustPageHeight:!forPdf,
+    pageMarginLeft:100, pageMarginRight:100, pageMarginTop:80, pageMarginBottom:80,
+    svgViewBox:true, svgRemoveXlink:true, header:'auto', footer:'none', breaks:'auto', svgCss:''});
+  return score.kind==='mxl' ? t.loadZipDataBuffer(score.data.slice(0)) : t.loadData(score.data);
+}
+async function renderScore(){
+  if(!score) return;
+  status('Preparing score…');
+  try{
+    const t = await getToolkit();
+    if(!loadIntoToolkit(t)) throw new Error('This file couldn’t be read as music notation.');
+    const n = t.getPageCount(), box = $('pages'); box.innerHTML='';
+    for(let i=1;i<=n;i++){ const d=document.createElement('div'); d.className='page'; d.innerHTML=t.renderToSVG(i); box.appendChild(d); }
+    $('dl').disabled = false;
+    const sh = shiftOf($('src').value,$('tgt').value);
+    status($('showOrig').checked ? `Original, ${n} page${n>1?'s':''}. Check the notes before downloading.`
+      : `Transposed for ${pretty($('tgt').value)} instrument, ${n} page${n>1?'s':''}.` + (sh.semis===0?' Same key, so nothing changed.':''));
+  }catch(e){ status(e.message || 'Something went wrong reading the score.', true); $('dl').disabled = true; }
+}
+
+async function handleFile(f){
+  if(!f) return;
+  $('pages').innerHTML=''; $('dl').disabled = true; score = null;
+  $('fname').textContent = f.name; $('scoreTools').hidden = false; $('drop').classList.add('small'); defaultDir();
+  const ext = f.name.toLowerCase().split('.').pop();
+  try{
+    if(ext==='pdf'){
+      if(!OMR_URL){ status('Reading PDFs needs the recognition server, which isn’t connected yet. MusicXML and .mxl files work now.', true); return; }
+      status('Reading the notes from your PDF. This can take a minute per page…');
+      const fd = new FormData(); fd.append('file', f);
+      const r = await fetch(OMR_URL.replace(/\/$/,'')+'/omr', {method:'POST', body:fd, headers: OMR_TOKEN?{'X-Token':OMR_TOKEN}:{}});
+      if(!r.ok){ const t = await r.text().catch(()=> ''); throw new Error('The PDF couldn’t be read' + (t?': '+t.slice(0,200):'.') ); }
+      score = {kind:'mxl', data: await r.arrayBuffer(), name:f.name};
+      $('showOrig').checked = true; // review recognition first
+    } else if(ext==='mxl'){
+      score = {kind:'mxl', data: await f.arrayBuffer(), name:f.name};
+    } else {
+      score = {kind:'xml', data: await f.text(), name:f.name};
+    }
+    await renderScore();
+  }catch(e){ status(e.message || 'Couldn’t open that file.', true); }
+}
+$('fileIn').addEventListener('change', e => handleFile(e.target.files[0]));
+const drop = $('drop');
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); handleFile(e.dataTransfer.files[0]); });
+for(const id of ['dirUp','dirDown','showOrig']) $(id).addEventListener('change', renderScore);
+
+async function saveFile(filename, blob){
+  if(window.claude && window.claude.use){
+    const d = await window.claude.use('downloads');
+    if(d){ await d.save({filename, data: blob}); return; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+}
+$('dl').addEventListener('click', async () => {
+  if(!score) return;
+  $('dl').disabled = true; status('Making PDF…');
+  try{
+    await getPdfLibs(); const t = await getToolkit();
+    loadIntoToolkit(t, true);
+    const doc = new window.jspdf.jsPDF({unit:'mm', format:'a4'});
+    const n = t.getPageCount(); const holder = document.createElement('div');
+    holder.style.cssText='position:absolute;left:-9999px;top:0;width:800px'; document.body.appendChild(holder);
+    for(let i=1;i<=n;i++){
+      if(i>1) doc.addPage();
+      holder.innerHTML = t.renderToSVG(i);
+      const el = holder.querySelector('svg');
+      el.setAttribute('width','2100'); el.setAttribute('height','2970');
+      const inner = el.querySelector('svg.definition-scale');
+      if(inner){ inner.setAttribute('width','2100'); inner.setAttribute('height','2970'); }
+      await doc.svg(el, {x:0, y:0, width:210, height:297});
+    }
+    holder.remove();
+    const base = score.name.replace(/\.[^.]+$/,'');
+    const suffix = $('showOrig').checked ? 'original' : 'in-' + $('tgt').value;
+    await saveFile(`${base}-${suffix}.pdf`, doc.output('blob'));
+    status('PDF ready.');
+  }catch(e){
+    status(e && e.code==='declined' ? 'Download cancelled.' : 'Couldn’t make the PDF' + (e && e.message ? ': '+e.message : '.'), e && e.code!=='declined');
+  }finally{ $('dl').disabled = false; }
+});
+
+/* ---------- chords ---------- */
+const SCALES = {
+  ion:{name:'Major (Ionian)', s:[[0,1],[2,2],[4,3],[5,4],[7,5],[9,6],[11,7]], tip:'The home-base scale for major keys.'},
+  lyd:{name:'Lydian', s:[[0,1],[2,2],[4,3],[6,4],[7,5],[9,6],[11,7]], tip:'Brighter, modern sound with the ♯4.'},
+  mpent:{name:'Major pentatonic', s:[[0,1],[2,2],[4,3],[7,5],[9,6]], tip:'No clashing notes. Easiest for melodic ad lib.'},
+  mix:{name:'Mixolydian', s:[[0,1],[2,2],[4,3],[5,4],[7,5],[9,6],[10,7]], tip:'The default choice over dominant chords.'},
+  blues:{name:'Blues', s:[[0,1],[3,3],[5,4],[6,5,4],[7,5],[10,7]], tip:'Gritty and bluesy. Great in blues, funk and rock.'},
+  lyddom:{name:'Lydian dominant', s:[[0,1],[2,2],[4,3],[6,4],[7,5],[9,6],[10,7]], tip:'Fits the ♯11 in the chord.'},
+  hw:{name:'Half-whole diminished', s:[[0,1],[1,2],[3,2],[4,3],[6,4],[7,5],[9,6],[10,7]], tip:'Covers ♭9, ♯9 and 13 at once.'},
+  alt:{name:'Altered', s:[[0,1],[1,2],[3,2],[4,3],[6,4],[8,6],[10,7]], tip:'Maximum tension. Resolve into the next chord.'},
+  dor:{name:'Dorian', s:[[0,1],[2,2],[3,3],[5,4],[7,5],[9,6],[10,7]], tip:'The go-to for minor 7 chords, especially in jazz.'},
+  aeo:{name:'Natural minor (Aeolian)', s:[[0,1],[2,2],[3,3],[5,4],[7,5],[8,6],[10,7]], tip:'A darker minor sound.'},
+  mipent:{name:'Minor pentatonic', s:[[0,1],[3,3],[5,4],[7,5],[10,7]], tip:'Safe, bluesy and easy to finger.'},
+  mel:{name:'Melodic minor', s:[[0,1],[2,2],[3,3],[5,4],[7,5],[9,6],[11,7]], tip:'Minor with a major 7th.'},
+  loc2:{name:'Locrian ♮2', s:[[0,1],[2,2],[3,3],[5,4],[6,5],[8,6],[10,7]], tip:'Smoother than plain Locrian; the jazz favourite.'},
+  loc:{name:'Locrian', s:[[0,1],[1,2],[3,3],[5,4],[6,5],[8,6],[10,7]], tip:'The classic half-diminished scale.'},
+  wh:{name:'Whole-half diminished', s:[[0,1],[2,2],[3,3],[5,4],[6,5],[8,6],[9,7],[11,7]], tip:'Symmetrical: repeats every minor third.'},
+  wt:{name:'Whole tone', s:[[0,1],[2,2],[4,3],[6,4],[8,5],[10,7]], tip:'Dreamy, floating sound.'}
+};
+const TYPES = [
+  {sym:'', name:'Major', al:['','M','maj','major'], t:[[0,1],[4,3],[7,5]], sc:['ion','mpent','lyd']},
+  {sym:'m', name:'Minor', al:['m','min','-','minor','mi'], t:[[0,1],[3,3],[7,5]], sc:['dor','aeo','mipent']},
+  {sym:'dim', name:'Diminished', al:['dim','o','°'], t:[[0,1],[3,3],[6,5]], sc:['wh','loc']},
+  {sym:'aug', name:'Augmented', al:['aug','+','#5'], t:[[0,1],[4,3],[8,5]], sc:['wt']},
+  {sym:'sus4', name:'Suspended 4th', al:['sus4','sus'], t:[[0,1],[5,4],[7,5]], sc:['mix','mpent']},
+  {sym:'sus2', name:'Suspended 2nd', al:['sus2'], t:[[0,1],[2,2],[7,5]], sc:['ion','mpent']},
+  {sym:'6', name:'Major 6th', al:['6','M6','maj6'], t:[[0,1],[4,3],[7,5],[9,6]], sc:['ion','mpent']},
+  {sym:'m6', name:'Minor 6th', al:['m6','-6','min6'], t:[[0,1],[3,3],[7,5],[9,6]], sc:['dor','mel']},
+  {sym:'7', name:'Dominant 7th', al:['7','dom7','dom'], t:[[0,1],[4,3],[7,5],[10,7]], sc:['mix','mpent','blues']},
+  {sym:'maj7', name:'Major 7th', al:['maj7','M7','Δ','Δ7','ma7','j7'], t:[[0,1],[4,3],[7,5],[11,7]], sc:['ion','lyd','mpent']},
+  {sym:'m7', name:'Minor 7th', al:['m7','-7','min7','mi7'], t:[[0,1],[3,3],[7,5],[10,7]], sc:['dor','mipent','blues']},
+  {sym:'m7♭5', name:'Half-diminished', al:['m7b5','ø','ø7','-7b5','min7b5','mi7b5'], t:[[0,1],[3,3],[6,5],[10,7]], sc:['loc2','loc']},
+  {sym:'dim7', name:'Diminished 7th', al:['dim7','o7','°7'], t:[[0,1],[3,3],[6,5],[9,7]], sc:['wh']},
+  {sym:'m(maj7)', name:'Minor-major 7th', al:['mmaj7','mM7','m(maj7)','-Δ7','minmaj7','m(M7)','-maj7'], t:[[0,1],[3,3],[7,5],[11,7]], sc:['mel']},
+  {sym:'7sus4', name:'Dominant 7 sus4', al:['7sus4','7sus'], t:[[0,1],[5,4],[7,5],[10,7]], sc:['mix','mpent']},
+  {sym:'add9', name:'Add 9', al:['add9','add2'], t:[[0,1],[4,3],[7,5],[14,9]], sc:['ion','mpent']},
+  {sym:'9', name:'Dominant 9th', al:['9'], t:[[0,1],[4,3],[7,5],[10,7],[14,9]], sc:['mix','mpent','blues']},
+  {sym:'maj9', name:'Major 9th', al:['maj9','M9','Δ9'], t:[[0,1],[4,3],[7,5],[11,7],[14,9]], sc:['ion','lyd','mpent']},
+  {sym:'m9', name:'Minor 9th', al:['m9','-9','min9'], t:[[0,1],[3,3],[7,5],[10,7],[14,9]], sc:['dor','mipent']},
+  {sym:'7♭9', name:'Dominant 7 flat 9', al:['7b9'], t:[[0,1],[4,3],[7,5],[10,7],[13,9]], sc:['hw']},
+  {sym:'7♯9', name:'Dominant 7 sharp 9', al:['7#9'], t:[[0,1],[4,3],[7,5],[10,7],[15,9]], sc:['alt','blues']},
+  {sym:'7♯11', name:'Dominant 7 sharp 11', al:['7#11'], t:[[0,1],[4,3],[7,5],[10,7],[18,11]], sc:['lyddom']},
+  {sym:'m11', name:'Minor 11th', al:['m11','-11','min11'], t:[[0,1],[3,3],[7,5],[10,7],[14,9],[17,11]], sc:['dor','mipent']},
+  {sym:'13', name:'Dominant 13th', al:['13'], t:[[0,1],[4,3],[7,5],[10,7],[14,9],[21,13]], sc:['mix','mpent']},
+  {sym:'7alt', name:'Altered dominant', al:['7alt','alt'], t:[[0,1],[4,3],[10,7]], sc:['alt','hw'], noId:true}
+];
+const ALIAS = new Map();
+for(const ty of TYPES) for(const a of ty.al) ALIAS.set(a, ty);
+const spell = (r,[semi,deg]) => transpose(r,{letters:(deg-1)%7, semis:semi%12});
+// A step like [6,5,4] can be spelled as ♭5 or ♯4; use whichever reads more simply in this key (A in E♭ blues, C in F♯ blues).
+const stepFor = (r, x) => x.length > 2 && Math.abs(spell(r,[x[0],x[2]]).acc) < Math.abs(spell(r,[x[0],x[1]]).acc) ? [x[0],x[2]] : [x[0],x[1]];
+function degLabel([semi,deg]){
+  const base = NAT[(deg-1)%7] + 12*Math.floor((deg-1)/7), d = semi-base;
+  return (d===-1?'♭':d===-2?'𝄫':d===1?'♯':'') + deg;
+}
+function parseChord(str){
+  let s = str.trim().replace(/♭/g,'b').replace(/♯/g,'#').replace(/\s+/g,'');
+  if(!s) return null;
+  let bass = null; const sl = s.lastIndexOf('/');
+  if(sl>0){ const bn = parse(s.slice(sl+1)); if(bn){ bass = bn; s = s.slice(0,sl); } }
+  const m = s.match(/^([A-Ga-g])(#|b)?(.*)$/);
+  if(!m) return {err:true};
+  const root = parse(m[1].toUpperCase()+(m[2]||'')), suf = m[3];
+  let type = ALIAS.get(suf);
+  if(!type && suf.length>2) type = TYPES.find(t=>t.al.some(a=>a.toLowerCase()===suf.toLowerCase()));
+  return type ? {root, type, bass} : {err:true};
+}
+function chordName(root, type, bass, sh){
+  const r = transpose(root, sh);
+  let b = '';
+  if(bass){ const bt = transpose(bass, sh); const tone = type.t.map(x=>spell(r,x)).find(n=>n.pc===bt.pc); b = '/'+fmt(tone||bt); }
+  return fmt(r)+type.sym+b;
+}
+function showChord(root, type, bass){
+  const sh = {letters:0, semis:0};
+  const r = root;
+  const pcs = new Set(type.t.map(([s])=>(r.pc+s)%12));
+  let h = `<div class="chord-name">${chordName(root,type,bass,sh)}</div><p class="chord-sub">${type.name}</p>`;
+  let alt = enharmonic(root);
+  // skip spellings nobody reads, e.g. G♭m7♭5 with double flats
+  if(alt && type.t.some(x => Math.abs(spell(alt,x).acc) > 1)) alt = null;
+  if(alt){
+    const easier = spellCost(alt,type) < spellCost(root,type);
+    const altTones = type.t.map(x => fmt(spell(alt,x))).join(' ');
+    h += `<p class="legend" style="margin:.35rem 0 0">Sounds the same as <button class="chip" id="enhBtn" style="padding:.1rem .6rem;font-size:.95rem">${chordName(alt,type,bass,sh)}</button> <span>(${altTones})</span>. Use the spelling that fits the key of the piece.</p>`;
+  }
+  h += '<div class="tones">' + type.t.map(x=>`<div class="tone"><div class="n">${fmt(spell(r,x))}</div><div class="d">${degLabel(x)}</div></div>`).join('') + '</div>';
+  h += '<p class="legend">Chord tones are the safest notes to land on. Scales that fit:</p>';
+  for(const id of type.sc){
+    const sc = SCALES[id];
+    const ns = sc.s.map(x=>{ const n = spell(r,stepFor(r,x)); return `<span${pcs.has(n.pc)?' class="ct"':''}>${fmt(n)}</span>`; }).join('');
+    h += `<div class="scale"><h3>${fmt(r)} ${sc.name}</h3><div class="ns">${ns}</div><p>${sc.tip}</p></div>`;
+  }
+  $('chordOut').innerHTML = h;
+  if(alt) $('enhBtn').addEventListener('click', () => {
+    if(chordMode==='name'){
+      const b = bass ? '/' + fmt(type.t.map(x=>spell(alt,x)).find(n=>n.pc===bass.pc) || bass, false) : '';
+      $('chordIn').value = fmt(alt,false) + type.sym.replace(/♭/g,'b').replace(/♯/g,'#') + b;
+    } else if(matches && matches[matchSel]) matches[matchSel].root = alt;
+    renderChords();
+  });
+}
+function chordMsg(t){ $('chordOut').innerHTML = ''; const p = document.createElement('p'); p.className='status'; p.textContent = t; $('chordOut').appendChild(p); }
+
+let chordMode = 'name';
+function setMode(m){
+  chordMode = m;
+  $('modeName').setAttribute('aria-pressed', m==='name'); $('modePick').setAttribute('aria-pressed', m==='pick');
+  $('nameBox').hidden = m!=='name'; $('pickBox').hidden = m!=='pick';
+  renderChords();
+}
+$('modeName').addEventListener('click', ()=>setMode('name'));
+$('modePick').addEventListener('click', ()=>setMode('pick'));
+$('chordIn').addEventListener('input', renderChords);
+
+const PICK_NAMES = ['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
+// Notes are entered with their spelling (C\u266f, E\u266f, G\u266f\u2026) so the result keeps the notation on the page.
+let picked = [], matches = null, matchSel = 0;
+const sameNote = (a, b) => a.L===b.L && a.acc===b.acc;
+for(const acc of [-1, 0, 1]) for(let L=0; L<7; L++){
+  const n = {L, acc, pc: ((NAT[L]+acc)%12+12)%12};
+  const b = document.createElement('button'); b.textContent = fmt(n); b.dataset.key = L+':'+acc;
+  if(acc) b.classList.add('acc');
+  b.addEventListener('click', () => {
+    const i = picked.findIndex(p => sameNote(p, n));
+    if(i >= 0) picked.splice(i, 1);
+    else { const j = picked.findIndex(p => p.pc===n.pc); if(j >= 0) picked[j] = n; else picked.push(n); }  // tapping E\u266f after F swaps the spelling
+    matches = null; updatePick(); renderChords();
+  });
+  $('cpad').appendChild(b);
+}
+// Spell the root so the chord reads naturally: D♭ major (D♭ F A♭), not C♯ major (C♯ E♯ G♯).
+function spellCost(r, type){
+  return type.t.reduce((s,x) => { const n = spell(r,x), a = Math.abs(n.acc);
+    return s + a + (a>1 ? 3 : 0) + ((n.L===2||n.L===6) && n.acc===1 || (n.L===3||n.L===0) && n.acc===-1 ? 1 : 0); }, 0);
+}
+function bestRoot(pc, type){
+  const SH = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'], FL = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+  return [FL[pc], SH[pc]].map(parse).reduce((best, r) => spellCost(r,type) < spellCost(best,type) ? r : best);
+}
+// The other way to write the same root (C♯ ↔ D♭, E♯ → F, C♭ → B…), or null for plain naturals.
+function enharmonic(r){
+  const SH = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'], FL = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+  const me = fmt(r,false), alt = [SH[r.pc], FL[r.pc]].find(n => n !== me);
+  return alt ? parse(alt) : null;
+}
+function updatePick(){
+  for(const b of $('cpad').children){
+    const [L, acc] = b.dataset.key.split(':').map(Number), on = picked.some(p => p.L===L && p.acc===acc);
+    b.classList.toggle('on', on); b.classList.toggle('bass', on && picked.length>1 && picked[0].L===L && picked[0].acc===acc); b.setAttribute('aria-pressed', on);
+  }
+  $('pickInfo').textContent = picked.length ? `${picked.length} note${picked.length>1?'s':''}. Lowest: ${fmt(picked[0])}` : 'Tap the notes as written on your part. The first one counts as the lowest.';
+}
+$('cclear').addEventListener('click', () => { picked = []; matches = null; updatePick(); renderChords(); });
+$('analyse').addEventListener('click', () => {
+  if(picked.length < 2){ matches = []; chordMsg('Pick at least two notes.'); $('matches').innerHTML=''; return; }
+  const S = new Set(picked.map(p => p.pc)), bassPc = picked[0].pc, res = [];
+  for(let rp=0; rp<12; rp++) for(const type of TYPES){
+    if(type.noId) continue;
+    const C = type.t.map(([s])=>(rp+s)%12), Cs = new Set(C);
+    if([...S].some(p=>!Cs.has(p))) continue;          // every picked note must be in the chord
+    const missing = type.t.filter(([s])=>!S.has((rp+s)%12));
+    if(missing.length > 1) continue;
+    let score = 100 - missing.length*25 - Cs.size*2;
+    if(missing.length===1 && missing[0][0]%12===7) score += 12;   // a missing 5th is normal
+    if(!S.has(rp)) score -= 30;                                    // rootless voicing
+    if(rp===bassPc) score += 15;
+    if(S.size<3 && missing.length) score -= 20;
+    const mine = picked.find(p => p.pc===rp);                      // keep the spelling you entered
+    const root = mine ? {L:mine.L, acc:mine.acc, pc:mine.pc} : bestRoot(rp, type);
+    const bass = bassPc!==rp && picked.length>1 ? picked[0] : null;
+    res.push({root, type, bass, score, note: missing.length ? (missing[0][0]%12===7 ? 'no 5th' : 'missing '+degLabel(missing[0])) : ''});
+  }
+  res.sort((a,b)=>b.score-a.score);
+  // When some chords fit exactly, only also show ones that just lack the 5th.
+  const exact = res.some(m=>!m.note);
+  matches = res.filter(m=>!exact || !m.note || m.note==='no 5th').slice(0,6); matchSel = 0; renderChords();
+});
+
+function renderChords(){
+  if(chordMode==='name'){
+    const v = $('chordIn').value;
+    if(!v.trim()){ chordMsg('Type a chord to see its notes and the scales you can ad lib with.'); return; }
+    const c = parseChord(v);
+    if(!c || c.err){ chordMsg('Couldn’t read that chord. Try F7, Bbm7, Cmaj7, C#m7b5 or G7/B.'); return; }
+    showChord(c.root, c.type, c.bass);
+  } else {
+    const box = $('matches'); box.innerHTML = '';
+    if(!matches){ chordMsg(picked.length ? 'Tap Analyse when you’ve added the notes you know.' : ''); return; }
+    if(!matches.length){ chordMsg('No chord fits all of those notes. Try removing one.'); return; }
+    const sh = {letters:0, semis:0};
+    matches.forEach((m,i) => {
+      const b = document.createElement('button'); b.className='chip'; b.setAttribute('aria-pressed', i===matchSel);
+      b.textContent = chordName(m.root, m.type, m.bass, sh);
+      if(m.note){ const s = document.createElement('small'); s.textContent = m.note; b.appendChild(s); }
+      b.addEventListener('click', () => { matchSel = i; renderChords(); });
+      box.appendChild(b);
+    });
+    const m = matches[matchSel]; showChord(m.root, m.type, m.bass);
+    const tones = m.type.t.map(x => spell(m.root, x));
+    const diff = picked.map(p => [p, tones.find(t => t.pc===p.pc)]).filter(([p,t]) => t && !sameNote(p,t));
+    if(diff.length){ const n = document.createElement('p'); n.className = 'legend'; n.style.margin = '.35rem 0 0';
+      n.textContent = 'In this chord ' + diff.map(([p,t]) => `${fmt(p)} is written ${fmt(t)}`).join(', ') + '.'; $('chordOut').querySelector('.chord-sub').after(n); }
+  }
+}
+updatePick();
+
+/* ---------- scales ---------- */
+SCALES.hmin = {name:'Harmonic minor', s:[[0,1],[2,2],[3,3],[5,4],[7,5],[8,6],[11,7]], tip:'Minor with a raised 7th. The classic sound of minor-key music.'};
+SCALES.phr = {name:'Phrygian', s:[[0,1],[1,2],[3,3],[5,4],[7,5],[8,6],[10,7]], tip:'Dark minor with a ♭2. Spanish flavour.'};
+const SCALE_ORDER = ['ion','aeo','hmin','mel','mpent','mipent','blues','dor','phr','lyd','mix','loc','wt','hw','wh'];
+const ROOTS = ['C','C#','Db','D','Eb','E','F','F#','Gb','G','Ab','A','Bb','B'];
+for(const r of ROOTS) $('sRoot').add(new Option(pretty(r), r));
+for(const id of SCALE_ORDER) $('sType').add(new Option(SCALES[id].name, id));
+for(const [k] of KEYS) $('sInst').add(new Option(k==='C' ? 'C (concert pitch)' : pretty(k)+' instrument', k));
+$('sInst').value = 'C';
+try{ const s = JSON.parse(localStorage.getItem('scales')||'null'); if(s){ $('sRoot').value=s.root; $('sType').value=s.type; $('sClef').value=s.clef; if(s.inst) $('sInst').value=s.inst; } }catch(e){}
+
+// Pick the more readable spelling for the written root (e.g. A♭ major rather than G♯ major).
+function friendlyRoot(n, sc){
+  const minor = sc.s.some(([s,d])=>s===3 && d===3);
+  const ok = minor ? ['C','C#','D','D#','Eb','E','F','F#','G','G#','A','Bb','B'] : ROOTS;
+  if(ok.includes(fmt(n,false))) return n;
+  const sh = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'][n.pc], fl = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'][n.pc];
+  const pick = minor ? (ok.includes(sh)?sh:fl) : (ok.includes(fl)?fl:sh);
+  return parse(pick);
+}
+
+const ACC_NAME = {'-2':'flat-flat','-1':'flat','0':'natural','1':'sharp','2':'double-sharp'};
+function scaleNotes(root, sc, clef){
+  const start = clef==='bass' ? (root.L>=4 ? 2 : 3) : 4;
+  return [...sc.s, [12,8]].map(x => stepFor(root, x)).map(([semi,deg]) => {
+    const n = spell(root,[semi,deg]);
+    n.oct = start + Math.floor((root.L + deg - 1)/7);
+    return n;
+  });
+}
+function scaleXml(notes, clef){
+  const measure = (num, list, first) => {
+    const state = {};
+    let x = `<measure number="${num}"><attributes>${first?'<divisions>1</divisions><key><fifths>0</fifths></key>':''}<time print-object="no"><beats>${list.length*4}</beats><beat-type>4</beat-type></time>${first?(clef==='bass'?'<clef><sign>F</sign><line>4</line></clef>':'<clef><sign>G</sign><line>2</line></clef>'):''}</attributes>`;
+    for(const n of list){
+      const k = n.L+'-'+n.oct, prev = state[k] ?? 0; state[k] = n.acc;
+      x += `<note><pitch><step>${LETTERS[n.L]}</step>${n.acc?`<alter>${n.acc}</alter>`:''}<octave>${n.oct}</octave></pitch><duration>4</duration><type>whole</type>`
+        + (n.acc!==prev ? `<accidental>${ACC_NAME[n.acc]}</accidental>` : '')
+        + `<lyric><text>${fmt(n)}</text></lyric></note>`;
+    }
+    return x + '</measure>';
+  };
+  const down = notes.slice(0,-1).reverse();
+  return `<?xml version="1.0" encoding="UTF-8"?><score-partwise version="3.1"><part-list><score-part id="P1"><part-name print-object="no"></part-name></score-part></part-list><part id="P1">`
+    + measure(1, notes, true) + measure(2, down, false) + `</part></score-partwise>`;
+}
+async function renderScale(){
+  if($('viewScales').hidden) return;
+  const concert = parse($('sRoot').value), sc = SCALES[$('sType').value], clef = $('sClef').value, inst = $('sInst').value;
+  const root = friendlyRoot(transpose(concert, shiftOf('C', inst)), sc);
+  try{ localStorage.setItem('scales', JSON.stringify({root:$('sRoot').value, type:$('sType').value, clef, inst})); }catch(e){}
+  $('sMap').textContent = inst==='C' ? `Concert ${fmt(concert)} ${sc.name}, shown at concert pitch.`
+    : `Concert ${fmt(concert)} ${sc.name} → play ${fmt(root)} ${sc.name} on your ${pretty(inst)} instrument.`;
+  $('formula').innerHTML = sc.s.map(x=>`<span>${degLabel(stepFor(root,x))}</span>`).join('');
+  $('sTip').textContent = sc.tip + (sc===SCALES.mel ? ' In classical music it usually comes down as natural minor.' : '');
+  const notes = scaleNotes(root, sc, clef);
+  if(!tk) $('sStatus').textContent = 'Loading notation…';
+  try{
+    const t = await getToolkit();
+    const box = $('notation');
+    const w = Math.round(Math.min(2100, Math.max(800, box.clientWidth * 2.2)));
+    t.setOptions({transpose:'', pageWidth:w, pageHeight:6000, scale:100, adjustPageHeight:true, breaks:'auto',
+      pageMarginLeft:60, pageMarginRight:60, pageMarginTop:40, pageMarginBottom:20,
+      svgViewBox:true, svgRemoveXlink:true, header:'none', footer:'none', svgCss:'.mNum{display:none}'});
+    t.loadData(scaleXml(notes, clef));
+    let h = ''; for(let i=1;i<=t.getPageCount();i++) h += t.renderToSVG(i);
+    box.innerHTML = h;
+    $('sStatus').textContent = '';
+  }catch(e){ $('sStatus').textContent = 'Couldn’t draw the notation. Check your connection and try again.'; }
+}
+for(const id of ['sRoot','sType','sClef','sInst']) $(id).addEventListener('change', renderScale);
+
+/* ---------- terms ---------- */
+// term | other spellings & abbreviations | language | category | meaning | approx BPM
+const TERMS_RAW = `
+Grave||Italian|Tempo|Very slow and solemn.|25–45
+Largo||Italian|Tempo|Broadly and very slowly.|40–60
+Larghetto||Italian|Tempo|Fairly slow; a little faster than largo.|60–66
+Lento||Italian|Tempo|Slowly.|45–60
+Adagio||Italian|Tempo|Slowly, at ease.|66–76
+Adagietto||Italian|Tempo|Fairly slow; a little faster than adagio.|70–80
+Andante||Italian|Tempo|At a walking pace.|76–108
+Andantino||Italian|Tempo|Slightly faster than andante (older music sometimes means slightly slower).|80–108
+Moderato||Italian|Tempo|At a moderate speed.|108–120
+Allegretto||Italian|Tempo|Moderately fast; a little slower than allegro.|100–128
+Allegro||Italian|Tempo|Fast, bright and lively.|120–156
+Allegro moderato||Italian|Tempo|Moderately fast.|116–128
+Allegro ma non troppo||Italian|Tempo|Fast, but not too fast.|
+Allegro assai||Italian|Tempo|Very fast.|
+Allegro vivace||Italian|Tempo|Fast and lively.|
+Vivace||Italian|Tempo|Lively and fast.|156–176
+Vivacissimo||Italian|Tempo|Very lively and fast.|
+Presto||Italian|Tempo|Very fast.|168–200
+Prestissimo||Italian|Tempo|As fast as possible.|200+
+A tempo||Italian|Tempo|Return to the previous speed after a change.|
+Tempo primo|Tempo I;Tempo 1|Italian|Tempo|Return to the opening speed.|
+L'istesso tempo|listesso tempo;lo stesso tempo|Italian|Tempo|Keep the same beat speed even though the time signature changes.|
+Tempo giusto||Italian|Tempo|In strict, steady time.|
+Rubato|tempo rubato|Italian|Tempo|Flexible tempo: push and pull the time for expression.|
+Ad libitum|ad lib;ad lib.|Latin|Tempo|At the player’s choice: play freely, or improvise.|
+Senza misura||Italian|Tempo|Without strict time or metre.|
+Alla breve|cut time|Italian|Tempo|Count in two minim (half-note) beats per bar.|
+Accelerando|accel;accel.|Italian|Tempo change|Gradually getting faster.|
+Stringendo|string.|Italian|Tempo change|Pressing forward; getting faster and more intense.|
+Ritardando|rit;rit.;ritard;ritard.|Italian|Tempo change|Gradually getting slower.|
+Rallentando|rall;rall.|Italian|Tempo change|Gradually getting slower.|
+Ritenuto|riten;riten.|Italian|Tempo change|Held back: slower straight away, not gradually.|
+Allargando|allarg.|Italian|Tempo change|Broadening: slower and usually fuller or louder.|
+Calando||Italian|Tempo change|Getting slower and softer.|
+Morendo||Italian|Tempo change|Dying away: slower and softer.|
+Smorzando|smorz.|Italian|Tempo change|Dying away, fading out.|
+Più mosso|piu mosso|Italian|Tempo change|More movement: faster.|
+Meno mosso||Italian|Tempo change|Less movement: slower.|
+Fermata|pause;bird's eye|Italian|Tempo change|Hold the note or rest longer than written, as long as feels right or as the conductor shows.|
+Caesura|railroad tracks;tramlines;//|Latin|Tempo change|A short break in the sound before continuing.|
+Pianississimo|ppp|Italian|Dynamics|As soft as possible.|
+Pianissimo|pp|Italian|Dynamics|Very soft.|
+Piano|p|Italian|Dynamics|Soft.|
+Mezzo piano|mp|Italian|Dynamics|Moderately soft.|
+Mezzo forte|mf|Italian|Dynamics|Moderately loud.|
+Forte|f|Italian|Dynamics|Loud.|
+Fortissimo|ff|Italian|Dynamics|Very loud.|
+Fortississimo|fff|Italian|Dynamics|As loud as possible.|
+Fortepiano|fp|Italian|Dynamics|Loud, then immediately soft.|
+Sforzando|sfz;sf;sforzato;sffz|Italian|Dynamics|A sudden strong accent on one note.|
+Rinforzando|rfz;rf;rinf.|Italian|Dynamics|Reinforced: sudden extra emphasis on a note or short phrase.|
+Crescendo|cresc;cresc.;<|Italian|Dynamics|Gradually getting louder.|
+Decrescendo|decresc;decresc.;>|Italian|Dynamics|Gradually getting softer.|
+Diminuendo|dim;dim.|Italian|Dynamics|Gradually getting softer.|
+Messa di voce||Italian|Dynamics|Swell and then fade on a single held note.|
+Sotto voce||Italian|Dynamics|In an undertone: very quietly, held back.|
+Al niente|niente;dal niente|Italian|Dynamics|Fade to nothing (al niente) or grow from nothing (dal niente).|
+Perdendosi||Italian|Dynamics|Losing itself: dying away.|
+Affettuoso||Italian|Expression|Tenderly, with warmth.|
+Agitato||Italian|Expression|Agitated, restless.|
+Amabile||Italian|Expression|Sweetly, lovingly.|
+Animato||Italian|Expression|Animated, lively.|
+Appassionato||Italian|Expression|Passionately.|
+Brillante||Italian|Expression|Brilliantly, sparkling.|
+Con brio|brio|Italian|Expression|With vigour and spirit.|
+Cantabile||Italian|Expression|In a singing style.|
+Comodo|commodo|Italian|Expression|Comfortably, at an easy pace.|
+Con moto||Italian|Expression|With motion: keep it moving.|
+Con anima||Italian|Expression|With soul and feeling.|
+Con forza||Italian|Expression|With force.|
+Con fuoco||Italian|Expression|With fire.|
+Con spirito||Italian|Expression|With spirit.|
+Dolce||Italian|Expression|Sweetly and gently.|
+Doloroso|dolente|Italian|Expression|Sorrowfully.|
+Energico||Italian|Expression|Energetically.|
+Espressivo|espress.;espr.|Italian|Expression|Expressively.|
+Furioso||Italian|Expression|Furiously.|
+Giocoso||Italian|Expression|Playfully, merrily.|
+Grazioso||Italian|Expression|Gracefully.|
+Lamentoso||Italian|Expression|Mournfully, like a lament.|
+Leggiero|leggero;legg.|Italian|Expression|Lightly.|
+Lugubre||Italian|Expression|Gloomy, mournful.|
+Maestoso||Italian|Expression|Majestically.|
+Marziale||Italian|Expression|In a march style.|
+Mesto||Italian|Expression|Sadly.|
+Misterioso||Italian|Expression|Mysteriously.|
+Nobilmente||Italian|Expression|Nobly.|
+Pesante||Italian|Expression|Heavily, with weight.|
+Scherzando||Italian|Expression|Playfully, jokingly.|
+Semplice||Italian|Expression|Simply, plainly.|
+Sognando||Italian|Expression|Dreamily.|
+Sostenuto|sost.|Italian|Expression|Sustained; often also slightly held back.|
+Spiritoso||Italian|Expression|Spiritedly.|
+Teneramente|tenero|Italian|Expression|Tenderly.|
+Tranquillo||Italian|Expression|Calmly.|
+Vigoroso||Italian|Expression|Vigorously.|
+Legato||Italian|Articulation|Smoothly, with notes connected.|
+Non legato||Italian|Articulation|Detached, but not short.|
+Staccato|stacc.|Italian|Articulation|Short and detached.|
+Staccatissimo||Italian|Articulation|Very short and detached.|
+Tenuto|ten.|Italian|Articulation|Hold the note for its full length, with a slight stress.|
+Marcato|marc.|Italian|Articulation|Marked: strongly accented.|
+Portato|mezzo staccato;louré;loure|Italian|Articulation|Slightly separated, between legato and staccato.|
+Accent|accento|English|Articulation|Give the note extra emphasis at the start.|
+Pizzicato|pizz;pizz.|Italian|Technique|Strings: pluck instead of bowing.|
+Arco||Italian|Technique|Strings: play with the bow again.|
+Col legno||Italian|Technique|Strings: play with the wood of the bow.|
+Sul ponticello|sul pont.|Italian|Technique|Strings: bow close to the bridge for a glassy sound.|
+Sul tasto||Italian|Technique|Strings: bow over the fingerboard for a soft, airy sound.|
+Tremolo|trem.|Italian|Technique|Rapidly repeat a note, or alternate quickly between two notes.|
+Trill|tr;trillo|English|Technique|Rapidly alternate with the note above.|
+Glissando|gliss;gliss.|Italian|Technique|Slide from one note to another.|
+Portamento|port.|Italian|Technique|An expressive slide connecting two notes.|
+Flutter-tongue|flatterzunge;flz;flz.;frullato|German|Technique|Wind: roll the tongue (or throat) while playing.|
+Con sordino|con sord.;sord.|Italian|Technique|With a mute.|
+Senza sordino|senza sord.|Italian|Technique|Without a mute.|
+Divisi|div;div.|Italian|Technique|Split the section to play the separate parts.|
+Unisono|unis;unis.;unison|Italian|Technique|Everyone plays the same part again.|
+Tutti||Italian|Technique|Everyone plays.|
+Solo||Italian|Technique|One player alone.|
+Una corda|u.c.|Italian|Technique|Piano: press the soft (left) pedal.|
+Tre corde|t.c.|Italian|Technique|Piano: release the soft pedal.|
+Pedale|ped;ped.|Italian|Technique|Piano: use the sustain pedal.|
+Mano destra|m.d.;md|Italian|Technique|Play with the right hand.|
+Mano sinistra|m.s.;ms;main gauche|Italian|Technique|Play with the left hand.|
+Ottava|8va;8ve;all'ottava|Italian|Technique|Play an octave higher than written.|
+Ottava bassa|8vb;8va bassa|Italian|Technique|Play an octave lower than written.|
+Loco||Italian|Technique|Return to the written pitch after an 8va.|
+Simile|sim;sim.|Italian|Instruction|Carry on in the same way.|
+Sempre||Italian|Instruction|Always, throughout.|
+Subito|sub;sub.|Italian|Instruction|Suddenly.|
+Poco a poco||Italian|Instruction|Little by little.|
+Poco||Italian|Instruction|A little.|
+Molto||Italian|Instruction|Very, much.|
+Assai||Italian|Instruction|Very.|
+Ma non troppo|non troppo|Italian|Instruction|But not too much.|
+Più|piu|Italian|Instruction|More.|
+Meno||Italian|Instruction|Less.|
+Quasi||Italian|Instruction|Almost, as if.|
+Con||Italian|Instruction|With.|
+Senza||Italian|Instruction|Without.|
+Attacca||Italian|Instruction|Go straight on to the next movement without a break.|
+Segue||Italian|Instruction|Continue straight into the next section.|
+Tacet||Latin|Instruction|Stay silent for this section.|
+Colla voce|colla parte|Italian|Instruction|Follow the soloist’s timing.|
+Da capo|D.C.|Italian|Structure|Go back to the beginning.|
+Dal segno|D.S.|Italian|Structure|Go back to the sign (𝄋).|
+Da capo al fine|D.C. al fine|Italian|Structure|Go back to the beginning and stop at Fine.|
+Da capo al coda|D.C. al coda|Italian|Structure|Go back to the beginning, then jump to the coda at “To Coda”.|
+Dal segno al fine|D.S. al fine|Italian|Structure|Go back to the sign and stop at Fine.|
+Dal segno al coda|D.S. al coda|Italian|Structure|Go back to the sign, then jump to the coda at “To Coda”.|
+Fine||Italian|Structure|The end (used with D.C. or D.S.).|
+Coda|to coda|Italian|Structure|The closing section. “To Coda” means jump there.|
+Segno|sign|Italian|Structure|The sign (𝄋) that D.S. sends you back to.|
+Prima volta|1st ending;first time bar|Italian|Structure|First-time ending: play it the first time through only.|
+Seconda volta|2nd ending;second time bar|Italian|Structure|Second-time ending: skip the first ending and play this instead.|
+Cadenza||Italian|Structure|A solo passage in free time, often showy or improvised.|
+Ossia||Italian|Structure|An alternative passage you may play instead (often easier).|
+Ritornello||Italian|Structure|A recurring passage or refrain.|
+Bis||Latin|Structure|Play the marked bars twice.|
+Cédez|cedez|French|Tempo change|Slow down.|
+Retenu||French|Tempo change|Held back: slower.|
+En dehors||French|Expression|Bring this line out above the others.|
+Animé|anime|French|Expression|Animated, lively.|
+Doux||French|Expression|Sweetly, softly.|
+Lent||French|Tempo|Slow.|
+Modéré|modere|French|Tempo|At a moderate speed.|
+Vif||French|Tempo|Lively, fast.|
+Très|tres|French|Instruction|Very.|
+Langsam||German|Tempo|Slowly.|
+Mäßig|massig;mässig|German|Tempo|At a moderate speed.|
+Schnell||German|Tempo|Fast.|
+Lebhaft||German|Tempo|Lively.|
+Bewegt||German|Tempo|With motion.|
+Ruhig||German|Expression|Calmly.|
+Zart||German|Expression|Tenderly, delicately.|
+Etwas||German|Instruction|Somewhat.|
+Sehr||German|Instruction|Very.|
+Nicht schleppen||German|Instruction|Don’t drag.|
+Nicht eilen||German|Tempo|Don’t rush.|
+Ohne zu schleppen||German|Tempo|Without dragging.|
+Ohne Hast||German|Tempo|Without haste.|
+Nicht zu schnell||German|Tempo|Not too fast.|
+Langsamer||German|Tempo change|Slower.|
+Schneller||German|Tempo change|Faster.|
+Bewegter||German|Tempo change|With more movement: a little faster.|
+Rasch||German|Tempo|Quick.|
+Gemächlich||German|Tempo|Leisurely, unhurried.|
+Bedächtig||German|Tempo|Deliberately, unhurried.|
+Gemessen||German|Tempo|Measured and steady.|
+Getragen||German|Tempo|Slow and sustained, solemn.|
+Breit||German|Tempo|Broadly.|
+Fließend||German|Tempo|Flowing.|
+Haupttempo|Hauptzeitmaß;Hauptzeitmass|German|Tempo|Return to the main tempo of the movement.|
+Im Tempo||German|Tempo|Back in tempo (a tempo).|
+Zeitmaß|Zeitmass|German|Tempo|Tempo.|
+Wie vorher||German|Instruction|As before.|
+Zurückhalten|zurückhaltend;zurückgehalten|German|Tempo change|Hold back: slowing down.|
+Gehalten||German|Tempo change|Held back; sustained.|
+Zögernd||German|Tempo change|Hesitating; slowing slightly.|
+Drängend|vorwärts drängend|German|Tempo change|Pressing forward, getting faster.|
+Vorwärts||German|Tempo change|Forward: move on.|
+Belebend|belebt|German|Tempo change|Getting livelier.|
+Unmerklich||German|Instruction|Imperceptibly (e.g. an unnoticeable tempo change).|
+Allmählich||German|Instruction|Gradually.|
+Nach und nach||German|Instruction|Little by little.|
+Plötzlich||German|Instruction|Suddenly.|
+Immer||German|Instruction|Always, still (sempre).|
+Noch||German|Instruction|Still; even (e.g. noch breiter = even broader).|
+Wieder||German|Instruction|Again.|
+Ein wenig||German|Instruction|A little.|
+Ziemlich||German|Instruction|Rather, fairly.|
+Ganz||German|Instruction|Quite, completely.|
+Mit||German|Instruction|With.|
+Ohne||German|Instruction|Without.|
+Feierlich||German|Expression|Solemnly.|
+Innig||German|Expression|Heartfelt, intimate.|
+Mit Empfindung||German|Expression|With feeling.|
+Ausdrucksvoll|mit Ausdruck|German|Expression|Expressively.|
+Gesangvoll||German|Expression|In a singing style (cantabile).|
+Hervortretend|hervor|German|Expression|Bring this part out.|
+Klagend||German|Expression|Lamenting.|
+Schmachtend||German|Expression|Languishing, yearning.|
+Leidenschaftlich||German|Expression|Passionately.|
+Heftig||German|Expression|Vehemently, violently.|
+Stürmisch||German|Expression|Stormily.|
+Wild||German|Expression|Wildly.|
+Kräftig||German|Expression|Strongly, vigorously.|
+Wuchtig||German|Expression|Weighty, forceful.|
+Schwer||German|Expression|Heavily.|
+Schwungvoll||German|Expression|With swing and verve.|
+Triumphierend||German|Expression|Triumphantly.|
+Lustig||German|Expression|Merrily.|
+Keck||German|Expression|Cheeky, bold.|
+Behaglich||German|Expression|Comfortably, contentedly.|
+Gemütlich||German|Expression|Easy-going, cosy.|
+Wie ein Naturlaut||German|Expression|Like a sound of nature.|
+Wie aus der Ferne||German|Expression|As if from far away.|
+In der Ferne||German|Technique|In the distance: played offstage or sounding distant.|
+Hinter der Szene||German|Technique|Offstage.|
+Verlöschend|ersterbend|German|Dynamics|Dying away.|
+Steigernd||German|Dynamics|Intensifying, building up.|
+Klingen lassen|lang klingen lassen;verklingen lassen|German|Technique|Let the sound ring (and fade naturally).|
+Kurz||German|Articulation|Short.|
+Gebunden||German|Articulation|Slurred, legato.|
+Mit Dämpfer|m. Dpf.;Dpf.|German|Technique|With a mute.|
+Ohne Dämpfer|Dämpfer ab;o. Dpf.|German|Technique|Without a mute / take the mute off.|
+Gestopft|stopped|German|Technique|Horn: stopped, with the hand closing the bell (+ sign).|
+Offen|open|German|Technique|Open: no mute, not stopped (o sign).|
+Schalltrichter auf|Schalltrichter in die Höhe;Sch. auf|German|Technique|Wind/brass: raise the bell up.|
+Stark anblasen||German|Technique|Wind/brass: blow forcefully.|
+Am Steg||German|Technique|Strings: bow at the bridge (sul ponticello).|
+Am Griffbrett||German|Technique|Strings: bow over the fingerboard (sul tasto).|
+Mit dem Holz|mit Holz|German|Technique|Strings: with the wood of the bow (col legno).|
+Auf der G-Saite|G-Saite;auf der D-Saite;auf der A-Saite|German|Technique|Strings: play on the named string (e.g. the G string).|
+Die Hälfte|Hälfte|German|Technique|Half the section plays.|
+Alle||German|Technique|Everyone plays (tutti).|
+`.trim().split('\n').map(line => {
+  const [t, al, l, c, d, bpm] = line.split('|');
+  return {t, al: al ? al.split(';') : [], l, c, d, bpm};
+});
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[.'’]/g,'').replace(/\s+/g,' ').trim();
+for(const e of TERMS_RAW){
+  // German umlauts can be typed as ae/oe/ue, and ß as ss
+  const forms = [e.t, ...e.al];
+  for(const f of [e.t, ...e.al]) if(/[äöüÄÖÜß]/.test(f)) forms.push(f.replace(/[äÄ]/g,'ae').replace(/[öÖ]/g,'oe').replace(/[üÜ]/g,'ue').replace(/ß/g,'ss'));
+  e.keys = [...new Set(forms.map(norm))];
+}
+function lev(a, b){
+  if(Math.abs(a.length-b.length) > 2) return 9;
+  const d = Array.from({length:a.length+1}, (_,i)=>[i]);
+  for(let j=1;j<=b.length;j++) d[0][j]=j;
+  for(let i=1;i<=a.length;i++) for(let j=1;j<=b.length;j++)
+    d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[a.length][b.length];
+}
+function searchTerms(qRaw){
+  // keep symbols like < > // as typed; normalise the rest
+  const q = norm(qRaw); if(!q) return [];
+  const short = q.length <= 2, out = [];
+  for(const e of TERMS_RAW){
+    let s = 0;
+    for(const k of e.keys){
+      if(k===q) s = Math.max(s, 100);
+      else if(short) continue;
+      else if(k.startsWith(q)) s = Math.max(s, 80);
+      else if(k.split(' ').some(w=>w.startsWith(q))) s = Math.max(s, 60);
+      else if(k.includes(q)) s = Math.max(s, 50);
+      else if(q.length>=4 && lev(q,k) <= (q.length>=7?2:1)) s = Math.max(s, 45);
+    }
+    if(!s && q.length>=3 && /[a-z]/.test(q) && new RegExp('\\b'+q.replace(/[^a-z0-9 ]/g,''), 'i').test(norm(e.d))) s = 25;
+    if(s) out.push({e, s});
+  }
+  return out.sort((a,b)=> b.s-a.s || a.e.t.length-b.e.t.length).map(x=>Object.assign({score:x.s}, x.e));
+}
+function termCard(e, related){
+  const box = $('termOut'); box.innerHTML = '';
+  const card = document.createElement('div'); card.className = 'term-card';
+  // one entry per spelling, preferring the dotted form (rit. over rit)
+  const byNorm = new Map();
+  for(const a of e.al){ const k = norm(a); if(k===norm(e.t)) continue; const cur = byNorm.get(k); if(!cur || a.length > cur.length) byNorm.set(k, a); }
+  const abbr = [...byNorm.values()];
+  card.innerHTML = `<h2 class="term-name"></h2><p class="term-meta"></p><p class="term-def"></p>`
+    + (abbr.length ? `<p class="term-extra"><b>Also written:</b> <span class="ab"></span></p>` : '')
+    + (e.bpm ? `<p class="term-extra"><b>Rough speed:</b> ${e.bpm} BPM <span class="legend">(varies by style and era)</span></p>` : '');
+  card.querySelector('.term-name').textContent = e.t;
+  card.querySelector('.term-meta').textContent = `${e.l} · ${e.c}`;
+  card.querySelector('.term-def').textContent = e.d;
+  if(abbr.length) card.querySelector('.ab').textContent = abbr.join(', ');
+  box.appendChild(card);
+  const rel = related.filter(r => r !== e).slice(0,6);
+  if(rel.length){
+    const r = document.createElement('div'); r.className = 'related';
+    r.innerHTML = '<p class="legend">Related</p><div class="matches"></div>';
+    for(const x of rel){ const b = document.createElement('button'); b.className='chip'; b.textContent = x.t; b.addEventListener('click', ()=> termCard(x, related)); r.lastChild.appendChild(b); }
+    box.appendChild(r);
+  }
+}
+function renderTerms(){
+  const q = $('termIn').value, box = $('termOut');
+  if(!q.trim()){ box.innerHTML = ''; return; }
+  if(!searchTerms(q).some(r=>r.score===100) && breakdown(q)) return;
+  let res = searchTerms(q);
+  if(!res.length){
+    // try each word on its own, e.g. “what is allegro”
+    const seen = new Set();
+    for(const w of norm(q).split(' ').filter(w=>w.length>=3))
+      for(const r of searchTerms(w)) if(!seen.has(r.t)){ seen.add(r.t); res.push(r); }
+    res.sort((a,b)=>b.score-a.score);
+  }
+  if(!res.length){ chordMsgIn(box, 'No match. Check the spelling, or try the abbreviation (e.g. rit., cresc.).'); return; }
+  const exact = res.filter(r=>r.score===100);
+  if(exact.length===1 || res.length===1){ termCard(exact[0] || res[0], res); return; }
+  const list = (exact.length ? exact : res).slice(0,12);
+  box.innerHTML = `<p class="legend" style="margin-top:.7rem">${list.length} matches. Pick one:</p>`;
+  const wrap = document.createElement('div'); wrap.className = 'sugg';
+  for(const e of list){
+    const b = document.createElement('button');
+    b.innerHTML = '<b></b><span></span>'; b.firstChild.textContent = e.t; b.lastChild.textContent = e.d;
+    b.addEventListener('click', ()=> termCard(e, res));
+    wrap.appendChild(b);
+  }
+  box.appendChild(wrap);
+}
+function chordMsgIn(box, t){ box.innerHTML = ''; const p = document.createElement('p'); p.className='status'; p.textContent = t; box.appendChild(p); }
+
+// Word-by-word translation of long markings, e.g. “Feierlich und gemessen, ohne zu schleppen”.
+const LINK_WORDS = {und:'and', oder:'or', aber:'but', doch:'yet, but', nicht:'not', zu:'too / to', wie:'like, as', im:'in the', in:'in', der:'the', die:'the', das:'the', den:'the', dem:'the', ein:'a', eine:'a', einem:'a', e:'and', ed:'and', ma:'but', non:'not', il:'the', et:'and', mais:'but', pas:'not', un:'a', une:'a', avec:'with', sans:'without', peu:'a little', plus:'more', moins:'less'};
+function breakdown(q){
+  const words = norm(q).replace(/[,;:!()]/g,' ').split(' ').filter(Boolean);
+  if(words.length < 2) return false;
+  const parts = []; let i = 0, known = 0;
+  const byKey = new Map(); for(const e of TERMS_RAW) for(const k of e.keys) if(!byKey.has(k)) byKey.set(k, e);
+  while(i < words.length){
+    let hit = null, len = Math.min(5, words.length - i);
+    for(; len >= 1; len--){ const e = byKey.get(words.slice(i, i+len).join(' ')); if(e){ hit = e; break; } }
+    if(hit){ parts.push({text: words.slice(i, i+len).join(' '), e: hit}); i += len; known++; continue; }
+    const w = words[i];
+    parts.push(LINK_WORDS[w] ? {text:w, link:LINK_WORDS[w]} : {text:w});
+    i++;
+  }
+  if(known < 2 && !(known === 1 && parts.some(p=>p.link))) return false;
+  const box = $('termOut'); box.innerHTML = '<p class="legend" style="margin-top:.7rem">Word by word. Tap a term for details.</p>';
+  const wrap = document.createElement('div'); wrap.className = 'sugg';
+  for(const p of parts){
+    const b = document.createElement(p.e ? 'button' : 'div');
+    if(!p.e) b.className = 'btn'; if(!p.e) b.style.cssText = 'cursor:default;border-style:dashed';
+    b.innerHTML = '<b></b><span></span>';
+    b.firstChild.textContent = p.e ? p.e.t : p.text;
+    b.lastChild.textContent = p.e ? p.e.d : p.link ? p.link : 'not found';
+    if(p.e) b.addEventListener('click', ()=> termCard(p.e, [p.e]));
+    wrap.appendChild(b);
+  }
+  box.appendChild(wrap);
+  return true;
+}
+$('termIn').addEventListener('input', renderTerms);
+
+/* ---------- metronome ---------- */
+const metro = {bpm:100, beats:4, sub:1, ctx:null, playing:false, next:0, step:0, timer:null, queue:[], taps:[]};
+try{ const s = JSON.parse(localStorage.getItem('metronome')||'null'); if(s){ metro.bpm=s.bpm||100; metro.beats=s.beats||4; metro.sub=s.sub||1; } }catch(e){}
+for(let i=1;i<=12;i++) $('mBeats').add(new Option(i, i));
+$('mBeats').value = metro.beats; $('mSub').value = metro.sub;
+const TEMPO_NAMES = [[40,'Grave'],[60,'Largo'],[66,'Larghetto'],[76,'Adagio'],[108,'Andante'],[120,'Moderato'],[156,'Allegro'],[176,'Vivace'],[200,'Presto'],[999,'Prestissimo']];
+function setBpm(v){
+  metro.bpm = Math.max(20, Math.min(300, Math.round(v)));
+  $('bpmVal').textContent = metro.bpm; $('bpmIn').value = metro.bpm;
+  $('bpmName').textContent = TEMPO_NAMES.find(([max]) => metro.bpm < max)[1];
+  saveMetro();
+}
+function saveMetro(){ try{ localStorage.setItem('metronome', JSON.stringify({bpm:metro.bpm, beats:metro.beats, sub:metro.sub})); }catch(e){} }
+function drawDots(){
+  $('dots').innerHTML = '';
+  for(let i=0;i<metro.beats;i++){ const d = document.createElement('div'); d.className = 'dot' + (i===0 && metro.beats>1 ? ' first' : ''); $('dots').appendChild(d); }
+}
+function click(time, kind){
+  // kind: 0 = first beat of bar, 1 = beat, 2 = subdivision
+  const c = metro.ctx, o = c.createOscillator(), g = c.createGain();
+  o.frequency.value = kind===0 ? 1600 : kind===1 ? 1100 : 800;
+  const vol = kind===2 ? 0.25 : 0.7;
+  g.gain.setValueAtTime(0.0001, time);
+  g.gain.exponentialRampToValueAtTime(vol, time + 0.002);
+  g.gain.exponentialRampToValueAtTime(0.0001, time + 0.05);
+  o.connect(g).connect(c.destination); o.start(time); o.stop(time + 0.06);
+}
+function schedule(){
+  const c = metro.ctx;
+  while(metro.next < c.currentTime + 0.12){
+    const perBar = metro.beats * metro.sub;
+    const s = metro.step % perBar, beat = Math.floor(s / metro.sub), isBeat = s % metro.sub === 0;
+    click(metro.next, !isBeat ? 2 : (beat===0 && metro.beats>1 ? 0 : 1));
+    if(isBeat) metro.queue.push({time: metro.next, beat});
+    metro.next += 60 / metro.bpm / metro.sub;
+    metro.step = (s + 1) % perBar;
+  }
+}
+function animate(){
+  if(!metro.playing) return;
+  const now = metro.ctx.currentTime;
+  while(metro.queue.length && metro.queue[0].time <= now){
+    const {beat} = metro.queue.shift();
+    [...$('dots').children].forEach((d,i) => d.classList.toggle('on', i===beat));
+  }
+  requestAnimationFrame(animate);
+}
+let wake = null;
+async function startMetro(){
+  if(!metro.ctx) metro.ctx = new (window.AudioContext || window.webkitAudioContext)();
+  await metro.ctx.resume();
+  metro.playing = true; metro.step = 0; metro.queue = []; metro.next = metro.ctx.currentTime + 0.06;
+  schedule(); metro.timer = setInterval(schedule, 25); requestAnimationFrame(animate);
+  $('mStart').textContent = 'Stop';
+  try{ wake = await navigator.wakeLock?.request('screen'); }catch(e){}
+}
+function stopMetro(){
+  metro.playing = false; clearInterval(metro.timer);
+  $('mStart').textContent = 'Start';
+  [...$('dots').children].forEach(d => d.classList.remove('on'));
+  try{ wake?.release(); }catch(e){} wake = null;
+}
+$('mStart').addEventListener('click', () => metro.playing ? stopMetro() : startMetro());
+$('bpmIn').addEventListener('input', e => setBpm(+e.target.value));
+$('bpmDown').addEventListener('click', () => setBpm(metro.bpm - 1));
+$('bpmUp').addEventListener('click', () => setBpm(metro.bpm + 1));
+$('mBeats').addEventListener('change', e => { metro.beats = +e.target.value; metro.step = 0; drawDots(); saveMetro(); });
+$('mSub').addEventListener('change', e => { metro.sub = +e.target.value; metro.step = 0; saveMetro(); });
+$('mTap').addEventListener('click', () => {
+  const t = performance.now();
+  if(metro.taps.length && t - metro.taps[metro.taps.length-1] > 2000) metro.taps = [];
+  metro.taps.push(t); metro.taps = metro.taps.slice(-5);
+  if(metro.taps.length >= 2){
+    const gaps = metro.taps.slice(1).map((x,i) => x - metro.taps[i]);
+    setBpm(60000 / (gaps.reduce((a,b)=>a+b,0) / gaps.length));
+  }
+});
+document.addEventListener('keydown', e => {
+  if(e.code !== 'Space' || $('viewMetro').hidden || /INPUT|SELECT|TEXTAREA|BUTTON/.test(e.target.tagName)) return;
+  e.preventDefault(); metro.playing ? stopMetro() : startMetro();
+});
+setBpm(metro.bpm); drawDots();
+window.metroReady = true;
+
+/* ---------- tuner ---------- */
+const T_NAMES = ['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
+const tuner = {a4:442, inst:'C', ctx:null, stream:null, an:null, buf:null, raf:0, hist:[], cents:0, frame:0, quiet:0};
+try{ const s = JSON.parse(localStorage.getItem('tunerSettings')||'null'); if(s){ tuner.a4 = s.a4||442; tuner.inst = s.inst||'C'; } }catch(e){}
+for(const [k] of KEYS) $('tInst').add(new Option(k==='C' ? 'C (concert pitch)' : pretty(k)+' instrument', k));
+$('tInst').value = tuner.inst;
+function saveTuner(){ try{ localStorage.setItem('tunerSettings', JSON.stringify({a4:tuner.a4, inst:tuner.inst})); }catch(e){} }
+function setA4(v){ tuner.a4 = Math.max(415, Math.min(466, v)); $('a4Val').textContent = tuner.a4+' Hz'; saveTuner(); }
+$('a4Down').addEventListener('click', ()=>setA4(tuner.a4-1));
+$('a4Up').addEventListener('click', ()=>setA4(tuner.a4+1));
+$('tInst').addEventListener('change', e=>{ tuner.inst = e.target.value; saveTuner(); });
+setA4(tuner.a4);
+
+// Autocorrelation pitch detection; returns Hz or -1 when there is no clear note.
+function detectPitch(buf, sr){
+  let size = buf.length, rms = 0;
+  for(let i=0;i<size;i++) rms += buf[i]*buf[i];
+  if(Math.sqrt(rms/size) < 0.01) return -1;
+  let r1 = 0, r2 = size-1; const th = 0.2;
+  for(let i=0;i<size/2;i++) if(Math.abs(buf[i]) < th){ r1 = i; break; }
+  for(let i=1;i<size/2;i++) if(Math.abs(buf[size-i]) < th){ r2 = size-i; break; }
+  const b = buf.subarray(r1, r2); size = b.length;
+  const c = new Float32Array(size);
+  for(let lag=0; lag<size; lag++){ let s = 0; for(let j=0;j<size-lag;j++) s += b[j]*b[j+lag]; c[lag] = s; }
+  let d = 0; while(d < size-1 && c[d] > c[d+1]) d++;
+  let max = -1, pos = -1;
+  for(let i=d;i<size;i++) if(c[i] > max){ max = c[i]; pos = i; }
+  if(pos <= 0 || pos >= size-1) return -1;
+  const x1 = c[pos-1], x2 = c[pos], x3 = c[pos+1], a = (x1+x3-2*x2)/2, bb = (x3-x1)/2;
+  const T = a ? pos - bb/(2*a) : pos;
+  return sr / T;
+}
+function showPitch(f){
+  const box = $('tuner');
+  if(f < 0){
+    if(++tuner.quiet > 20){ box.classList.remove('good'); $('tFreq').textContent = 'Listening…'; }
+    return;
+  }
+  tuner.quiet = 0;
+  tuner.hist.push(f); if(tuner.hist.length > 5) tuner.hist.shift();
+  const fm = [...tuner.hist].sort((a,b)=>a-b)[Math.floor(tuner.hist.length/2)];
+  const n = 12*Math.log2(fm/tuner.a4) + 69, near = Math.round(n);
+  tuner.cents = tuner.cents*0.6 + (n-near)*100*0.4;
+  const cents = Math.round(tuner.cents);
+  const shift = (12 - parse(tuner.inst).pc) % 12, written = (near + shift) % 12;
+  $('tNote').textContent = pretty(T_NAMES[written]);
+  $('tOct').textContent = tuner.inst==='C' ? Math.floor(near/12)-1 : '';
+  $('tConcert').textContent = tuner.inst==='C' ? '' : `Concert ${pretty(T_NAMES[near%12])}`;
+  $('tNeedle').style.left = (50 + Math.max(-50, Math.min(50, tuner.cents))) + '%';
+  $('tCents').textContent = Math.abs(cents) <= 4 ? 'In tune' : (cents>0?'+':'−') + Math.abs(cents) + ' cents';
+  $('tFreq').textContent = fm.toFixed(1) + ' Hz';
+  box.classList.toggle('good', Math.abs(cents) <= 4);
+}
+function tunerLoop(){
+  tuner.raf = requestAnimationFrame(tunerLoop);
+  if(++tuner.frame % 2) return;   // about 30 checks a second is plenty
+  tuner.an.getFloatTimeDomainData(tuner.buf);
+  showPitch(detectPitch(tuner.buf, tuner.ctx.sampleRate));
+}
+async function startTuner(){
+  $('tStatus').textContent = '';
+  if(!navigator.mediaDevices?.getUserMedia){ $('tStatus').textContent = 'This browser can’t use the microphone.'; return; }
+  try{
+    tuner.stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
+  }catch(e){
+    $('tStatus').textContent = e && e.name==='NotAllowedError'
+      ? 'Microphone access was blocked. Allow it in your browser settings, then try again. Some previews don’t allow the microphone; it works once the app is installed or hosted.'
+      : 'Couldn’t start the microphone.';
+    return;
+  }
+  tuner.ctx = tuner.ctx || new (window.AudioContext || window.webkitAudioContext)();
+  await tuner.ctx.resume();
+  const src = tuner.ctx.createMediaStreamSource(tuner.stream);
+  tuner.an = tuner.ctx.createAnalyser(); tuner.an.fftSize = 2048;
+  tuner.buf = new Float32Array(tuner.an.fftSize);
+  src.connect(tuner.an);
+  tuner.hist = []; tuner.cents = 0; tuner.quiet = 0;
+  $('tuner').classList.add('live'); $('tFreq').textContent = 'Listening…';
+  $('tStart').textContent = 'Stop tuner';
+  tunerLoop();
+}
+function stopTuner(){
+  if(!tuner.stream) return;
+  cancelAnimationFrame(tuner.raf);
+  tuner.stream.getTracks().forEach(t=>t.stop()); tuner.stream = null;
+  $('tuner').classList.remove('live','good');
+  $('tStart').textContent = 'Start tuner'; $('tFreq').textContent = ' '; $('tCents').textContent = ' ';
+  $('tNeedle').style.left = '50%';
+}
+$('tStart').addEventListener('click', ()=> tuner.stream ? stopTuner() : startTuner());
+window.tunerReady = true;
+
+/* ---------- fingering (links to trusted charts) ---------- */
+const WFG = 'https://www.wfg.woodwind.org/', ME = 'https://mouthpieceexpress.com/blogs/resources/';
+const SW = 'https://www.stepwisepublications.com/storage/19387/a1f47e4a-6b77-49c0-a962-43303a425908/', SWP = 'https://www.stepwisepublications.com/free-fingering-charts';
+const reg = (path, names) => names.map((n,i) => [n, WFG + path.replace('#', i+1)]);
+const OCT = ['1st octave','2nd octave','3rd octave','4th octave'];
+const CL = ['Chalumeau','Clarion','Altissimo'];
+const FINGER = [
+  {id:'flute', fam:'Woodwind', name:'Flute', groups:[
+    ['Standard fingerings', reg('flute/fl_bas_#.html', OCT.slice(0,3))],
+    ['Alternate fingerings', reg('flute/fl_alt_#.html', OCT)],
+    ['Trills', reg('flute/fl_tr2_#.html', OCT)],
+    ['Tremolos (thirds)', reg('flute/fl_tr3_#.html', OCT.slice(0,3))],
+    ['Printable charts', [['Flute & piccolo chart (PDF)', ME+'free-flute-piccolo-fingering-chart'], ['Flute trill chart (PDF)', ME+'free-flute-trill-fingerings-chart']]]]},
+  {id:'picc', fam:'Woodwind', name:'Piccolo', note:'Piccolo uses flute fingerings; these pages add piccolo-specific alternates.', groups:[
+    ['Alternate fingerings', reg('flute/picc_alt_#.html', OCT.slice(0,3))],
+    ['Flute charts (also apply)', [['Standard fingerings', WFG+'flute/fl_bas_1.html'], ['Trills', WFG+'flute/fl_tr2_1.html']]],
+    ['Printable charts', [['Flute & piccolo chart (PDF)', ME+'free-flute-piccolo-fingering-chart']]]]},
+  {id:'oboe', fam:'Woodwind', name:'Oboe / English horn', groups:[
+    ['Standard fingerings', reg('oboe/ob_bas_#.html', OCT.slice(0,3))],
+    ['Alternate fingerings', reg('oboe/ob_alt_#.html', OCT.slice(0,3))],
+    ['Trills', reg('oboe/ob_tr2_#.html', OCT.slice(0,3))],
+    ['Tremolos (thirds)', reg('oboe/ob_tr3_#.html', OCT.slice(0,2))],
+    ['Printable charts', [['Oboe & English horn chart (PDF)', ME+'free-oboe-english-horn-fingering-chart']]]]},
+  {id:'cl', fam:'Woodwind', name:'Clarinet (B\u266d / A / E\u266d, Boehm)', groups:[
+    ['Standard fingerings', reg('clarinet/cl_bas_#.html', CL)],
+    ['Alternate fingerings', reg('clarinet/cl_alt_#.html', ['Chalumeau','Clarion','Lower altissimo','Upper altissimo'])],
+    ['Trills', reg('clarinet/cl_tr2_#.html', CL)],
+    ['Printable charts', [['Clarinet chart (PDF)', ME+'free-clarinet-fingering-chart']]]]},
+  {id:'bcl', fam:'Woodwind', name:'Alto / bass clarinet', note:'Low clarinets mostly use soprano clarinet fingerings; these pages add their own alternates.', groups:[
+    ['Alternate fingerings', reg('clarinet/basscl_alt_#.html', ['Chalumeau','Altissimo'])],
+    ['Clarinet charts (also apply)', [['Standard fingerings', WFG+'clarinet/cl_bas_1.html'], ['Trills', WFG+'clarinet/cl_tr2_1.html']]]]},
+  {id:'sax', fam:'Woodwind', name:'Saxophone (all sizes)', groups:[
+    ['Standard fingerings', reg('sax/sax_bas_#.html', OCT.slice(0,2))],
+    ['Alternate fingerings', [...reg('sax/sax_alt_#.html', OCT.slice(0,2)), ['Lower altissimo', WFG+'sax/sax_alt_4.html'], ['Middle altissimo', WFG+'sax/sax_alt_5.html'], ['Upper altissimo', WFG+'sax/sax_alt_6.html']]],
+    ['Trills', [...reg('sax/sax_tr2_#.html', OCT.slice(0,2)), ['Altissimo', WFG+'sax/sax_tr2_4.html']]],
+    ['Tremolos (thirds)', reg('sax/sax_tr3_#.html', OCT.slice(0,2))],
+    ['Printable charts', [['Saxophone chart (PDF)', ME+'free-saxophone-fingering-chart']]]]},
+  {id:'bsn', fam:'Woodwind', name:'Bassoon', groups:[
+    ['Standard fingerings', reg('bassoon/basn_bas_#.html', OCT.slice(0,3))],
+    ['Alternate fingerings', reg('bassoon/basn_alt_#.html', OCT.slice(0,3))],
+    ['Trills', reg('bassoon/basn_tr2_#.html', OCT.slice(0,3))],
+    ['Printable charts', [['Bassoon chart (PDF)', ME+'free-bassoon-fingering-chart']]]]},
+  {id:'cbsn', fam:'Woodwind', name:'Contrabassoon', groups:[
+    ['Alternate fingerings', reg('bassoon/cbasn_alt_#.html', OCT.slice(0,3))]]},
+  {id:'tpt', fam:'Brass', name:'Trumpet / cornet', groups:[['Printable charts', [['Trumpet & cornet chart (PDF)', ME+'free-trumpet-cornet-fingering-chart']]]]},
+  {id:'hn', fam:'Brass', name:'Horn (single & double)', groups:[['Printable charts', [['Single and double horn charts (PDF)', ME+'free-french-horn-fingering-chart']]]]},
+  {id:'tbn', fam:'Brass', name:'Trombone (incl. F attachment)', groups:[['Printable charts', [['Slide position chart (PDF)', ME+'free-trombone-fingering-chart']]]]},
+  {id:'euph', fam:'Brass', name:'Euphonium / baritone', groups:[['Printable charts', [['Euphonium & baritone chart (PDF)', ME+'free-euphonium-baritone-fingering-chart']]]]},
+  {id:'tuba', fam:'Brass', name:'Tuba / sousaphone', groups:[['Printable charts', [['Tuba chart, 3 & 4 valves (PDF)', ME+'free-tuba-sousaphone-fingering-chart']]]]},
+  {id:'vn', fam:'Strings', name:'Violin', groups:[['Printable charts', [['Violin fingering chart (PDF)', SW+'_____violin_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]},
+  {id:'va', fam:'Strings', name:'Viola', groups:[['Printable charts', [['Viola fingering chart (PDF)', SW+'____viola_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]},
+  {id:'vc', fam:'Strings', name:'Cello', groups:[['Printable charts', [['Cello fingering chart (PDF)', SW+'____cello_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]},
+  {id:'db', fam:'Strings', name:'Double bass', groups:[['Printable charts', [['Bass fingering chart (PDF)', SW+'____bass_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]}
+];
+const STRINGS_NOTE = 'These charts cover the essential range (first position, and the lower positions on bass). For higher positions, shifting and extensions, your teacher’s fingerings are the best guide.';
+const BRASS_NOTE = 'Brass trills are usually lip trills (same valves, moving between harmonics) or valve trills. Your teacher can show which suits each passage.';
+let fFam = '', fOg = null;
+for(const i of FINGER){ if(i.fam!==fFam){ fOg = document.createElement('optgroup'); fOg.label = i.fam; $('fInst').appendChild(fOg); fFam = i.fam; } fOg.appendChild(new Option(i.name, i.id)); }
+try{ const s = localStorage.getItem('fingerInst'); if(s && FINGER.some(i=>i.id===s)) $('fInst').value = s; }catch(e){}
+function renderFinger(){
+  const inst = FINGER.find(i => i.id===$('fInst').value) || FINGER[0];
+  try{ localStorage.setItem('fingerInst', inst.id); }catch(e){}
+  const box = $('fLinks'); box.innerHTML = '';
+  const add = (tag, cls, text) => { const el = document.createElement(tag); if(cls) el.className = cls; if(text) el.textContent = text; return el; };
+  if(inst.note) box.appendChild(add('p', 'legend', inst.note));
+  for(const [title, links] of inst.groups){
+    const card = add('div', 'fcard'); card.appendChild(add('h3', '', title));
+    const row = add('div', 'link-row');
+    for(const [label, url] of links){ const a = add('a', 'link-chip', label); a.href = url; a.target = '_blank'; a.rel = 'noopener'; row.appendChild(a); }
+    card.appendChild(row); box.appendChild(card);
+  }
+  if(inst.fam==='Brass') box.appendChild(add('p', 'legend', BRASS_NOTE));
+  if(inst.fam==='Strings') box.appendChild(add('p', 'legend', STRINGS_NOTE));
+}
+$('fInst').addEventListener('change', renderFinger);
+window.fingerReady = true;
+$('copyPay').addEventListener('click', async () => {
+  const email = $('payEmail').textContent;
+  try{ await navigator.clipboard.writeText(email); $('copyPay').textContent = 'Copied'; }
+  catch(e){ const r = document.createRange(); r.selectNodeContents($('payEmail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $('copyPay').textContent = 'Selected, press copy'; }
+  setTimeout(() => $('copyPay').textContent = 'Copy', 2500);
+});
+if(location.hash==='#fingering') renderFinger();
+
+load(); defaultDir(); render(); route(); renderChords();
+</script>
+</body>
+</html>
