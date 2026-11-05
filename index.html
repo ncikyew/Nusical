@@ -220,6 +220,23 @@ button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font
 .sdesc .sd-name{font:600 1.1rem Spectral,Georgia,serif;margin-bottom:.15rem}
 .sdesc .sd-text{font-size:.93rem;line-height:1.45}
 .sdesc .sd-steps{font-size:.82rem;color:var(--muted);margin-top:.35rem}
+/* about: what's new and version history */
+.whatsnew{background:var(--brass-soft);border:1px solid var(--brass);border-radius:14px;padding:.8rem 1rem;margin:0 0 1.1rem}
+.whatsnew .wn-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:600;color:var(--brass);margin:0 0 .3rem}
+.whatsnew .wn-badge svg{width:.95rem;height:.95rem;fill:none;stroke:currentColor;stroke-width:2}
+.whatsnew h2{font:600 1.2rem Spectral,Georgia,serif;margin:0 0 .25rem}
+.whatsnew p{margin:0 0 .6rem;font-size:.95rem;line-height:1.5}
+.whatsnew ul{margin:0 0 .7rem;padding-left:1.1rem;font-size:.9rem;line-height:1.5}
+.whatsnew .wn-go{font-size:.9rem}
+.vhist{margin-top:1.6rem;border-top:1px solid var(--line);padding-top:.6rem}
+.vhist h2{font:600 1.15rem Spectral,Georgia,serif;margin:.4rem 0 .3rem}
+.rel{border-top:1px solid var(--line);padding:.6rem 0}
+.rel:first-child{border-top:0}
+.rel .rh{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem}
+.rel .rv{font-weight:600;font-size:.95rem}
+.rel .rd{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.rel ul{margin:.3rem 0 0;padding-left:1.1rem;font-size:.87rem;line-height:1.5;color:var(--muted)}
+.relmore{font-size:.85rem;margin-top:.3rem}
 /* drone */
 .drone{margin-top:1.4rem;border-top:1px solid var(--line);padding-top:.6rem}
 .drone h2{font:600 1.25rem Spectral,Georgia,serif;margin:.4rem 0 .3rem}
@@ -502,6 +519,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
 
   <section id="viewAbout" hidden>
     <p class="about-lead">A pocket companion for musicians: everything you reach for in the practice room, at rehearsal and on the gig, in one place.</p>
+    <div class="whatsnew" id="whatsNew"></div>
     <div class="donate">
       <h2>Free for every musician</h2>
       <p>This app is free to use. If it has saved you time in a rehearsal or helped you practise, a small donation keeps it alive and pays for new features.</p>
@@ -514,16 +532,21 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
     </div>
     <ul class="feat">
       <li><svg viewBox="0 0 24 24"><path d="M4 8h14l-3.5-3.5M20 16H6l3.5 3.5"/></svg><p><b>Transpose</b>Rewrite notes and key signatures for B♭, E♭, F and other instruments.</p></li>
-      <li><svg viewBox="0 0 24 24"><ellipse cx="10" cy="18" rx="3" ry="2.2"/><ellipse cx="10" cy="12" rx="3" ry="2.2"/><ellipse cx="10" cy="6" rx="3" ry="2.2"/><path d="M13 18V3"/></svg><p><b>Chords</b>Name a chord or tap its notes to see what it is and which scales to ad lib over it.</p></li>
-      <li><svg viewBox="0 0 24 24"><path d="M3 20h4.5v-4.5H12V11h4.5V6.5H21"/></svg><p><b>Scales</b>Any scale written out on the staff, at concert pitch or for your instrument.</p></li>
-      <li><svg viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 8h6"/></svg><p><b>Terms</b>Look up Italian, German, French and Latin markings, including long phrases word by word.</p></li>
+      <li><svg viewBox="0 0 24 24"><ellipse cx="10" cy="18" rx="3" ry="2.2"/><ellipse cx="10" cy="12" rx="3" ry="2.2"/><ellipse cx="10" cy="6" rx="3" ry="2.2"/><path d="M13 18V3"/></svg><p><b>Chords</b>Tap notes or name a chord to see what it is, hear it, and find scales to ad lib over it.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M3 20h4.5v-4.5H12V11h4.5V6.5H21"/></svg><p><b>Scales</b>Any scale on the staff in four clefs, with a description and playback, at concert pitch or for your instrument.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 8h6"/></svg><p><b>Terms</b>Over 500 Italian, German, French and Latin markings with Chinese meanings, plus a guide to notation signs.</p></li>
       <li><svg viewBox="0 0 24 24"><path d="M10 3h4l4 18H6zM12 16l6-9M8.5 16h7"/></svg><p><b>Metronome</b>Steady clicks with accents, subdivisions and tap tempo.</p></li>
-      <li><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><p><b>Tuner</b>Tune with your microphone, shown in your instrument’s key.</p></li>
-      <li><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><p><b>Fingering</b>Quick links to trusted fingering, alternate and trill charts for woodwind, brass and strings.</p></li>
-      <li><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><p><b>Quiz</b>Ten-question theory quizzes for Grades 1 to 8, in the style of the ABRSM exams.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><p><b>Tuner</b>Tune with your microphone, or play along with a drone, in your instrument’s key.</p></li>
+      <li><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><p><b>Fingering</b>Fingering, trill and tremolo charts for woodwind, brass and strings.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><p><b>Quiz</b>Theory quizzes by grade or topic, plus ear training.</p></li>
     </ul>
     <p class="legend">Fingerings, terms and tunings are checked carefully, but your teacher and your ears always have the final say. Music notation is drawn with the open-source Verovio engraver.</p>
     <p class="legend">Thank you for playing. 🎶</p>
+    <div class="vhist">
+      <h2>Version history</h2>
+      <div id="relList"></div>
+      <button id="relMore" class="relmore">Show older releases</button>
+    </div>
   </section>
 
   <section id="viewQuiz" hidden>
@@ -3983,6 +4006,45 @@ function stopTuner(){
 }
 $('tStart').addEventListener('click', ()=> tuner.stream ? stopTuner() : startTuner());
 window.tunerReady = true;
+
+/* ---------- release notes: the newest is featured on About, the rest are listed below ---------- */
+// Add each new release at the TOP. Versions: a new feature bumps the middle number, a fix bumps the last.
+const RELEASES = [
+  {v:'1.9', date:'2026-11-05', title:'Notation signs in Terms', text:'Terms now has a Signs view: 76 music signs drawn on a staff, from clefs to ornaments.', notes:['Explanations, Chinese names and sound examples for each sign','Search by name, symbol (8va, sfz, >) or Chinese','Links between signs and the matching terms'], go:'terms', then:() => setTermsMode('signs')},
+  {v:'1.8', date:'2026-11-05', title:'Scale descriptions', notes:['Each scale explains its sound, where it’s used and its step pattern']},
+  {v:'1.7', date:'2026-11-05', title:'535 music terms', notes:['278 new terms, including string and brass techniques, French, German and jazz markings','Chinese meaning for every new term']},
+  {v:'1.6.1', date:'2026-11-05', title:'Sound fix', notes:['Play buttons now sound on the first tap, including on iPhone']},
+  {v:'1.6', date:'2026-11-05', title:'Drone and ear training', notes:['Drone in the Tuner, in your instrument’s key, with an optional 5th','Ear-training quizzes at three levels']},
+  {v:'1.5', date:'2026-11-05', title:'Quiz by topic', notes:['Choose a topic and level as well as a grade','Overview and a note on what the quizzes cover']},
+  {v:'1.4.1', date:'2026-11-05', title:'Quiz questions matched to grade', notes:['Higher grades no longer ask basic questions','19 new questions for Grades 6–8']},
+  {v:'1.4', date:'2026-11-05', title:'Theory quiz', notes:['10-question quizzes for Grades 1–8, with explanations and best scores','Score upload paused for now']},
+  {v:'1.3', date:'2026-11-05', title:'Chinese meanings in Terms', notes:['Every term shows its meaning in Chinese','Search in Chinese, such as 渐慢']},
+  {v:'1.2', date:'2026-11-05', title:'Pick notes and more clefs', notes:['Chords opens on Pick notes','Scales in alto and tenor clef']},
+  {v:'1.1.1', date:'2026-11-04', title:'Play buttons react', notes:['Buttons light up, show moving bars and become Stop while sound plays']},
+  {v:'1.1', date:'2026-11-04', title:'Listen to chords and scales', notes:['Hear chords, arpeggios, scales and single notes','Notes light up as they play']},
+  {v:'1.0', date:'2026-11-04', title:'Oboe, bassoon and piccolo charts', notes:['Built-in fingering, trill and tremolo charts for oboe, bassoon and piccolo, checked against the Woodwind Fingering Guide']}
+];
+const relDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+function renderReleases(){
+  const [cur, ...past] = RELEASES;
+  const wn = $('whatsNew');
+  wn.innerHTML = `<p class="wn-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>New in v${cur.v} \u00b7 ${relDate(cur.date)}</p><h2></h2><p class="wn-text"></p><ul></ul>${cur.go ? '<button class="primary wn-go">Try it</button>' : ''}`;
+  wn.querySelector('h2').textContent = cur.title;
+  wn.querySelector('.wn-text').textContent = cur.text || '';
+  for(const n of cur.notes){ const li = document.createElement('li'); li.textContent = n; wn.querySelector('ul').appendChild(li); }
+  if(cur.go) wn.querySelector('.wn-go').addEventListener('click', () => { location.hash = '#' + cur.go; if(cur.then) setTimeout(cur.then, 0); });
+  const list = $('relList'); list.innerHTML = '';
+  past.forEach((r, i) => {
+    const d = document.createElement('div'); d.className = 'rel'; if(i >= 3) d.hidden = true;
+    d.innerHTML = '<div class="rh"><span class="rv"></span><span class="rd"></span></div><ul></ul>';
+    d.querySelector('.rv').textContent = `v${r.v} \u00b7 ${r.title}`; d.querySelector('.rd').textContent = relDate(r.date);
+    for(const n of r.notes){ const li = document.createElement('li'); li.textContent = n; d.querySelector('ul').appendChild(li); }
+    list.appendChild(d);
+  });
+  $('relMore').hidden = past.length <= 3;
+}
+$('relMore').addEventListener('click', () => { for(const d of $('relList').children) d.hidden = false; $('relMore').hidden = true; });
+renderReleases();
 
 /* ---------- drone: a sustained reference note in the instrument's key ---------- */
 const drone = {pc:0, oct:3, fifth:false, vol:.6, out:null, nodes:[], on:false};
