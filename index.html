@@ -186,6 +186,19 @@ button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font
 /* Chinese meanings in Terms */
 .term-zh{font-size:1.05rem;margin:.35rem 0 0;color:var(--ink)}
 .sugg .zh{display:block;font-size:.85em;opacity:.85;margin-top:.1rem}
+/* drone */
+.drone{margin-top:1.4rem;border-top:1px solid var(--line);padding-top:.6rem}
+.drone h2{font:600 1.25rem Spectral,Georgia,serif;margin:.4rem 0 .3rem}
+.dnotes{display:grid;grid-template-columns:repeat(6,1fr);gap:.35rem;margin:.6rem 0}
+.dnotes button{font:600 1.05rem Spectral,Georgia,serif;padding:.45rem 0}
+.dnotes button[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+.dopts{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.6rem 1.2rem}
+.dopts label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:.15rem}
+.dopts .dchk{display:flex;align-items:center;gap:.4rem;font-size:.95rem;color:var(--ink);margin:0 0 .35rem}
+.dvol input{width:140px}
+/* ear training */
+.qlisten{flex-direction:column;align-items:center;gap:.3rem;padding:1rem .5rem}
+.qlisten .qhint{font-size:.8rem;color:var(--muted);margin:0}
 /* click to listen */
 .listen{display:flex;flex-wrap:wrap;gap:.4rem;margin:.55rem 0 .1rem}
 .listen button,.scale .pl{display:inline-flex;align-items:center;gap:.35rem;font-size:.85rem;border-radius:999px;padding:.3rem .8rem}
@@ -481,8 +494,8 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
 
   <section id="viewQuiz" hidden>
     <div id="quizHome">
-      <p class="qintro">Quick multiple-choice quizzes to revise music theory. Each quiz has 10 random questions, with an explanation after every answer and your score at the end. Choose a grade for a mixed set, or a topic to focus on one area.</p>
-      <div class="seg" role="group" aria-label="Quiz type"><button id="qmGrade" aria-pressed="true">By grade</button><button id="qmTopic" aria-pressed="false">By topic</button></div>
+      <p class="qintro">Quick multiple-choice quizzes to revise music theory. Each quiz has 10 random questions, with an explanation after every answer and your score at the end. Choose a grade for a mixed set, a topic to focus on one area, or ear training to practise listening.</p>
+      <div class="seg" role="group" aria-label="Quiz type"><button id="qmGrade" aria-pressed="true">By grade</button><button id="qmTopic" aria-pressed="false">By topic</button><button id="qmEar" aria-pressed="false">Ear training</button></div>
       <div id="qGradeBox">
         <div class="qgrades" id="qGrades"></div>
       </div>
@@ -490,6 +503,10 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
         <div class="qtopics" id="qTopics"></div>
         <p class="qlvlh">Level</p>
         <div class="qlvls" id="qLvls"></div>
+      </div>
+      <div id="qEarBox" hidden>
+        <p class="legend" style="margin-top:0">Listen and answer: each question plays by itself, and you can replay it as often as you like. Turn your sound on.</p>
+        <div class="qtopics" id="qEarLvls"></div>
       </div>
       <button class="primary" id="qStart" style="margin-top:.8rem">Start quiz</button>
       <p class="qnote"><b>Please note:</b> these are general practice quizzes, loosely based on the ABRSM Music Theory grades. They aren’t past papers or a mock exam, and real exams also include written tasks, such as composing a melody or completing harmony, that a quiz can’t test. Use them for revision alongside your teacher and the official syllabus. Not affiliated with or endorsed by ABRSM.</p>
@@ -605,6 +622,18 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
     </div>
     <button class="primary" id="tStart" style="width:100%;padding:.8rem;font-size:1.05rem">Start tuner</button>
     <p class="status" id="tStatus" style="text-align:center"></p>
+    <div class="drone" id="drone">
+      <h2>Drone</h2>
+      <p class="legend" style="margin-top:0">A steady note to tune scales and long notes against by ear. Notes are in your instrument’s key and follow the A4 setting above.</p>
+      <div class="dnotes" id="dNotes" role="group" aria-label="Drone note"></div>
+      <div class="dopts">
+        <div><label for="dOct">Register</label><select id="dOct"><option value="2">Low</option><option value="3" selected>Middle</option><option value="4">High</option></select></div>
+        <label class="dchk"><input type="checkbox" id="dFifth"> Add the 5th</label>
+        <div class="dvol"><label for="dVol">Volume</label><input type="range" id="dVol" min="0.05" max="1" step="0.05" value="0.6"></div>
+      </div>
+      <div class="listen"><button id="dPlay" aria-pressed="false"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg><span class="t">Play drone</span></button></div>
+      <p class="legend">Tip: the tuner hears the drone too, so stop the tuner or wear headphones while you play along.</p>
+    </div>
   </section>
 </main>
 
@@ -717,17 +746,18 @@ function stopSound(){
   const f = sound.onStop; sound.onStop = null; if(f) f();
 }
 // steps: [[midi, midi…], …] one entry per beat; each beat may be a single note or a chord.
-function playSteps(steps, {gap=.45, dur=.42, onStep, onEnd}={}){
+function playSteps(steps, {gap=.45, dur=.42, vels, durs, onStep, onEnd}={}){
   stopSound();
   const ctx = audioCtx(); if(!ctx) return false;
   const t0 = ctx.currentTime + .05;
   steps.forEach((ms, i) => {
-    const t = t0 + i*gap, vel = 1/Math.sqrt(ms.length);
-    for(const m of ms) voice(m, t, dur, vel);
+    const t = t0 + i*gap, vel = (vels ? vels[i] : 1)/Math.sqrt(ms.length);
+    for(const m of ms) voice(m, t, durs ? durs[i] : dur, vel);
     if(onStep) sound.timers.push(setTimeout(() => onStep(i), (t - ctx.currentTime)*1000));
   });
   sound.onStop = onEnd || null;
-  sound.timers.push(setTimeout(stopSound, ((steps.length-1)*gap + dur + .45)*1000 + 50));
+  const last = durs ? Math.max(...durs.map((d, i) => i*gap + d)) : (steps.length-1)*gap + dur;
+  sound.timers.push(setTimeout(stopSound, (last + .45)*1000 + 50));
   return true;
 }
 document.addEventListener('visibilitychange', () => { if(document.hidden) stopSound(); });
@@ -820,7 +850,7 @@ function route(){
   // Chords and scales work on their own, without instrument keys.
   const solo = ['quiz','chords','scales','terms','metronome','tuner','fingering','about'].includes(v);
   if(v==='fingering' && window.fingerReady) renderFinger();
-  if(v!=='tuner' && window.tunerReady) stopTuner();
+  if(v!=='tuner' && window.tunerReady){ stopTuner(); if(drone.on) stopDrone(); }
   stopSound();
   if(v!=='metronome' && window.metroReady && metro.playing) stopMetro();
   document.querySelector('.keys').hidden = solo;
@@ -836,8 +866,8 @@ function route(){
     metronome:'Keep steady time while you practise.',
     fingering:'Trusted fingering charts for woodwind, brass and strings, including alternates and trills.',
     about:'What this app does, and how to support it.',
-    tuner:'Play a note and see if you’re in tune, using your microphone.',
-    quiz:'Test your music theory by grade or by topic.'
+    tuner:'Check your tuning with the microphone, or play along with a drone.',
+    quiz:'Test your theory and your ear, by grade or by topic.'
   }[v];
 }
 window.addEventListener('hashchange', () => { route(); window.scrollTo(0,0); });
@@ -2720,12 +2750,100 @@ function topicAvailable(cat, lvl){
   return topicOK[k];
 }
 
+/* ---- ear training ---- */
+const EAR_LV = {b:['Beginner','Grades 1–3: higher or lower, major or minor, intervals up to an octave, beats in 2, 3 or 4'],
+  i:['Intermediate','Grades 4–5: interval qualities, four kinds of triad, perfect and imperfect cadences, time'],
+  a:['Advanced','Grades 6–8: all intervals up and down, 7th chords and four kinds of cadence']};
+const IVN = ['unison','minor 2nd','major 2nd','minor 3rd','major 3rd','perfect 4th','tritone','perfect 5th','minor 6th','major 6th','minor 7th','major 7th','octave'];
+const earRoot = () => 55 + rnd(10);  // G3 to E4
+const near = (list, a, n=3) => shuffle(list.filter(x => x!==a)).slice(0, n);
+const EAR = {
+  updown(){
+    const r = earRoot(), d = Math.random()<.15 ? 0 : (1 + rnd(9)) * (Math.random()<.5 ? 1 : -1), a = d>0 ? 'Higher' : d<0 ? 'Lower' : 'The same';
+    return {tag:'Pitch', q:'Is the second note higher, lower or the same as the first?', a, opts:['Higher','Lower','The same'], ex:`The second note was ${d ? Math.abs(d)+' semitone'+(Math.abs(d)>1?'s ':' ')+(d>0?'higher':'lower') : 'the same'}.`, play:{steps:[[r],[r+d]], gap:.8, dur:.75}};
+  },
+  majmin(){
+    const r = earRoot(), min = Math.random()<.5, t = [r, r+(min?3:4), r+7];
+    return {tag:'Chords', q:'Is this chord major or minor?', a:min?'Minor':'Major', opts:['Major','Minor'], ex: min ? 'Minor: the middle note is a minor 3rd above the root, so it sounds darker.' : 'Major: the middle note is a major 3rd above the root, so it sounds bright.', play:{steps:[[t[0]],[t[1]],[t[2]],t], gap:.5, durs:[.45,.45,.45,1.5]}};
+  },
+  tonality(){
+    const r = earRoot(), min = Math.random()<.5, sc = min ? [0,2,3,5,7,8,11,12] : [0,2,4,5,7,9,11,12];
+    const pat = pick([[1,2,3,4,5,3,1],[1,3,5,8,7,5,3,1],[5,4,3,2,1,3,5,1],[1,3,2,4,3,2,7,1]]);
+    const steps = pat.map(d => [r + (d===7 && pat[pat.length-1]===1 && pat.indexOf(7)===pat.length-2 ? sc[6]-12 : sc[d-1])]);
+    return {tag:'Tonality', q:'Is this melody in a major or a minor key?', a:min?'Minor':'Major', opts:['Major','Minor'], ex: min ? 'Minor: listen for the lowered 3rd above the home note.' : 'Major: the 3rd above the home note is bright and wide.', play:{steps, gap:.42, durs:steps.map((_, i) => i===steps.length-1 ? 1.2 : .4)}};
+  },
+  ivnum(){
+    const r = earRoot(), s = pick([2,4,5,7,9,12]), nm = {2:'2nd',4:'3rd',5:'4th',7:'5th',9:'6th',12:'octave'};
+    return {tag:'Intervals', q:'Which interval is this (the notes go up)?', a:nm[s], opts:shuffle([nm[s], ...near(Object.values(nm), nm[s])]), ex:`A ${IVN[s]}: ${s} semitones.`, play:{steps:[[r],[r+s]], gap:.8, dur:.75}};
+  },
+  meter(lv){
+    const beats = pick([2,3,4]), r = 60 + rnd(5), bars = beats===2 ? 4 : 3, steps = [], vels = [];
+    const tune = [0,2,4,5,7,4,2,0,7,5,4,2];
+    for(let i=0; i<bars*beats; i++){ const m = r + tune[i % tune.length]; if(i % beats===0){ steps.push([r-12, m]); vels.push(1.35); } else { steps.push([m]); vels.push(.45); } }
+    return {tag:'Time', q:'Are the beats grouped in 2, 3 or 4?', a:`In ${beats}`, opts:['In 2','In 3','In 4'], ex:`Count the beats from one strong beat (with the low note) to the next: ${beats}.`, play:{steps, vels, gap:.5, dur:.45}};
+  },
+  ivqual(lv){
+    const adv = lv==='a', set = adv ? range(1,12) : [1,2,3,4,5,7,8,9,10,11,12], s = pick(set), r = earRoot();
+    const mode = adv ? pick(['up','down','together']) : pick(['up','together']);
+    const lo = mode==='down' ? r+s : r, hi = mode==='down' ? r : r+s;
+    const steps = mode==='together' ? [[r, r+s]] : [[lo],[hi]];
+    const wrongs = [s-1, s+1, s-2, s+2].filter(x => set.includes(x)).map(x => IVN[x]);
+    return {tag:'Intervals', q: mode==='together' ? 'Name this interval (both notes together).' : `Name this interval (the notes go ${mode}).`, a:IVN[s], opts:shuffle([IVN[s], ...wrongs.slice(0,3)]), ex:`A ${IVN[s]}: ${s} semitone${s>1?'s':''}.`, play:{steps, gap:.8, dur: mode==='together' ? 1.4 : .75}};
+  },
+  triad4(){
+    const r = earRoot(), k = pick(['major','minor','diminished','augmented']), iv = {major:[4,7], minor:[3,7], diminished:[3,6], augmented:[4,8]}[k], t = [r, r+iv[0], r+iv[1]];
+    const why = {major:'major 3rd + minor 3rd: bright', minor:'minor 3rd + major 3rd: darker', diminished:'two minor 3rds: tense and narrow', augmented:'two major 3rds: unsettled and wide'}[k];
+    return {tag:'Chords', q:'What kind of triad is this?', a:k, opts:shuffle(['major','minor','diminished','augmented']), ex:`${k[0].toUpperCase()+k.slice(1)}: ${why}.`, play:{steps:[[t[0]],[t[1]],[t[2]],t], gap:.5, durs:[.45,.45,.45,1.5]}};
+  },
+  seventh(){
+    const r = earRoot() - 2, k = pick(['dominant 7th','major 7th','minor 7th','diminished 7th']), iv = {'dominant 7th':[4,7,10], 'major 7th':[4,7,11], 'minor 7th':[3,7,10], 'diminished 7th':[3,6,9]}[k], t = [r, ...iv.map(x => r+x)];
+    const why = {'dominant 7th':'major triad + minor 7th: wants to resolve', 'major 7th':'major triad + major 7th: soft and jazzy', 'minor 7th':'minor triad + minor 7th: mellow', 'diminished 7th':'stacked minor 3rds: tense and dramatic'}[k];
+    return {tag:'Chords', q:'What kind of 7th chord is this?', a:k, opts:shuffle(['dominant 7th','major 7th','minor 7th','diminished 7th']), ex:`${k[0].toUpperCase()+k.slice(1)}: ${why}.`, play:{steps:[t.map(x=>[x])].flat().concat([t]), gap:.45, durs:[.4,.4,.4,.4,1.6]}};
+  },
+  cadence(lv){
+    const kinds = lv==='a' ? ['perfect','imperfect','plagal','interrupted'] : ['perfect','imperfect'];
+    const k = pick(kinds), prog = pick({perfect:[['I','IV','V','I'],['I','ii','V','I'],['I','vi','V','I']], imperfect:[['I','IV','I','V'],['I','vi','ii','V'],['I','ii','IV','V']], plagal:[['I','V','IV','I'],['I','vi','IV','I']], interrupted:[['I','IV','V','vi'],['I','ii','V','vi']]}[k]);
+    const steps = voiceProg(57 + rnd(8), prog), end = prog.slice(-2).join('–');
+    return {tag:'Cadences', q:'Listen to the end of this phrase. Which cadence is it?', a:k, opts:kinds.length>2 ? shuffle(kinds.slice()) : ['perfect','imperfect'], ex:`It ends ${end}: ${{perfect:'a perfect cadence (V–I) sounds finished', imperfect:'an imperfect cadence ends on V and sounds unfinished', plagal:'a plagal cadence (IV–I) is the “Amen” ending', interrupted:'an interrupted cadence (V–vi) surprises you instead of going home'}[k]}.`, play:{steps, gap:1, durs:steps.map((_, i) => i===steps.length-1 ? 1.8 : .95)}};
+  }
+};
+// Close-position chords with smooth voice leading over a root-position bass.
+const DEGS = {I:[0,4,7], ii:[2,5,9], IV:[5,9,0], V:[7,11,2], vi:[9,0,4]};
+function voiceProg(t, prog){
+  let prev = null;
+  return prog.map(r => {
+    const pcs = DEGS[r].map(x => (t + x) % 12);
+    let best = null;
+    for(let s = t-3; s <= t+8; s++){
+      if(!pcs.includes(s % 12)) continue;
+      const v = [s]; while(v.length < 3){ let n = v[v.length-1] + 1; while(!pcs.includes(n % 12) || v.some(x => x%12===n%12)) n++; v.push(n); }
+      const cost = prev ? v.reduce((a, n, i) => a + Math.abs(n - prev[i]), 0) : Math.abs(v[0] - (t+4));
+      if(!best || cost < best.c) best = {v, c:cost};
+    }
+    prev = best.v;
+    let bass = t - 12 + DEGS[r][0]; if(bass > t - 5) bass -= 12;
+    return [bass, ...best.v];
+  });
+}
+const EAR_PLAN = {b:['updown','majmin','tonality','ivnum','meter'], i:['tonality','ivqual','triad4','cadence','meter'], a:['ivqual','triad4','seventh','cadence']};
+function buildEarQuiz(lv){
+  const types = EAR_PLAN[lv], plan = []; while(plan.length < 10) plan.push(...shuffle(types.slice()));
+  const out = [], seen = new Set();
+  for(const t of plan.slice(0, 10)){
+    let q; for(let k=0; k<10; k++){ q = EAR[t](lv); const key = q.q + q.a + JSON.stringify(q.play.steps); if(!seen.has(key)){ seen.add(key); break; } }
+    q.ear = true; out.push(q);
+  }
+  return shuffle(out);
+}
+
 /* ---- quiz screens ---- */
 const quiz = {g:1, mode:'grade', cat:'T', lvl:'all', qs:[], i:0, score:0, answered:false, wrong:[]};
 try{ quiz.g = +(localStorage.getItem('quizGrade') || 1); const t = JSON.parse(localStorage.getItem('quizTopic') || 'null'); if(t){ quiz.mode = t.mode || 'grade'; quiz.cat = t.cat || 'T'; quiz.lvl = t.lvl || 'all'; } }catch(e){}
 const saveTopic = () => { try{ localStorage.setItem('quizTopic', JSON.stringify({mode:quiz.mode, cat:quiz.cat, lvl:quiz.lvl})); }catch(e){} };
-const quizKey = () => quiz.mode==='grade' ? quiz.g : `${quiz.cat}:${quiz.lvl}`;
-const quizLabel = () => quiz.mode==='grade' ? `Grade ${quiz.g}` : `${QCATS[quiz.cat]} (${QLEVELS[quiz.lvl][2]})`;
+quiz.ear = (() => { try{ return localStorage.getItem('quizEar') || 'b'; }catch(e){ return 'b'; } })();
+const quizKey = () => quiz.mode==='grade' ? quiz.g : quiz.mode==='ear' ? `ear:${quiz.ear}` : `${quiz.cat}:${quiz.lvl}`;
+const quizLabel = () => quiz.mode==='grade' ? `Grade ${quiz.g}` : quiz.mode==='ear' ? `Ear training (${EAR_LV[quiz.ear][0]})` : `${QCATS[quiz.cat]} (${QLEVELS[quiz.lvl][2]})`;
+const quizTitle = () => quiz.mode==='grade' ? `Grade ${quiz.g}` : quiz.mode==='ear' ? 'Ear training' : QCATS[quiz.cat];
 function quizBest(){ try{ return JSON.parse(localStorage.getItem('quizBest') || '{}'); }catch(e){ return {}; } }
 function quizHome(){
   const best = quizBest();
@@ -2738,9 +2856,18 @@ function quizHome(){
     b.addEventListener('click', () => { quiz.g = g; try{ localStorage.setItem('quizGrade', g); }catch(e){} quizHome(); });
     $('qGrades').appendChild(b);
   }
-  const topic = quiz.mode==='topic';
-  $('qmGrade').setAttribute('aria-pressed', !topic); $('qmTopic').setAttribute('aria-pressed', topic);
-  $('qGradeBox').hidden = topic; $('qTopicBox').hidden = !topic;
+  const topic = quiz.mode==='topic', ear = quiz.mode==='ear';
+  $('qmGrade').setAttribute('aria-pressed', quiz.mode==='grade'); $('qmTopic').setAttribute('aria-pressed', topic); $('qmEar').setAttribute('aria-pressed', ear);
+  $('qGradeBox').hidden = quiz.mode!=='grade'; $('qTopicBox').hidden = !topic; $('qEarBox').hidden = !ear;
+  if(ear){
+    $('qEarLvls').innerHTML = '';
+    for(const [k, [name, txt]] of Object.entries(EAR_LV)){
+      const b = document.createElement('button'), bs = best['ear:'+k]; b.className = 'qtopic'; b.setAttribute('aria-pressed', k===quiz.ear);
+      b.innerHTML = '<b></b><span></span>'; b.firstChild.textContent = name + (bs!==undefined ? ` · best ${bs}/10` : ''); b.lastChild.textContent = txt;
+      b.addEventListener('click', () => { quiz.ear = k; try{ localStorage.setItem('quizEar', k); }catch(e){} quizHome(); });
+      $('qEarLvls').appendChild(b);
+    }
+  }
   if(topic){
     $('qTopics').innerHTML = '';
     for(const c of Object.keys(QCATS)){
@@ -2759,13 +2886,14 @@ function quizHome(){
       $('qLvls').appendChild(b);
     }
   }
-  $('qStart').textContent = topic ? `Start ${QCATS[quiz.cat]} quiz` : `Start Grade ${quiz.g} quiz`;
+  $('qStart').textContent = ear ? `Start ${EAR_LV[quiz.ear][0].toLowerCase()} ear training` : topic ? `Start ${QCATS[quiz.cat]} quiz` : `Start Grade ${quiz.g} quiz`;
 }
+$('qmEar').addEventListener('click', () => { quiz.mode = 'ear'; saveTopic(); quizHome(); });
 $('qmGrade').addEventListener('click', () => { quiz.mode = 'grade'; saveTopic(); quizHome(); });
 $('qmTopic').addEventListener('click', () => { quiz.mode = 'topic'; if(!topicAvailable(quiz.cat, quiz.lvl)) quiz.lvl = 'all'; saveTopic(); quizHome(); });
 function quizStart(){
-  quiz.qs = quiz.mode==='topic' ? buildTopicQuiz(quiz.cat, quiz.lvl) : buildQuiz(quiz.g); quiz.i = 0; quiz.score = 0; quiz.wrong = [];
-  track('quiz_start', quiz.mode==='topic' ? {topic: quiz.cat, level: quiz.lvl} : {grade: quiz.g});
+  quiz.qs = quiz.mode==='ear' ? buildEarQuiz(quiz.ear) : quiz.mode==='topic' ? buildTopicQuiz(quiz.cat, quiz.lvl) : buildQuiz(quiz.g); quiz.i = 0; quiz.score = 0; quiz.wrong = [];
+  track('quiz_start', quiz.mode==='ear' ? {ear: quiz.ear} : quiz.mode==='topic' ? {topic: quiz.cat, level: quiz.lvl} : {grade: quiz.g});
   $('quizHome').hidden = true; $('quizRun').hidden = false;
   quizShow();
 }
@@ -2773,12 +2901,13 @@ function quizShow(){
   const q = quiz.qs[quiz.i], n = quiz.qs.length;
   quiz.answered = false;
   const box = $('quizRun');
-  box.innerHTML = `<div class="qtop"><span>${quiz.mode==='topic' ? QCATS[quiz.cat] : `Grade ${quiz.g}`} \u00b7 Question ${quiz.i+1} of ${n}</span><button class="qquit">Quit</button></div>
+  box.innerHTML = `<div class="qtop"><span>${quizTitle()} \u00b7 Question ${quiz.i+1} of ${n}</span><button class="qquit">Quit</button></div>
     <div class="qbar"><i style="width:${quiz.i/n*100}%"></i></div>
-    <p class="qcat">${quiz.mode==='topic' ? `Grade ${q.lv}` : QCATS[q.cat]}</p><h2 class="qq"></h2>${q.svg ? `<div class="qfig">${q.svg}</div>` : ''}
+    <p class="qcat">${q.ear ? q.tag : quiz.mode==='topic' ? `Grade ${q.lv}` : QCATS[q.cat]}</p><h2 class="qq"></h2>${q.svg ? `<div class="qfig">${q.svg}</div>` : ''}${q.ear ? earBox() : ''}
     <div class="qopts"></div><div class="qfeed" aria-live="polite"></div>`;
   box.querySelector('.qq').textContent = q.q;
-  box.querySelector('.qquit').addEventListener('click', quizHome);
+  box.querySelector('.qquit').addEventListener('click', () => { stopSound(); quizHome(); });
+  if(q.ear){ wireEar(box.querySelector('.qplay'), q); earPlay(box.querySelector('.qplay'), q); }
   const opts = box.querySelector('.qopts');
   q.opts.forEach((o, k) => {
     const b = document.createElement('button'); b.className = 'qopt';
@@ -2788,6 +2917,12 @@ function quizShow(){
   });
   box.scrollIntoView({block:'nearest'});
 }
+const earBox = () => `<div class="qfig qlisten"><div class="listen" style="margin:0"><button class="qplay" aria-pressed="false">${PLAY_ICON}<span class="t">Play again</span></button></div><p class="qhint">Replay as often as you like.</p></div>`;
+function earPlay(b, q){
+  const p = q.play;
+  if(playSteps(p.steps, {gap:p.gap, dur:p.dur, durs:p.durs, vels:p.vels, onEnd: () => { setPlaying(b, false); b.querySelector('.t').textContent = 'Play again'; }})) setPlaying(b, true);
+}
+function wireEar(b, q){ b.addEventListener('click', () => { if(b.classList.contains('playing')){ stopSound(); return; } earPlay(b, q); }); }
 function quizAnswer(btn, o){
   if(quiz.answered) return; quiz.answered = true;
   const q = quiz.qs[quiz.i], ok = o === q.a;
@@ -2800,7 +2935,7 @@ function quizAnswer(btn, o){
   const f = $('quizRun').querySelector('.qfeed'), last = quiz.i === quiz.qs.length - 1;
   f.innerHTML = `<p class="qverdict ${ok?'ok':'no'}">${ok ? 'Correct' : 'Not quite'}</p><p class="qex"></p><button class="primary qnext">${last ? 'See my score' : 'Next question'}</button>`;
   f.querySelector('.qex').textContent = q.ex || '';
-  f.querySelector('.qnext').addEventListener('click', () => { quiz.i++; if(quiz.i < quiz.qs.length) quizShow(); else quizEnd(); });
+  f.querySelector('.qnext').addEventListener('click', () => { stopSound(); quiz.i++; if(quiz.i < quiz.qs.length) quizShow(); else quizEnd(); });
   f.querySelector('.qnext').focus({preventScroll:true});
   f.scrollIntoView({block:'nearest', behavior:'smooth'});
 }
@@ -2808,20 +2943,21 @@ function quizEnd(){
   const n = quiz.qs.length, s = quiz.score, best = quizBest();
   const key = quizKey(), newBest = best[key] === undefined || s > best[key];
   if(newBest){ best[key] = s; try{ localStorage.setItem('quizBest', JSON.stringify(best)); }catch(e){} }
-  track('quiz_end', quiz.mode==='topic' ? {topic: quiz.cat, level: quiz.lvl, score: s} : {grade: quiz.g, score: s});
-  const msg = s===n ? (quiz.mode==='topic' ? 'Perfect score! Try a higher level or another topic.' : 'Perfect score! Ready to try the next grade?') : s>=8 ? 'Excellent work.' : s>=6 ? 'Good effort. Review the ones you missed below.' : 'Keep practising. The explanations below will help.';
+  track('quiz_end', quiz.mode==='ear' ? {ear: quiz.ear, score: s} : quiz.mode==='topic' ? {topic: quiz.cat, level: quiz.lvl, score: s} : {grade: quiz.g, score: s});
+  const msg = s===n ? (quiz.mode==='grade' ? 'Perfect score! Ready to try the next grade?' : 'Perfect score! Try a higher level.') : s>=8 ? 'Excellent work.' : s>=6 ? 'Good effort. Review the ones you missed below.' : 'Keep practising. The explanations below will help.';
   const box = $('quizRun');
   box.innerHTML = `<div class="qresult"><p class="qcat">${quizLabel()} quiz</p><p class="qscore">${s}<small>/${n}</small></p><p>${msg}${newBest && s ? ' <b>New best!</b>' : ''}</p>
-    <div class="row qend"><button class="primary qagain">Try another ${quiz.mode==='topic' ? QCATS[quiz.cat] : `Grade ${quiz.g}`} quiz</button><button class="qhome">${quiz.mode==='topic' ? 'Choose a topic' : 'Choose a grade'}</button></div></div>
+    <div class="row qend"><button class="primary qagain">Try another ${quizTitle()} quiz</button><button class="qhome">${quiz.mode==='topic' ? 'Choose a topic' : quiz.mode==='ear' ? 'Choose a level' : 'Choose a grade'}</button></div></div>
     ${quiz.wrong.length ? '<h2 class="qrevh">Questions to review</h2><div class="qreview"></div>' : ''}`;
   box.querySelector('.qagain').addEventListener('click', quizStart);
   box.querySelector('.qhome').addEventListener('click', quizHome);
   const rv = box.querySelector('.qreview');
   for(const {q, picked} of quiz.wrong){
     const d = document.createElement('div'); d.className = 'qrev';
-    d.innerHTML = `<p class="qcat">${QCATS[q.cat]} \u00b7 Grade ${q.lv}</p><p class="qq2"></p>${q.svg ? `<div class="qfig">${q.svg}</div>` : ''}<p class="qmine">Your answer: <span></span></p><p class="qans">Answer: <b></b></p><p class="qex"></p>`;
+    d.innerHTML = `<p class="qcat">${q.ear ? q.tag : `${QCATS[q.cat]} \u00b7 Grade ${q.lv}`}</p><p class="qq2"></p>${q.svg ? `<div class="qfig">${q.svg}</div>` : ''}${q.ear ? earBox() : ''}<p class="qmine">Your answer: <span></span></p><p class="qans">Answer: <b></b></p><p class="qex"></p>`;
     d.querySelector('.qq2').textContent = q.q; d.querySelector('.qmine span').textContent = picked;
     d.querySelector('.qans b').textContent = q.a; d.querySelector('.qex').textContent = q.ex || '';
+    if(q.ear){ d.querySelector('.qhint').textContent = 'Listen again'; wireEar(d.querySelector('.qplay'), q); }
     rv.appendChild(d);
   }
   box.scrollIntoView({block:'start'});
@@ -3012,6 +3148,54 @@ function stopTuner(){
 }
 $('tStart').addEventListener('click', ()=> tuner.stream ? stopTuner() : startTuner());
 window.tunerReady = true;
+
+/* ---------- drone: a sustained reference note in the instrument's key ---------- */
+const drone = {pc:0, oct:3, fifth:false, vol:.6, out:null, nodes:[], on:false};
+try{ const s = JSON.parse(localStorage.getItem('drone')||'null'); if(s) Object.assign(drone, {pc:s.pc||0, oct:s.oct||3, fifth:!!s.fifth, vol:s.vol||.6}); }catch(e){}
+$('dOct').value = drone.oct; $('dFifth').checked = drone.fifth; $('dVol').value = drone.vol;
+const saveDrone = () => { try{ localStorage.setItem('drone', JSON.stringify({pc:drone.pc, oct:drone.oct, fifth:drone.fifth, vol:drone.vol})); }catch(e){} };
+// Written note -> sounding MIDI: concert pitch = written + the instrument's key.
+const droneMidis = () => { const root = 12*(drone.oct+1) + ((drone.pc + parse(tuner.inst).pc) % 12); return drone.fifth ? [root, root+7] : [root]; };
+function drawDroneNotes(){
+  $('dNotes').innerHTML = '';
+  T_NAMES.forEach((n, pc) => {
+    const b = document.createElement('button'); b.textContent = pretty(n); b.setAttribute('aria-pressed', pc===drone.pc);
+    b.addEventListener('click', () => { drone.pc = pc; saveDrone(); drawDroneNotes(); if(drone.on) startDrone(); });
+    $('dNotes').appendChild(b);
+  });
+}
+function startDrone(){
+  const ctx = audioCtx(); if(!ctx) return;
+  fadeDrone();
+  drone.out = ctx.createGain(); drone.out.gain.setValueAtTime(0.0001, ctx.currentTime);
+  drone.out.gain.exponentialRampToValueAtTime(.32*drone.vol, ctx.currentTime + .35);
+  drone.out.connect(sound.out);
+  for(const m of droneMidis()){
+    const f = hzOf(m), lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = Math.min(5000, f*5); lp.Q.value = .5; lp.connect(drone.out);
+    for(const [type, mult, lvl] of [['sawtooth',1,.35],['sine',1,.8],['sine',2,.25]]){
+      const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.value = f*mult; g.gain.value = lvl/(drone.fifth?1.5:1);
+      o.connect(g); g.connect(lp); o.start(); drone.nodes.push(o);
+    }
+  }
+  drone.on = true; setPlaying($('dPlay'), true); $('dPlay').querySelector('.t').textContent = 'Stop drone';
+}
+function fadeDrone(){
+  if(!drone.out) return;
+  const ctx = sound.ctx, out = drone.out, nodes = drone.nodes, t = ctx.currentTime;
+  out.gain.cancelScheduledValues(t); out.gain.setValueAtTime(out.gain.value, t); out.gain.exponentialRampToValueAtTime(0.0001, t + .3);
+  nodes.forEach(o => { try{ o.stop(t + .35); }catch(e){} });
+  drone.out = null; drone.nodes = [];
+}
+function stopDrone(){ fadeDrone(); drone.on = false; setPlaying($('dPlay'), false); }
+$('dPlay').addEventListener('click', () => { if(drone.on) stopDrone(); else { track('drone', {inst: tuner.inst}); startDrone(); } });
+$('dOct').addEventListener('change', e => { drone.oct = +e.target.value; saveDrone(); if(drone.on) startDrone(); });
+$('dFifth').addEventListener('change', e => { drone.fifth = e.target.checked; saveDrone(); if(drone.on) startDrone(); });
+$('dVol').addEventListener('input', e => { drone.vol = +e.target.value; saveDrone(); if(drone.out) drone.out.gain.setTargetAtTime(.32*drone.vol, sound.ctx.currentTime, .05); });
+// Re-tune a playing drone when the instrument or A4 changes.
+$('tInst').addEventListener('change', () => { if(drone.on) startDrone(); });
+for(const id of ['a4Down','a4Up']) $(id).addEventListener('click', () => { if(drone.on) startDrone(); });
+document.addEventListener('visibilitychange', () => { if(document.hidden && drone.on) stopDrone(); });
+drawDroneNotes();
 
 /* ---------- fingering: link data ---------- */
 const WFG = 'https://www.wfg.woodwind.org/', ME = 'https://mouthpieceexpress.com/blogs/resources/';
