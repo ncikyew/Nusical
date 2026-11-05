@@ -240,8 +240,9 @@ button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font
 /* drone */
 .drone{margin-top:1.4rem;border-top:1px solid var(--line);padding-top:.6rem}
 .drone h2{font:600 1.25rem Spectral,Georgia,serif;margin:.4rem 0 .3rem}
-.dnotes{display:grid;grid-template-columns:repeat(6,1fr);gap:.35rem;margin:.6rem 0}
-.dnotes button{font:600 1.05rem Spectral,Georgia,serif;padding:.45rem 0}
+.dnotes{display:grid;grid-template-columns:repeat(7,1fr);gap:.35rem;margin:.6rem 0}
+.dnotes button{font:600 1.05rem Spectral,Georgia,serif;padding:.35rem 0;display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.dnotes button small{font:400 .68rem Figtree,sans-serif;color:var(--muted)}
 .dnotes button[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
 .dopts{display:flex;flex-wrap:wrap;align-items:flex-end;gap:.6rem 1.2rem}
 .dopts label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:.15rem}
@@ -690,10 +691,9 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
     <p class="status" id="tStatus" style="text-align:center"></p>
     <div class="drone" id="drone">
       <h2>Drone</h2>
-      <p class="legend" style="margin-top:0">A steady note to tune scales and long notes against by ear. Notes are in your instrument’s key and follow the A4 setting above.</p>
+      <p class="legend" style="margin-top:0">A steady note to tune scales and long notes against by ear. Notes run from C4 to C5 in your instrument’s key and follow the A4 setting above.</p>
       <div class="dnotes" id="dNotes" role="group" aria-label="Drone note"></div>
       <div class="dopts">
-        <div><label for="dOct">Register</label><select id="dOct"><option value="2">Low</option><option value="3" selected>Middle</option><option value="4">High</option></select></div>
         <label class="dchk"><input type="checkbox" id="dFifth"> Add the 5th</label>
         <div class="dvol"><label for="dVol">Volume</label><input type="range" id="dVol" min="0.05" max="1" step="0.05" value="0.6"></div>
       </div>
@@ -4008,8 +4008,10 @@ $('tStart').addEventListener('click', ()=> tuner.stream ? stopTuner() : startTun
 window.tunerReady = true;
 
 /* ---------- release notes: the newest is featured on About, the rest are listed below ---------- */
-// Add each new release at the TOP. Versions: a new feature bumps the middle number, a fix bumps the last.
+// Add every change at the TOP: the newest is featured on About and every release is listed in the history.
+// Versions: a new feature bumps the middle number, a fix bumps the last.
 const RELEASES = [
+  {v:'1.9.1', date:'2026-11-06', title:'Drone fix', text:'The drone now runs from C4 to C5 with a smoother tone.', go:'tuner', notes:['Notes now run from C4 to C5 and always go up in order (some notes jumped an octave)','Smoother, organ-like tone; the register setting is gone']},
   {v:'1.9', date:'2026-11-05', title:'Notation signs in Terms', text:'Terms now has a Signs view: 76 music signs drawn on a staff, from clefs to ornaments.', notes:['Explanations, Chinese names and sound examples for each sign','Search by name, symbol (8va, sfz, >) or Chinese','Links between signs and the matching terms'], go:'terms', then:() => setTermsMode('signs')},
   {v:'1.8', date:'2026-11-05', title:'Scale descriptions', notes:['Each scale explains its sound, where it’s used and its step pattern']},
   {v:'1.7', date:'2026-11-05', title:'535 music terms', notes:['278 new terms, including string and brass techniques, French, German and jazz markings','Chinese meaning for every new term']},
@@ -4026,7 +4028,8 @@ const RELEASES = [
 ];
 const relDate = d => new Date(d + 'T00:00:00').toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
 function renderReleases(){
-  const [cur, ...past] = RELEASES;
+  // Only the newest release is featured; the history lists every release, newest included.
+  const cur = RELEASES[0], past = RELEASES;
   const wn = $('whatsNew');
   wn.innerHTML = `<p class="wn-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>New in v${cur.v} \u00b7 ${relDate(cur.date)}</p><h2></h2><p class="wn-text"></p><ul></ul>${cur.go ? '<button class="primary wn-go">Try it</button>' : ''}`;
   wn.querySelector('h2').textContent = cur.title;
@@ -4049,14 +4052,16 @@ renderReleases();
 /* ---------- drone: a sustained reference note in the instrument's key ---------- */
 const drone = {pc:0, oct:3, fifth:false, vol:.6, out:null, nodes:[], on:false};
 try{ const s = JSON.parse(localStorage.getItem('drone')||'null'); if(s) Object.assign(drone, {pc:s.pc||0, oct:s.oct||3, fifth:!!s.fifth, vol:s.vol||.6}); }catch(e){}
-$('dOct').value = drone.oct; $('dFifth').checked = drone.fifth; $('dVol').value = drone.vol;
-const saveDrone = () => { try{ localStorage.setItem('drone', JSON.stringify({pc:drone.pc, oct:drone.oct, fifth:drone.fifth, vol:drone.vol})); }catch(e){} };
+$('dFifth').checked = drone.fifth; $('dVol').value = drone.vol;
+const saveDrone = () => { try{ localStorage.setItem('drone', JSON.stringify({pc:drone.pc, fifth:drone.fifth, vol:drone.vol})); }catch(e){} };
 // Written note -> sounding MIDI: concert pitch = written + the instrument's key.
-const droneMidis = () => { const root = 12*(drone.oct+1) + ((drone.pc + parse(tuner.inst).pc) % 12); return drone.fifth ? [root, root+7] : [root]; };
+// drone.pc is 0-12: written C4 up to C5. Sounding pitch = written pitch moved down by the instrument's
+// transposition (a B♭ instrument's written C4 sounds B♭3), so every step goes up by exactly a semitone.
+const droneMidis = () => { const root = 60 + drone.pc - (12 - parse(tuner.inst).pc) % 12; return drone.fifth ? [root, root+7] : [root]; };
 function drawDroneNotes(){
   $('dNotes').innerHTML = '';
-  T_NAMES.forEach((n, pc) => {
-    const b = document.createElement('button'); b.textContent = pretty(n); b.setAttribute('aria-pressed', pc===drone.pc);
+  T_NAMES.concat(T_NAMES[0]).forEach((n, pc) => {
+    const b = document.createElement('button'); b.innerHTML = `${pretty(n)}<small>${pc < 12 ? 4 : 5}</small>`; b.setAttribute('aria-pressed', pc===drone.pc);
     b.addEventListener('click', () => { drone.pc = pc; saveDrone(); drawDroneNotes(); if(drone.on) startDrone(); });
     $('dNotes').appendChild(b);
   });
@@ -4075,7 +4080,8 @@ function buildDrone(ctx){
   drone.out.connect(sound.out);
   for(const m of droneMidis()){
     const f = hzOf(m), lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = Math.min(5000, f*5); lp.Q.value = .5; lp.connect(drone.out);
-    for(const [type, mult, lvl] of [['sawtooth',1,.35],['sine',1,.8],['sine',2,.25]]){
+    // A smooth organ-like tone: the note plus a few soft overtones.
+    for(const [type, mult, lvl] of [['sine',1,.85],['sine',2,.32],['sine',3,.14],['sine',4,.06]]){
       const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.value = f*mult; g.gain.value = lvl/(drone.fifth?1.5:1);
       o.connect(g); g.connect(lp); o.start(); drone.nodes.push(o);
     }
@@ -4090,7 +4096,6 @@ function fadeDrone(){
 }
 function stopDrone(){ fadeDrone(); drone.on = false; setPlaying($('dPlay'), false); }
 $('dPlay').addEventListener('click', () => { if(drone.on) stopDrone(); else { track('drone', {inst: tuner.inst}); startDrone(); } });
-$('dOct').addEventListener('change', e => { drone.oct = +e.target.value; saveDrone(); if(drone.on) startDrone(); });
 $('dFifth').addEventListener('change', e => { drone.fifth = e.target.checked; saveDrone(); if(drone.on) startDrone(); });
 $('dVol').addEventListener('input', e => { drone.vol = +e.target.value; saveDrone(); if(drone.out) drone.out.gain.setTargetAtTime(.32*drone.vol, sound.ctx.currentTime, .05); });
 // Re-tune a playing drone when the instrument or A4 changes.
