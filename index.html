@@ -67,7 +67,28 @@ button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font
 [hidden]{display:none !important}
 .entry{display:flex;gap:.4rem}
 .entry input{flex:1;min-width:0}
-.pad{display:grid;grid-template-columns:repeat(13,1fr);gap:.3rem;margin:.4rem 0 0}
+.pad{display:grid;grid-template-columns:repeat(12,1fr);gap:.3rem;margin:.3rem 0 0}
+.pad button.acc{background:var(--surface)}
+.ksig{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:.5rem;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.55rem .7rem;margin:0 0 .9rem}
+.ksig label,.ks-lbl{display:block;font-size:.75rem;font-weight:600;color:var(--muted);margin:0 0 .2rem}
+.ksig select{width:100%}
+.ks-arrow{font-size:1.3rem;color:var(--brass);padding-bottom:.45rem}
+.ksig .sig-out{display:flex;flex-direction:column;justify-content:center;min-height:2.6rem;font:600 1.2rem/1.15 Spectral,Georgia,serif}
+.ksig .sig-out small{margin:0;font-size:.78rem}
+.padhd{display:flex;justify-content:space-between;align-items:center;margin:.6rem 0 0}
+.padhint{font-size:.78rem;color:var(--muted)}
+.accseg{margin:0}
+.accseg button{font:600 1.05rem Spectral,Georgia,serif;padding:.15rem .9rem}
+.nmap{border-top:1px solid var(--line);padding-top:.8rem;margin-top:.4rem}
+.nm-hd,.nm-row{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:.4rem;align-items:center;max-width:420px}
+.nm-hd{font-size:.72rem;color:var(--muted);text-align:center;margin:.5rem 0 .3rem}
+.nm-hd b{display:block;color:var(--ink);font-size:.85rem}
+.nm-row{margin:0 0 .25rem;cursor:pointer;background:none;border:0;padding:0;width:100%}
+.nm-row span{text-align:center;font:600 1rem Spectral,Georgia,serif;padding:.28rem 0;border-radius:8px;border:1px solid var(--line);background:var(--surface)}
+.nm-row .nm-c{background:#E6F1FB;border-color:#B5D4F4;color:#0C447C}
+.nm-row.on span{background:var(--brass-soft);border-color:var(--brass);color:var(--ink)}
+.nm-sum{font-size:.85rem;color:var(--muted);margin:.5rem 0 0;max-width:420px;line-height:1.45}
+.nm-sum b{color:var(--ink)}
 .pad button{font:600 .95rem Spectral,Georgia,serif;padding:.4rem 0}
 .strip{margin:.8rem 0;padding:.6rem 0;display:flex;flex-wrap:wrap;gap:1.4rem 1.6rem;
   background:repeating-linear-gradient(to bottom,transparent 0 13px,var(--line) 13px 14px);
@@ -442,7 +463,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
   .tabs a{font-size:.56rem;padding:.35rem 0;letter-spacing:-.02em}
   .tabs a[aria-current="page"]{background:transparent;color:var(--brass)}
   h1{font-size:1.5rem}
-  .pad{grid-template-columns:repeat(7,1fr)}
+  .pad{grid-template-columns:repeat(6,1fr)}
   .pad.cpad{grid-template-columns:repeat(7,1fr)}
   .sig{grid-template-columns:auto 1fr}
   .sig-out{grid-column:1 / -1}
@@ -486,21 +507,25 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
   <div class="interval" id="interval" aria-live="polite"></div>
 
   <section id="viewNotes">
+    <div class="ksig" role="group" aria-label="Key signature">
+      <div class="ks-from"><label for="sigIn" id="ksFromLbl">Key on the From part</label><select id="sigIn"></select></div>
+      <span class="ks-arrow" aria-hidden="true">→</span>
+      <div class="ks-to"><span class="ks-lbl" id="ksToLbl">Key on the To part</span><div class="sig-out" id="sigOut"></div></div>
+    </div>
     <div class="entry">
       <input type="text" id="notes" aria-label="Written notes" autocomplete="off" spellcheck="false" placeholder="Notes, e.g. C D Eb F# G">
       <button id="back" aria-label="Delete last note" title="Delete last">⌫</button>
       <button id="clear">Clear</button>
     </div>
+    <div class="padhd"><span class="padhint" id="padHint"></span><div class="seg accseg" role="group" aria-label="Sharps or flats"><button id="padSharp" aria-pressed="true" aria-label="Sharps">♯</button><button id="padFlat" aria-pressed="false" aria-label="Flats">♭</button></div></div>
     <div class="pad" id="pad"></div>
     <div class="strip" id="strip" aria-live="polite"></div>
-    <div class="sig-section">
-      <h2 class="sec">Key signature</h2>
-      <p class="legend">Pick the key the piece is written in on the From part to see which key the To part should use.</p>
-      <div class="sig">
-        <label for="sigIn">Written in</label>
-        <select id="sigIn"></select>
-        <div class="sig-out" id="sigOut"></div>
-      </div>
+    <div class="nmap">
+      <h2 class="sec">Note map</h2>
+      <p class="legend">Concert pitch in the middle, the From part on the left and the To part on the right, with the same sharps or flats as the pad. Your notes are highlighted; tap any row to compare.</p>
+      <div class="nm-hd"><span><b id="nmFrom"></b>written</span><span><b>Concert</b>sounding</span><span><b id="nmTo"></b>written</span></div>
+      <div id="nmRows"></div>
+      <p class="nm-sum" id="nmSum"></p>
     </div>
   </section>
 
@@ -741,7 +766,10 @@ const KEYS = [
 ];
 const MAJORS = ['C','G','D','A','E','B','F#','C#','F','Bb','Eb','Ab','Db','Gb','Cb'];
 const SIG = {C:0,G:1,D:2,A:3,E:4,B:5,'F#':6,'C#':7,F:-1,Bb:-2,Eb:-3,Ab:-4,Db:-5,Gb:-6,Cb:-7};
-const PAD = ['C','C#','Db','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
+// The note pad shows 12 notes, spelled with sharps or with flats (typing accepts any spelling).
+const PAD_SH = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const PAD_FL = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+const padState = {mode:'sharp', manual:false, pick:null};
 const IV = {'0,0':['unison','P1'],'1,1':['minor second','m2'],'1,2':['major second','M2'],'2,3':['minor third','m3'],
   '2,4':['major third','M3'],'3,5':['perfect fourth','P4'],'3,6':['augmented fourth','A4'],'4,6':['diminished fifth','d5'],
   '4,7':['perfect fifth','P5'],'5,8':['minor sixth','m6'],'5,9':['major sixth','M6'],'6,10':['minor seventh','m7'],'6,11':['major seventh','M7']};
@@ -861,18 +889,26 @@ function setPlaying(b, on){
 const pretty = k => fmt(parse(k));
 for(const [k] of KEYS) for(const sel of [$('src'),$('tgt')]) sel.add(new Option(pretty(k), k));
 for(const k of MAJORS) $('sigIn').add(new Option(pretty(k)+' major', k));
-for(const p of PAD){
-  const b = document.createElement('button'); b.textContent = pretty(p);
-  b.addEventListener('click', () => { const v = $('notes').value.trim(); $('notes').value = (v? v+' ' : '') + p; render(); });
-  $('pad').appendChild(b);
+function drawPad(){
+  const list = padState.mode==='flat' ? PAD_FL : PAD_SH;
+  $('pad').innerHTML = '';
+  for(const p of list){
+    const b = document.createElement('button'); b.textContent = pretty(p); if(p.length > 1) b.className = 'acc';
+    b.addEventListener('click', () => { const v = $('notes').value.trim(); $('notes').value = (v? v+' ' : '') + p; padState.pick = null; render(); });
+    $('pad').appendChild(b);
+  }
+  $('padSharp').setAttribute('aria-pressed', padState.mode==='sharp'); $('padFlat').setAttribute('aria-pressed', padState.mode==='flat');
+  $('padHint').textContent = padState.manual ? 'Your choice' : `Following ${pretty($('sigIn').value)} major`;
 }
+// Sharps for sharp keys (and C), flats for flat keys, unless the player has picked one.
+const autoMode = () => (SIG[$('sigIn').value] || 0) < 0 ? 'flat' : 'sharp';
 function load(){
   try{ const s = JSON.parse(localStorage.getItem('transpose') || 'null');
-    if(s){ $('src').value=s.src; $('tgt').value=s.tgt; $('notes').value=s.notes; $('sigIn').value=s.sig||'C'; return; } }catch(e){}
+    if(s){ $('src').value=s.src; $('tgt').value=s.tgt; $('notes').value=s.notes; $('sigIn').value=s.sig||'C'; padState.manual = !!s.padManual; padState.mode = s.padMode || autoMode(); return; } }catch(e){}
   $('src').value='Bb'; $('tgt').value='Eb'; $('notes').value='C D E F G'; $('sigIn').value='C';
 }
 function save(){
-  try{ localStorage.setItem('transpose', JSON.stringify({src:$('src').value,tgt:$('tgt').value,notes:$('notes').value,sig:$('sigIn').value})); }catch(e){}
+  try{ localStorage.setItem('transpose', JSON.stringify({src:$('src').value,tgt:$('tgt').value,notes:$('notes').value,sig:$('sigIn').value,padMode:padState.mode,padManual:padState.manual})); }catch(e){}
 }
 
 function render(){
@@ -901,7 +937,14 @@ function render(){
     name = k.pc===6 ? (k.acc>0?'F#':'Gb') : flats[k.pc];
   }
   const c = SIG[name];
-  $('sigOut').innerHTML = `→ ${pretty(name)} major<small>${c===0?'No sharps or flats':Math.abs(c)+(c>0?' sharp':' flat')+(Math.abs(c)>1?'s':'')}</small>`;
+  $('ksFromLbl').textContent = src==='C' ? 'Key (concert)' : `Key on the ${pretty(src)} part`;
+  $('ksToLbl').textContent = tgt==='C' ? 'Key (concert)' : `Key on the ${pretty(tgt)} part`;
+  $('sigOut').innerHTML = `${pretty(name)} major<small>${c===0?'No sharps or flats':Math.abs(c)+(c>0?' sharp':' flat')+(Math.abs(c)>1?'s':'')}</small>`;
+
+  // pad and note map
+  if(!padState.manual) padState.mode = autoMode();
+  drawPad();
+  renderNoteMap(src, tgt, sh, toks.map(parse).filter(Boolean));
 
   // score direction labels
   $('dirUpTxt').textContent = sh.semis===0 ? 'No change' : `Up a ${up}`;
@@ -910,12 +953,34 @@ function render(){
   save();
 }
 
+// Note map: written C up to C on the From part, with concert pitch and the To part alongside.
+function renderNoteMap(src, tgt, sh, typed){
+  const part = k => k==='C' ? 'Concert' : `${pretty(k)} part`;
+  $('nmFrom').textContent = part(src); $('nmTo').textContent = part(tgt);
+  const toC = shiftOf(src, 'C'), list = (padState.mode==='flat' ? PAD_FL : PAD_SH).concat('C');
+  const rows = list.map(p => { const n = parse(p); return [n, transpose(n, toC), transpose(n, sh)]; }).reverse();
+  const typedPc = new Set(typed.map(n => n.pc));
+  const box = $('nmRows'); box.innerHTML = '';
+  rows.forEach((r, i) => {
+    const on = padState.pick===null ? typedPc.has(r[0].pc) : padState.pick===i;
+    const b = document.createElement('button'); b.className = 'nm-row' + (on ? ' on' : '');
+    b.innerHTML = `<span>${fmt(r[0])}</span><span class="nm-c">${fmt(r[1])}</span><span>${fmt(r[2])}</span>`;
+    b.setAttribute('aria-label', `Written ${fmt(r[0])} on the ${part(src)} sounds ${fmt(r[1])}; the ${part(tgt)} writes ${fmt(r[2])}`);
+    b.addEventListener('click', () => { padState.pick = padState.pick===i ? null : i; render(); });
+    box.appendChild(b);
+  });
+  const p = padState.pick===null ? null : rows[padState.pick];
+  $('nmSum').innerHTML = p ? `A written <b>${fmt(p[0])}</b> on the ${part(src)} sounds concert <b>${fmt(p[1])}</b>; the ${part(tgt)} writes it as <b>${fmt(p[2])}</b>. Tap it again to go back to your notes.`
+    : typed.length ? 'Showing the notes you entered.' : 'Tap a row to compare one note.';
+}
+$('padSharp').addEventListener('click', () => { padState.mode = 'sharp'; padState.manual = true; padState.pick = null; render(); });
+$('padFlat').addEventListener('click', () => { padState.mode = 'flat'; padState.manual = true; padState.pick = null; render(); });
 $('swap').addEventListener('click',()=>{ const a=$('src').value; $('src').value=$('tgt').value; $('tgt').value=a; keysChanged(); });
 $('back').addEventListener('click',()=>{ const t=$('notes').value.trim().split(/\s+/); t.pop(); $('notes').value=t.join(' '); render(); });
 $('clear').addEventListener('click',()=>{ $('notes').value=''; render(); $('notes').focus(); });
 for(const id of ['src','tgt']) $(id).addEventListener('change',keysChanged);
-$('sigIn').addEventListener('change',render);
-$('notes').addEventListener('input',render);
+$('sigIn').addEventListener('change',()=>{ padState.manual = false; padState.pick = null; render(); });
+$('notes').addEventListener('input',()=>{ padState.pick = null; render(); });
 
 /* ---------- views ---------- */
 function route(){
@@ -4011,6 +4076,8 @@ window.tunerReady = true;
 // Add every change at the TOP: the newest is featured on About and every release is listed in the history.
 // Versions: a new feature bumps the middle number, a fix bumps the last.
 const RELEASES = [
+  {v:'1.10.1', date:'2026-11-06', title:'Compact key signature', text:'The key signature in Transpose now fits on one line: your part’s key on the left, the other part’s key on the right.', notes:['Key signature shown as From key → To key on one line, labelled with each instrument'], go:'notes'},
+  {v:'1.10', date:'2026-11-06', title:'Note map in Transpose', text:'See every note side by side: your part, concert pitch and the other part, with your notes highlighted.', notes:['Note map from C to C for any pair of instruments','Note pad with 12 keys and a sharp/flat switch that follows the key signature','Key signature moved above the note pad'], go:'notes'},
   {v:'1.9.1', date:'2026-11-06', title:'Drone fix', text:'The drone now runs from C4 to C5 with a smoother tone.', go:'tuner', notes:['Notes now run from C4 to C5 and always go up in order (some notes jumped an octave)','Smoother, organ-like tone; the register setting is gone']},
   {v:'1.9', date:'2026-11-05', title:'Notation signs in Terms', text:'Terms now has a Signs view: 76 music signs drawn on a staff, from clefs to ornaments.', notes:['Explanations, Chinese names and sound examples for each sign','Search by name, symbol (8va, sfz, >) or Chinese','Links between signs and the matching terms'], go:'terms', then:() => setTermsMode('signs')},
   {v:'1.8', date:'2026-11-05', title:'Scale descriptions', notes:['Each scale explains its sound, where it’s used and its step pattern']},
