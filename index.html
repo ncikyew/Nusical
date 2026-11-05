@@ -128,6 +128,64 @@ button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font
 .scale .ns span.ct{color:var(--brass);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .scale p{margin:.05rem 0 0;font-size:.82rem;color:var(--muted)}
 .legend{font-size:.8rem;color:var(--muted);margin:.2rem 0 .3rem}
+/* quiz */
+.qgrades{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem}
+.qgrade{display:flex;flex-direction:column;align-items:flex-start;gap:.1rem;text-align:left;padding:.5rem .65rem}
+.qgrade b{font:600 1.05rem Spectral,Georgia,serif}
+.qgrade span{font-size:.75rem;color:var(--muted)}
+.qgrade[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+.qintro{margin:0 0 .7rem}
+.qnote{font-size:.85rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:10px;padding:.6rem .75rem;margin:1rem 0 0}
+.qtopics{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.4rem}
+.qtopic{display:flex;flex-direction:column;align-items:flex-start;gap:.15rem;text-align:left;padding:.55rem .7rem}
+.qtopic b{font:600 1.05rem Spectral,Georgia,serif}
+.qtopic span{font-size:.78rem;color:var(--muted);line-height:1.35}
+.qtopic[aria-pressed="true"],.qlvls button[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+.qlvlh{font-size:.8rem;font-weight:600;color:var(--muted);margin:.8rem 0 .3rem}
+.qlvls{display:flex;flex-wrap:wrap;gap:.35rem}
+.qlvls button{font-size:.85rem;padding:.3rem .75rem;border-radius:999px}
+.qlvls button:disabled{opacity:.4}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:.85rem;color:var(--muted)}
+.qtop button{font-size:.8rem;padding:.25rem .7rem}
+.qbar{height:5px;border-radius:3px;background:var(--line);margin:.5rem 0 .2rem;overflow:hidden}
+.qbar i{display:block;height:100%;background:var(--brass);transition:width .3s}
+.qcat{font-size:.75rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--brass);margin:.8rem 0 .2rem}
+.qq{font:600 1.3rem/1.3 Spectral,Georgia,serif;margin:0 0 .6rem}
+.qfig{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:.4rem;margin:.2rem 0 .7rem;display:flex;justify-content:center}
+.qstaff{width:100%;height:auto;display:block}
+.qsym{width:84px;height:auto;display:block}
+.qline{stroke:#1C2333;stroke-width:1}
+.qg{fill:#1C2333}
+.qts{font:700 19px Spectral,Georgia,serif;fill:#1C2333}
+.qopts{display:grid;gap:.45rem}
+.qopt{display:flex;align-items:center;gap:.6rem;text-align:left;padding:.6rem .7rem;font-size:1rem;transition:background-color .15s,border-color .15s,transform .1s}
+.qopt:active:not(:disabled){transform:scale(.98)}
+.qopt:disabled{opacity:1;cursor:default}
+.qk{flex:none;width:1.6rem;height:1.6rem;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:600;border:1px solid var(--line);color:var(--muted)}
+.qopt.right{border-color:#2E7D4F;background:#E3F2E8}
+.qopt.right .qk{background:#2E7D4F;border-color:#2E7D4F;color:#fff}
+.qopt.wrong{border-color:#B3261E;background:#FBE9E7}
+.qopt.wrong .qk{background:#B3261E;border-color:#B3261E;color:#fff}
+.qopt:disabled:not(.right):not(.wrong){opacity:.55}
+.qverdict{font-weight:700;margin:.8rem 0 .2rem}
+.qverdict.ok{color:#2E7D4F}.qverdict.no{color:#B3261E}
+.qex{margin:.1rem 0 .7rem;color:var(--muted)}
+.qresult{text-align:center;padding:1rem 0 .4rem}
+.qscore{font:600 3.6rem/1 Spectral,Georgia,serif;margin:.2rem 0}
+.qscore small{font-size:1.4rem;color:var(--muted)}
+.qend{justify-content:center;flex-wrap:wrap;gap:.5rem}
+.qrevh{font:600 1.15rem Spectral,Georgia,serif;margin:1.4rem 0 .4rem}
+.qreview{display:grid;gap:.6rem}
+.qrev{border:1px solid var(--line);border-radius:12px;padding:.2rem .8rem .4rem;background:var(--surface)}
+.qrev .qcat{margin-top:.5rem}
+.qq2{font-weight:600;margin:.1rem 0 .4rem}
+.qmine{margin:.2rem 0;color:#B3261E}.qans{margin:.2rem 0;color:#2E7D4F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .qopt.right{background:#1F3A2A;border-color:#5DBB85}:root:not([data-theme="light"]) .qopt.wrong{background:#3F2020;border-color:#E57368}:root:not([data-theme="light"]) .qverdict.ok,:root:not([data-theme="light"]) .qans{color:#7FD1A0}:root:not([data-theme="light"]) .qverdict.no,:root:not([data-theme="light"]) .qmine{color:#F09A91}}
+:root[data-theme="dark"] .qopt.right{background:#1F3A2A;border-color:#5DBB85}:root[data-theme="dark"] .qopt.wrong{background:#3F2020;border-color:#E57368}:root[data-theme="dark"] .qverdict.ok,:root[data-theme="dark"] .qans{color:#7FD1A0}:root[data-theme="dark"] .qverdict.no,:root[data-theme="dark"] .qmine{color:#F09A91}
+@media (max-width:520px){.qgrades{grid-template-columns:repeat(2,1fr)}}
+/* Chinese meanings in Terms */
+.term-zh{font-size:1.05rem;margin:.35rem 0 0;color:var(--ink)}
+.sugg .zh{display:block;font-size:.85em;opacity:.85;margin-top:.1rem}
 /* click to listen */
 .listen{display:flex;flex-wrap:wrap;gap:.4rem;margin:.55rem 0 .1rem}
 .listen button,.scale .pl{display:inline-flex;align-items:center;gap:.35rem;font-size:.85rem;border-radius:999px;padding:.3rem .8rem}
@@ -347,7 +405,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <a href="#metronome" id="tabMetro"><svg viewBox="0 0 24 24"><path d="M10 3h4l4 18H6zM12 16l6-9M8.5 16h7"/></svg><span>Metronome</span></a>
       <a href="#tuner" id="tabTuner"><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><span>Tuner</span></a>
       <a href="#fingering" id="tabFinger"><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><span>Fingering</span></a>
-      <a href="#score" id="tabScore"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14.5 3v4.5H19M9 11h7M9 14.5h7M9 18h4"/></svg><span>Score</span></a>
+      <a href="#quiz" id="tabQuiz"><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><span>Quiz</span></a>
     </nav>
   </header>
   <p class="tagline" id="tagline"></p>
@@ -415,10 +473,28 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <li><svg viewBox="0 0 24 24"><path d="M10 3h4l4 18H6zM12 16l6-9M8.5 16h7"/></svg><p><b>Metronome</b>Steady clicks with accents, subdivisions and tap tempo.</p></li>
       <li><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><p><b>Tuner</b>Tune with your microphone, shown in your instrument’s key.</p></li>
       <li><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><p><b>Fingering</b>Quick links to trusted fingering, alternate and trill charts for woodwind, brass and strings.</p></li>
-      <li><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14.5 3v4.5H19M9 11h7M9 14.5h7M9 18h4"/></svg><p><b>Score</b>Upload sheet music and get it back transposed for another instrument.</p></li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><p><b>Quiz</b>Ten-question theory quizzes for Grades 1 to 8, in the style of the ABRSM exams.</p></li>
     </ul>
     <p class="legend">Fingerings, terms and tunings are checked carefully, but your teacher and your ears always have the final say. Music notation is drawn with the open-source Verovio engraver.</p>
     <p class="legend">Thank you for playing. 🎶</p>
+  </section>
+
+  <section id="viewQuiz" hidden>
+    <div id="quizHome">
+      <p class="qintro">Quick multiple-choice quizzes to revise music theory. Each quiz has 10 random questions, with an explanation after every answer and your score at the end. Choose a grade for a mixed set, or a topic to focus on one area.</p>
+      <div class="seg" role="group" aria-label="Quiz type"><button id="qmGrade" aria-pressed="true">By grade</button><button id="qmTopic" aria-pressed="false">By topic</button></div>
+      <div id="qGradeBox">
+        <div class="qgrades" id="qGrades"></div>
+      </div>
+      <div id="qTopicBox" hidden>
+        <div class="qtopics" id="qTopics"></div>
+        <p class="qlvlh">Level</p>
+        <div class="qlvls" id="qLvls"></div>
+      </div>
+      <button class="primary" id="qStart" style="margin-top:.8rem">Start quiz</button>
+      <p class="qnote"><b>Please note:</b> these are general practice quizzes, loosely based on the ABRSM Music Theory grades. They aren’t past papers or a mock exam, and real exams also include written tasks, such as composing a melody or completing harmony, that a quiz can’t test. Use them for revision alongside your teacher and the official syllabus. Not affiliated with or endorsed by ABRSM.</p>
+    </div>
+    <div id="quizRun" hidden></div>
   </section>
 
   <section id="viewScore" hidden>
@@ -451,13 +527,13 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
 
   <section id="viewChords" hidden>
     <div class="seg">
-      <button id="modeName" aria-pressed="true">Name a chord</button>
-      <button id="modePick" aria-pressed="false">Pick notes</button>
+      <button id="modePick" aria-pressed="true">Pick notes</button>
+      <button id="modeName" aria-pressed="false">Name a chord</button>
     </div>
-    <div id="nameBox">
+    <div id="nameBox" hidden>
       <input type="text" id="chordIn" aria-label="Chord symbol" autocomplete="off" spellcheck="false" placeholder="Chord symbol, e.g. F7, Bbm7, C#m7b5">
     </div>
-    <div id="pickBox" hidden>
+    <div id="pickBox">
       <div class="pad cpad" id="cpad"></div>
       <div class="row" style="margin-top:.5rem">
         <span class="fname" id="pickInfo"></span>
@@ -474,7 +550,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <div><label for="sRoot">Concert key</label><select id="sRoot"></select></div>
       <div><label for="sType">Scale</label><select id="sType" style="font:500 1rem Figtree,sans-serif"></select></div>
       <div><label for="sInst">Your instrument</label><select id="sInst" style="font:500 1rem Figtree,sans-serif"></select></div>
-      <div><label for="sClef">Clef</label><select id="sClef" style="font:500 1rem Figtree,sans-serif"><option value="treble">Treble</option><option value="bass">Bass</option></select></div>
+      <div><label for="sClef">Clef</label><select id="sClef" style="font:500 1rem Figtree,sans-serif"><option value="treble">Treble</option><option value="alto">Alto</option><option value="tenor">Tenor</option><option value="bass">Bass</option></select></div>
     </div>
     <div class="interval" id="sMap" style="margin:.7rem 0 0"></div>
     <div class="listen"><button id="sPlay" aria-pressed="false"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg><span class="t">Play scale</span></button></div>
@@ -486,7 +562,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
   </section>
 
   <section id="viewTerms" hidden>
-    <input type="search" id="termIn" aria-label="Search music terms" autocomplete="off" spellcheck="false" placeholder="Search a term, e.g. allegro, rit., D.S. al coda">
+    <input type="search" id="termIn" aria-label="Search music terms" autocomplete="off" spellcheck="false" placeholder="Search a term, e.g. allegro, rit., D.S. al coda, 渐慢">
     <div id="termOut" aria-live="polite"></div>
   </section>
 
@@ -725,8 +801,11 @@ $('notes').addEventListener('input',render);
 
 /* ---------- views ---------- */
 function route(){
-  const v = ['#score','#chords','#scales','#terms','#metronome','#tuner','#fingering','#about'].includes(location.hash) ? location.hash.slice(1) : 'notes';
-  for(const [k,sec,tab] of [['notes','viewNotes','tabNotes'],['score','viewScore','tabScore'],['chords','viewChords','tabChords'],['scales','viewScales','tabScales'],['terms','viewTerms','tabTerms'],['metronome','viewMetro','tabMetro'],['tuner','viewTuner','tabTuner'],['fingering','viewFinger','tabFinger'],['about','viewAbout','tabAbout']]){
+  // The score upload is switched off for now; old #score links fall back to the quiz.
+  if(location.hash==='#score'){ location.replace('#quiz'); return; }
+  const v = ['#quiz','#chords','#scales','#terms','#metronome','#tuner','#fingering','#about'].includes(location.hash) ? location.hash.slice(1) : 'notes';
+  $('viewScore').hidden = true;
+  for(const [k,sec,tab] of [['notes','viewNotes','tabNotes'],['quiz','viewQuiz','tabQuiz'],['chords','viewChords','tabChords'],['scales','viewScales','tabScales'],['terms','viewTerms','tabTerms'],['metronome','viewMetro','tabMetro'],['tuner','viewTuner','tabTuner'],['fingering','viewFinger','tabFinger'],['about','viewAbout','tabAbout']]){
     $(sec).hidden = v!==k;
     if(v===k) $(tab).setAttribute('aria-current','page'); else $(tab).removeAttribute('aria-current');
   }
@@ -739,7 +818,7 @@ function route(){
   $('aboutTxt').textContent = isAbout ? 'Close' : 'About';
   $('aboutIcon').innerHTML = isAbout ? '<path d="M6 6l12 12M18 6L6 18"/>' : '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>';
   // Chords and scales work on their own, without instrument keys.
-  const solo = ['chords','scales','terms','metronome','tuner','fingering','about'].includes(v);
+  const solo = ['quiz','chords','scales','terms','metronome','tuner','fingering','about'].includes(v);
   if(v==='fingering' && window.fingerReady) renderFinger();
   if(v!=='tuner' && window.tunerReady) stopTuner();
   stopSound();
@@ -747,7 +826,7 @@ function route(){
   document.querySelector('.keys').hidden = solo;
   $('interval').hidden = solo;
   if(v==='scales') renderScale();
-  $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Fingering', score:'Score', about:'About'}[v];
+  $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Fingering', quiz:'Quiz', about:'About'}[v];
   if(window.lastTracked !== v){ window.lastTracked = v; track('page_view', {page_title: 'Nusical – ' + $('title').textContent, page_location: location.href, page_path: '/' + v}); }
   $('tagline').textContent = {
     notes:'Convert notes between instruments in different keys.',
@@ -758,7 +837,7 @@ function route(){
     fingering:'Trusted fingering charts for woodwind, brass and strings, including alternates and trills.',
     about:'What this app does, and how to support it.',
     tuner:'Play a note and see if you’re in tune, using your microphone.',
-    score:'Upload sheet music and get it rewritten for another instrument.'
+    quiz:'Test your music theory by grade or by topic.'
   }[v];
 }
 window.addEventListener('hashchange', () => { route(); window.scrollTo(0,0); });
@@ -1005,7 +1084,7 @@ function showChord(root, type, bass){
 }
 function chordMsg(t){ $('chordOut').innerHTML = ''; const p = document.createElement('p'); p.className='status'; p.textContent = t; $('chordOut').appendChild(p); }
 
-let chordMode = 'name';
+let chordMode = 'pick';
 function setMode(m){
   chordMode = m;
   $('modeName').setAttribute('aria-pressed', m==='name'); $('modePick').setAttribute('aria-pressed', m==='pick');
@@ -1147,7 +1226,8 @@ function friendlyRoot(n, sc){
 
 const ACC_NAME = {'-2':'flat-flat','-1':'flat','0':'natural','1':'sharp','2':'double-sharp'};
 function scaleNotes(root, sc, clef){
-  const start = clef==='bass' ? (root.L>=4 ? 2 : 3) : 4;
+  // Starting octave keeps each scale close to the staff of the chosen clef.
+  const start = clef==='bass' ? (root.L>=4 ? 2 : 3) : clef==='tenor' ? 3 : clef==='alto' ? (root.L>=2 ? 3 : 4) : 4;
   return [...sc.s, [12,8]].map(x => stepFor(root, x)).map(([semi,deg]) => {
     const n = spell(root,[semi,deg]);
     n.oct = start + Math.floor((root.L + deg - 1)/7);
@@ -1157,7 +1237,7 @@ function scaleNotes(root, sc, clef){
 function scaleXml(notes, clef){
   const measure = (num, list, first) => {
     const state = {};
-    let x = `<measure number="${num}"><attributes>${first?'<divisions>1</divisions><key><fifths>0</fifths></key>':''}<time print-object="no"><beats>${list.length*4}</beats><beat-type>4</beat-type></time>${first?(clef==='bass'?'<clef><sign>F</sign><line>4</line></clef>':'<clef><sign>G</sign><line>2</line></clef>'):''}</attributes>`;
+    let x = `<measure number="${num}"><attributes>${first?'<divisions>1</divisions><key><fifths>0</fifths></key>':''}<time print-object="no"><beats>${list.length*4}</beats><beat-type>4</beat-type></time>${first?({bass:'<clef><sign>F</sign><line>4</line></clef>', alto:'<clef><sign>C</sign><line>3</line></clef>', tenor:'<clef><sign>C</sign><line>4</line></clef>'}[clef] || '<clef><sign>G</sign><line>2</line></clef>'):''}</attributes>`;
     for(const n of list){
       const k = n.L+'-'+n.oct, prev = state[k] ?? 0; state[k] = n.acc;
       x += `<note><pitch><step>${LETTERS[n.L]}</step>${n.acc?`<alter>${n.acc}</alter>`:''}<octave>${n.oct}</octave></pitch><duration>4</duration><type>whole</type>`
@@ -1479,6 +1559,268 @@ Alle||German|Technique|Everyone plays (tutti).|
   const [t, al, l, c, d, bpm] = line.split('|');
   return {t, al: al ? al.split(';') : [], l, c, d, bpm};
 });
+// Chinese meanings (Simplified), keyed by term
+const TERMS_ZH = {
+  "Grave":"庄板：极慢而庄严",
+  "Largo":"广板：宽广而很慢",
+  "Larghetto":"小广板：稍慢，比广板略快",
+  "Lento":"慢板：缓慢地",
+  "Adagio":"柔板：慢而从容",
+  "Adagietto":"小柔板：稍慢，比柔板略快",
+  "Andante":"行板：如步行的速度",
+  "Andantino":"小行板：比行板稍快（早期作品有时指稍慢）",
+  "Moderato":"中板：中等速度",
+  "Allegretto":"小快板：稍快，比快板略慢",
+  "Allegro":"快板：快速、明朗而活泼",
+  "Allegro moderato":"中庸的快板：适度地快",
+  "Allegro ma non troppo":"快板，但不过分快",
+  "Allegro assai":"很快的快板",
+  "Allegro vivace":"活泼的快板",
+  "Vivace":"活板：活泼而快速",
+  "Vivacissimo":"极活泼而快速",
+  "Presto":"急板：很快",
+  "Prestissimo":"最急板：尽可能快",
+  "A tempo":"回原速",
+  "Tempo primo":"回到最初的速度",
+  "L'istesso tempo":"拍子改变时保持同样的拍速",
+  "Tempo giusto":"准确、稳定的速度",
+  "Rubato":"自由速度：为表情而伸缩节拍",
+  "Ad libitum":"随意：自由演奏或即兴",
+  "Senza misura":"不受严格节拍限制，自由地",
+  "Alla breve":"二二拍：每小节按两个二分音符计拍",
+  "Accelerando":"渐快",
+  "Stringendo":"紧迫地：渐快并更加紧张",
+  "Ritardando":"渐慢",
+  "Rallentando":"渐慢",
+  "Ritenuto":"突慢：立即放慢，而非逐渐",
+  "Allargando":"渐宽：渐慢并通常更饱满、更响",
+  "Calando":"渐慢渐弱",
+  "Morendo":"渐消逝：渐慢渐弱",
+  "Smorzando":"渐渐消失",
+  "Più mosso":"稍快：更活跃些",
+  "Meno mosso":"稍慢：活跃些减少",
+  "Fermata":"延长记号：音符或休止符按需要或按指挥延长",
+  "Caesura":"中断记号：声音短暂停顿后再继续",
+  "Pianississimo":"极弱：尽可能弱",
+  "Pianissimo":"很弱",
+  "Piano":"弱",
+  "Mezzo piano":"中弱",
+  "Mezzo forte":"中强",
+  "Forte":"强",
+  "Fortissimo":"很强",
+  "Fortississimo":"极强：尽可能强",
+  "Fortepiano":"强后立即弱",
+  "Sforzando":"突强：单个音突然加重",
+  "Rinforzando":"加强：音符或短句突然加重",
+  "Crescendo":"渐强",
+  "Decrescendo":"渐弱",
+  "Diminuendo":"渐弱",
+  "Messa di voce":"单个长音上先渐强再渐弱",
+  "Sotto voce":"低声地：很轻、含蓄地",
+  "Al niente":"渐弱至无声（dal niente：从无声渐起）",
+  "Perdendosi":"逐渐消失",
+  "Affettuoso":"深情地、温暖地",
+  "Agitato":"激动不安地",
+  "Amabile":"可爱地、亲切地",
+  "Animato":"活跃地、生气勃勃地",
+  "Appassionato":"热情地",
+  "Brillante":"辉煌地、灿烂地",
+  "Con brio":"有活力、有精神地",
+  "Cantabile":"如歌地",
+  "Comodo":"舒适地、从容地",
+  "Con moto":"稍快地：保持流动",
+  "Con anima":"有灵魂、有感情地",
+  "Con forza":"有力地",
+  "Con fuoco":"如火般热烈地",
+  "Con spirito":"有精神地",
+  "Dolce":"柔和、甜美地",
+  "Doloroso":"悲痛地",
+  "Energico":"有力、充满活力地",
+  "Espressivo":"有表情地",
+  "Furioso":"狂暴地",
+  "Giocoso":"诙谐、欢乐地",
+  "Grazioso":"优雅地",
+  "Lamentoso":"哀怨地，如哀歌",
+  "Leggiero":"轻巧地",
+  "Lugubre":"阴郁、悲哀地",
+  "Maestoso":"庄严、雄伟地",
+  "Marziale":"进行曲风格地",
+  "Mesto":"忧伤地",
+  "Misterioso":"神秘地",
+  "Nobilmente":"高贵地",
+  "Pesante":"沉重地",
+  "Scherzando":"诙谐、戏谑地",
+  "Semplice":"朴素、简单地",
+  "Sognando":"如梦地",
+  "Sostenuto":"持续地：常带稍微放慢",
+  "Spiritoso":"有精神地",
+  "Teneramente":"温柔地",
+  "Tranquillo":"安静、平静地",
+  "Vigoroso":"有力、精力充沛地",
+  "Legato":"连奏：音与音相连",
+  "Non legato":"非连奏：分开但不短促",
+  "Staccato":"断奏（跳音）：短促分开",
+  "Staccatissimo":"极短的断奏",
+  "Tenuto":"保持音：奏满时值并稍加重",
+  "Marcato":"着重地：强烈重音",
+  "Portato":"次断奏：介于连奏与断奏之间",
+  "Accent":"重音：音头加重",
+  "Pizzicato":"拨奏（弦乐）：用手指拨弦",
+  "Arco":"用弓（弦乐）：恢复用弓演奏",
+  "Col legno":"用弓杆（弦乐）：以弓的木杆演奏",
+  "Sul ponticello":"近琴马（弦乐）：靠近琴马拉奏，声音尖细",
+  "Sul tasto":"指板上（弦乐）：在指板上方拉奏，声音柔和",
+  "Tremolo":"震音：快速重复一个音或在两音间快速交替",
+  "Trill":"颤音：与上方音快速交替",
+  "Glissando":"滑奏：从一个音滑到另一个音",
+  "Portamento":"滑音：表情性地连接两个音",
+  "Flutter-tongue":"花舌（管乐）：吹奏时舌头或喉咙颤动",
+  "Con sordino":"加弱音器",
+  "Senza sordino":"去弱音器",
+  "Divisi":"分奏：声部分开演奏不同的音",
+  "Unisono":"齐奏：全声部再次演奏同一声部",
+  "Tutti":"全体演奏",
+  "Solo":"独奏",
+  "Una corda":"弱音踏板（钢琴）：踩下左踏板",
+  "Tre corde":"放开弱音踏板（钢琴）",
+  "Pedale":"踏板（钢琴）：使用延音踏板",
+  "Mano destra":"右手",
+  "Mano sinistra":"左手",
+  "Ottava":"高八度演奏",
+  "Ottava bassa":"低八度演奏",
+  "Loco":"还原：8va 之后回到记谱音高",
+  "Simile":"同样地：照前面的方式继续",
+  "Sempre":"始终、一直",
+  "Subito":"突然",
+  "Poco a poco":"逐渐地",
+  "Poco":"稍微",
+  "Molto":"很、非常",
+  "Assai":"很",
+  "Ma non troppo":"但不过分",
+  "Più":"更",
+  "Meno":"较少",
+  "Quasi":"几乎、好像",
+  "Con":"带着、用",
+  "Senza":"没有、不用",
+  "Attacca":"紧接：不间断地进入下一乐章",
+  "Segue":"接续：直接进入下一段",
+  "Tacet":"此段休止不奏",
+  "Colla voce":"跟随独唱/独奏者的速度",
+  "Da capo":"从头反复",
+  "Dal segno":"从记号（𝄋）处反复",
+  "Da capo al fine":"从头反复，至 Fine 结束",
+  "Da capo al coda":"从头反复，至“To Coda”处跳到尾声",
+  "Dal segno al fine":"从记号处反复，至 Fine 结束",
+  "Dal segno al coda":"从记号处反复，再跳到尾声",
+  "Fine":"结束（与 D.C. 或 D.S. 连用）",
+  "Coda":"尾声：“To Coda”表示跳到尾声",
+  "Segno":"反复记号（𝄋）：D.S. 返回之处",
+  "Prima volta":"第一结尾：只在第一遍演奏",
+  "Seconda volta":"第二结尾：跳过第一结尾，改奏此处",
+  "Cadenza":"华彩乐段：自由速度的独奏，常带炫技或即兴",
+  "Ossia":"或奏：可选的替代段落（常较容易）",
+  "Ritornello":"回复段：反复出现的段落",
+  "Bis":"重复：所标小节奏两遍",
+  "Cédez":"渐慢",
+  "Retenu":"突慢：放慢",
+  "En dehors":"突出：让此旋律突出于其他声部",
+  "Animé":"活跃地",
+  "Doux":"柔和、甜美地",
+  "Lent":"慢",
+  "Modéré":"中速",
+  "Vif":"活泼、快速",
+  "Très":"很",
+  "Langsam":"慢",
+  "Mäßig":"中速",
+  "Schnell":"快",
+  "Lebhaft":"活泼地",
+  "Bewegt":"流动地、稍快",
+  "Ruhig":"安静地",
+  "Zart":"柔和、细腻地",
+  "Etwas":"稍微",
+  "Sehr":"很",
+  "Nicht schleppen":"不要拖慢",
+  "Nicht eilen":"不要赶快",
+  "Ohne zu schleppen":"不拖沓地",
+  "Ohne Hast":"不急不忙地",
+  "Nicht zu schnell":"不要太快",
+  "Langsamer":"更慢",
+  "Schneller":"更快",
+  "Bewegter":"更流动：稍快些",
+  "Rasch":"迅速",
+  "Gemächlich":"悠闲、从容地",
+  "Bedächtig":"慎重、从容地",
+  "Gemessen":"有节制、稳定地",
+  "Getragen":"缓慢持续、庄重地",
+  "Breit":"宽广地",
+  "Fließend":"流畅地",
+  "Haupttempo":"回到本乐章的主要速度",
+  "Im Tempo":"回原速",
+  "Zeitmaß":"速度",
+  "Wie vorher":"如前",
+  "Zurückhalten":"渐慢：往回收",
+  "Gehalten":"保持；稍放慢",
+  "Zögernd":"犹豫地；稍放慢",
+  "Drängend":"紧迫地：渐快",
+  "Vorwärts":"向前：继续推进",
+  "Belebend":"渐趋活跃",
+  "Unmerklich":"不知不觉地（如难以察觉的速度变化）",
+  "Allmählich":"逐渐地",
+  "Nach und nach":"逐渐地",
+  "Plötzlich":"突然",
+  "Immer":"始终、一直",
+  "Noch":"还、更（如 noch breiter：更宽广）",
+  "Wieder":"再次",
+  "Ein wenig":"稍微",
+  "Ziemlich":"相当",
+  "Ganz":"十分、完全",
+  "Mit":"带着、用",
+  "Ohne":"没有、不用",
+  "Feierlich":"庄严地",
+  "Innig":"深情、亲切地",
+  "Mit Empfindung":"有感情地",
+  "Ausdrucksvoll":"有表情地",
+  "Gesangvoll":"如歌地",
+  "Hervortretend":"突出此声部",
+  "Klagend":"哀怨地",
+  "Schmachtend":"憔悴、渴望地",
+  "Leidenschaftlich":"热情地",
+  "Heftig":"猛烈地",
+  "Stürmisch":"狂风暴雨般地",
+  "Wild":"狂野地",
+  "Kräftig":"有力地",
+  "Wuchtig":"沉重有力地",
+  "Schwer":"沉重地",
+  "Schwungvoll":"有动力、充满活力地",
+  "Triumphierend":"凯旋般地",
+  "Lustig":"欢快地",
+  "Keck":"大胆、调皮地",
+  "Behaglich":"舒适、惬意地",
+  "Gemütlich":"轻松、舒适地",
+  "Wie ein Naturlaut":"如大自然的声音",
+  "Wie aus der Ferne":"如从远方传来",
+  "In der Ferne":"在远处：在台后演奏或听起来遥远",
+  "Hinter der Szene":"在台后",
+  "Verlöschend":"渐渐消失",
+  "Steigernd":"逐渐加强",
+  "Klingen lassen":"让声音延续（自然消失）",
+  "Kurz":"短",
+  "Gebunden":"连奏",
+  "Mit Dämpfer":"加弱音器",
+  "Ohne Dämpfer":"去弱音器",
+  "Gestopft":"阻塞音（圆号）：用手塞住喇叭口（+ 号）",
+  "Offen":"开放：不加弱音器、不阻塞（o 号）",
+  "Schalltrichter auf":"管乐：喇叭口朝上",
+  "Stark anblasen":"管乐：用力吹奏",
+  "Am Steg":"近琴马拉奏（弦乐）",
+  "Am Griffbrett":"指板上拉奏（弦乐）",
+  "Mit dem Holz":"用弓杆演奏（弦乐）",
+  "Auf der G-Saite":"在指定弦上演奏（弦乐，如 G 弦）",
+  "Die Hälfte":"声部的一半演奏",
+  "Alle":"全体演奏"
+};
+for(const e of TERMS_RAW) e.zh = TERMS_ZH[e.t] || '';
+const hasCJK = s => /[\u3400-\u9fff]/.test(s);
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[.'’]/g,'').replace(/\s+/g,' ').trim();
 for(const e of TERMS_RAW){
   // German umlauts can be typed as ae/oe/ue, and ß as ss
@@ -1497,6 +1839,12 @@ function lev(a, b){
 function searchTerms(qRaw){
   // keep symbols like < > // as typed; normalise the rest
   const q = norm(qRaw); if(!q) return [];
+  if(hasCJK(q)){
+    // Chinese search: match the Chinese meaning, best when it starts with the query (渐慢, 弱音器…)
+    const zq = q.replace(/\s+/g,''), res = [];
+    for(const e of TERMS_RAW){ const z = e.zh.replace(/\s+/g,''); if(!z.includes(zq)) continue; const head = z.split('：')[0]; res.push({e, s: head===zq ? 100 : z.startsWith(zq) ? 80 : 50}); }
+    return res.sort((a,b)=> b.s-a.s || a.e.t.length-b.e.t.length).map(x=>Object.assign({score:x.s}, x.e));
+  }
   const short = q.length <= 2, out = [];
   for(const e of TERMS_RAW){
     let s = 0;
@@ -1521,11 +1869,13 @@ function termCard(e, related){
   for(const a of e.al){ const k = norm(a); if(k===norm(e.t)) continue; const cur = byNorm.get(k); if(!cur || a.length > cur.length) byNorm.set(k, a); }
   const abbr = [...byNorm.values()];
   card.innerHTML = `<h2 class="term-name"></h2><p class="term-meta"></p><p class="term-def"></p>`
+    + (e.zh ? `<p class="term-zh" lang="zh-Hans"></p>` : '')
     + (abbr.length ? `<p class="term-extra"><b>Also written:</b> <span class="ab"></span></p>` : '')
     + (e.bpm ? `<p class="term-extra"><b>Rough speed:</b> ${e.bpm} BPM <span class="legend">(varies by style and era)</span></p>` : '');
   card.querySelector('.term-name').textContent = e.t;
   card.querySelector('.term-meta').textContent = `${e.l} · ${e.c}`;
   card.querySelector('.term-def').textContent = e.d;
+  if(e.zh) card.querySelector('.term-zh').textContent = e.zh;
   if(abbr.length) card.querySelector('.ab').textContent = abbr.join(', ');
   box.appendChild(card);
   const rel = related.filter(r => r !== e).slice(0,6);
@@ -1556,7 +1906,7 @@ function renderTerms(){
   const wrap = document.createElement('div'); wrap.className = 'sugg';
   for(const e of list){
     const b = document.createElement('button');
-    b.innerHTML = '<b></b><span></span>'; b.firstChild.textContent = e.t; b.lastChild.textContent = e.d;
+    b.innerHTML = '<b></b><span></span><span class="zh" lang="zh-Hans"></span>'; b.firstChild.textContent = e.t; b.children[1].textContent = e.d; b.lastChild.textContent = e.zh;
     b.addEventListener('click', ()=> termCard(e, res));
     wrap.appendChild(b);
   }
@@ -1585,9 +1935,10 @@ function breakdown(q){
   for(const p of parts){
     const b = document.createElement(p.e ? 'button' : 'div');
     if(!p.e) b.className = 'btn'; if(!p.e) b.style.cssText = 'cursor:default;border-style:dashed';
-    b.innerHTML = '<b></b><span></span>';
+    b.innerHTML = '<b></b><span></span>' + (p.e && p.e.zh ? '<span class="zh" lang="zh-Hans"></span>' : '');
     b.firstChild.textContent = p.e ? p.e.t : p.text;
-    b.lastChild.textContent = p.e ? p.e.d : p.link ? p.link : 'not found';
+    b.children[1].textContent = p.e ? p.e.d : p.link ? p.link : 'not found';
+    if(p.e && p.e.zh) b.lastChild.textContent = p.e.zh;
     if(p.e) b.addEventListener('click', ()=> termCard(p.e, [p.e]));
     wrap.appendChild(b);
   }
@@ -1595,6 +1946,894 @@ function breakdown(q){
   return true;
 }
 $('termIn').addEventListener('input', renderTerms);
+
+/* ---------- quiz: ABRSM-style theory questions by grade ---------- */
+// Music glyph outlines from Noto Music (SIL Open Font License).
+const QG = {"G": "M314 801Q300 854 291 906Q282 958 282 1012Q282 1059 288 1100Q295 1142 307 1177Q320 1217 341 1252Q362 1288 386 1311Q409 1334 427 1334Q451 1334 493 1249Q514 1206 524 1156Q534 1106 534 1049Q534 978 515 908Q496 837 460 775Q423 713 372 666L407 498Q422 500 432 501Q442 502 447 502Q508 502 556 468Q604 433 632 377Q661 321 661 254Q661 177 622 116Q582 54 503 25Q508 8 532 -117Q538 -147 541 -164Q544 -182 545 -195Q546 -208 546 -225Q546 -275 522 -314Q497 -354 456 -376Q414 -398 363 -398Q311 -398 271 -378Q231 -359 208 -324Q185 -290 185 -245Q185 -197 212 -165Q238 -133 287 -133Q329 -133 356 -164Q382 -194 382 -236Q382 -272 357 -299Q332 -326 292 -326H282Q308 -365 364 -365Q433 -365 472 -320Q511 -275 511 -205Q511 -188 507 -160Q503 -131 493 -91Q483 -51 478 -25Q472 1 470 12Q436 2 390 2Q304 2 222 52Q142 102 96 184Q50 266 50 361Q50 451 91 530Q132 609 192 675Q253 741 314 801ZM341 826Q364 838 390 870Q416 903 440 945Q464 987 479 1030Q494 1072 494 1106Q494 1142 483 1163Q472 1184 445 1184Q421 1184 398 1162Q376 1140 358 1104Q341 1067 331 1022Q321 977 321 930Q321 898 328 872Q334 846 341 826ZM398 379Q371 373 347 354Q323 334 308 306Q294 279 294 248Q294 223 307 196Q320 170 339 154Q352 142 365 136Q380 129 380 123Q380 120 370 117Q332 126 302 151Q271 176 254 212Q236 247 236 287Q236 330 254 370Q271 410 302 442Q334 474 374 490L345 641Q229 547 174 456Q120 366 120 277Q120 212 154 156Q188 100 247 66Q306 31 380 31Q400 31 420 35Q441 39 464 45ZM495 55Q593 97 593 227Q593 270 571 306Q549 341 512 362Q475 383 429 383Z", "F": "M50 123Q216 231 288 301Q336 348 373 408Q410 469 432 536Q453 603 453 669Q453 728 435 774Q417 819 383 845Q349 871 302 871Q284 871 264 867Q245 863 224 855Q181 839 158 814Q135 788 135 765Q135 756 143 752Q151 748 158 748Q168 748 183 752Q190 754 196 755Q203 756 210 756Q248 756 272 734Q296 711 296 674Q296 638 266 612Q236 586 195 586Q146 586 111 617Q76 648 76 697Q76 756 109 802Q142 848 198 874Q255 900 324 900Q400 900 460 867Q520 834 556 776Q591 719 591 646Q591 551 538 464Q511 419 476 379Q442 339 389 298Q336 256 256 208Q176 160 57 101ZM687 809Q710 809 726 793Q742 777 742 754Q742 731 726 716Q710 700 687 700Q664 700 648 716Q632 731 632 754Q632 777 648 793Q664 809 687 809ZM687 589Q710 589 726 573Q742 557 742 534Q742 511 726 496Q710 480 687 480Q664 480 648 496Q632 511 632 534Q632 557 648 573Q664 589 687 589Z", "C": "M226 0V1000H263V510Q281 519 301 546Q321 573 339 608Q357 644 370 680Q383 715 386 742Q396 673 427 634Q458 594 503 594Q548 594 570 631Q593 668 593 775Q593 818 590 848Q588 879 582 898Q569 942 541 960Q513 979 470 979Q447 979 434 970Q421 960 421 951Q421 944 428 934Q435 924 443 914Q460 894 460 877Q460 853 442 834Q425 814 392 814Q362 814 342 836Q323 857 323 887Q323 924 348 952Q372 980 412 996Q451 1012 497 1012Q561 1012 612 982Q663 952 694 899Q724 846 724 777Q724 734 714 698Q705 662 685 633Q658 595 616 574Q574 552 527 552Q505 552 482 558Q458 563 437 574L390 500L437 426Q460 435 484 440Q508 445 532 445Q587 445 630 414Q674 383 699 332Q724 281 724 219Q724 157 694 104Q664 52 613 21Q562 -10 497 -10Q413 -10 368 24Q323 57 323 115Q323 145 342 166Q362 188 392 188Q425 188 442 168Q460 149 460 125Q460 106 443 88Q434 78 428 69Q421 60 421 52Q421 40 434 32Q447 23 470 23Q532 23 564 68Q595 114 595 219Q595 311 574 358Q553 406 503 406Q457 406 427 367Q397 328 388 260Q379 309 360 355Q341 401 316 437Q291 473 263 492V0ZM50 0V1000H167V0Z", "sharp": "M97 46V189L50 177V277L97 290V486H128V298L195 314V509H226V322L275 333V234L226 220V77L275 89V-14L226 -26V-214H195V-34L128 -52V-247H97V-59L50 -71V32ZM195 70V214L128 197V54Z", "flat": "M50 615H81V225Q118 262 165 262Q197 262 223 240Q249 219 249 178Q249 146 230 119Q211 92 179 65L110 6Q91 -10 76 -26Q61 -41 50 -55ZM81 12Q107 40 125 64Q143 87 153 105Q164 124 170 140Q175 156 175 170Q175 198 162 210Q149 223 134 223Q118 223 102 212Q87 200 81 180Z", "nat": "M226 316V-221H195V-9L50 -46V486H83V279ZM197 84V212L81 183V56Z", "dsharp": "M224 0V45Q224 64 212 75Q199 86 181 86Q162 86 149 75Q136 64 136 47V0H50V86H105Q119 86 128 100Q136 114 136 131Q136 147 126 162Q117 176 111 176H50V262H136V209Q136 195 149 186Q162 176 181 176Q196 176 210 185Q224 194 224 207V262H310V176H259Q246 176 235 160Q224 145 224 131Q224 114 234 100Q243 86 259 86H310V0Z", "dflat": "M218 107Q210 95 192 78Q175 61 147 39Q92 -4 50 -55V615H79V225Q125 262 163 262Q195 262 218 242V615H249V225Q286 262 333 262Q365 262 391 240Q417 219 417 178Q417 146 398 119Q379 92 347 65L278 6Q239 -28 218 -55ZM249 12Q289 54 316 96Q343 137 343 170Q343 198 330 210Q317 223 302 223Q286 223 270 212Q255 200 249 180ZM79 12 120 59Q149 92 161 117Q173 142 173 170Q173 221 132 221Q116 221 100 210Q85 198 79 180Z", "breve": "M564 -31V128Q562 90 532 63Q503 36 457 22Q411 8 359 8Q304 8 256 23Q209 38 180 66Q151 95 150 135V-31H114V301H150V141Q152 178 180 204Q209 231 254 246Q300 260 353 260Q410 260 458 245Q505 230 534 202Q563 174 564 135V301H597V-31ZM628 -31V301H663V-31ZM50 -31V301H85V-31ZM380 28Q414 28 426 53Q439 78 439 112Q439 146 424 175Q410 204 386 222Q362 240 332 240Q298 240 286 215Q275 190 275 156Q275 122 289 93Q303 64 327 46Q351 28 380 28Z", "whole": "M50 135Q50 172 77 200Q104 228 150 244Q197 260 253 260Q310 260 358 244Q406 229 435 201Q464 173 464 135Q464 96 436 68Q408 39 362 24Q315 8 259 8Q203 8 156 23Q108 38 79 66Q50 95 50 135ZM280 28Q314 28 326 53Q339 78 339 112Q339 147 324 176Q310 205 286 222Q262 240 232 240Q198 240 186 215Q175 190 175 156Q175 122 189 93Q203 64 226 46Q250 28 280 28Z", "half": "M323 1009H347V169Q347 137 330 106Q314 76 286 52Q258 28 225 14Q192 -1 159 -1Q111 -1 80 22Q50 44 50 90Q50 141 78 182Q107 222 153 246Q199 269 251 269Q295 269 323 247ZM77 66Q77 56 84 48Q92 40 105 40Q140 40 192 69Q227 89 256 114Q284 138 301 162Q318 187 318 204Q318 215 312 222Q307 230 293 230Q274 230 247 218Q220 206 190 187Q161 168 135 146Q109 123 93 102Q77 81 77 66Z", "quarter": "M350 1009V173Q350 130 322 93Q293 56 248 34Q203 11 153 11Q107 11 79 34Q51 58 51 98Q51 129 69 158Q87 187 116 210Q146 234 181 248Q216 261 250 261Q293 261 324 236V1009Z", "eighth": "M325 1009H351Q357 968 366 936Q375 905 392 876Q409 846 437 812Q467 777 487 754Q507 730 527 704Q564 658 582 610Q599 561 599 511Q599 407 511 259H495Q523 318 546 378Q568 437 568 491Q568 545 540 602Q512 659 462 698Q411 737 351 741V175Q351 132 324 94Q296 57 251 34Q206 11 152 11Q109 11 80 33Q50 55 50 98Q50 130 67 160Q84 189 112 212Q140 235 174 248Q207 261 241 261Q299 261 325 238Z", "sixteenth": "M321 1009H347Q350 980 356 958Q362 936 372 919Q389 892 413 872Q437 853 468 822Q498 793 527 758Q556 722 576 677Q595 632 595 576Q595 531 581 478Q607 440 607 368Q607 320 594 272Q581 225 556 191H540Q587 283 587 351Q587 406 556 452Q536 482 512 506Q487 529 449 554Q411 579 347 611V171Q347 128 318 92Q290 55 245 33Q200 11 152 11Q110 11 80 30Q50 49 50 89Q50 137 79 176Q108 215 154 238Q200 262 249 262Q294 262 321 238ZM353 823Q353 771 376 727Q384 713 408 682Q433 651 467 619Q505 583 534 550Q563 517 568 505Q570 513 571 524Q572 534 572 547Q572 623 523 690Q474 757 353 823Z", "thirtysecond": "M321 1154H347Q350 1117 364 1089Q377 1061 406 1031Q434 1001 480 956Q527 911 552 871Q577 831 586 794Q595 756 595 716Q595 672 583 628Q595 591 595 548Q595 531 592 512Q590 493 585 472Q609 441 609 374Q609 328 596 280Q584 231 558 193H542Q587 286 587 355Q587 418 552 466Q516 515 446 559L347 622V171Q347 129 318 92Q290 56 245 34Q200 11 152 11Q104 11 77 31Q50 51 50 99Q50 131 68 160Q86 189 115 212Q144 235 178 248Q213 262 247 262Q271 262 290 256Q309 250 321 236ZM351 972Q351 935 368 903Q379 882 401 859Q423 836 449 813Q481 784 514 747Q546 710 568 665Q571 683 571 699Q571 762 538 813Q504 865 453 902Q402 940 351 972ZM349 798Q352 750 376 712Q400 675 436 641L512 570Q533 551 547 534Q561 517 568 503Q569 511 569 516Q569 521 569 527Q569 678 349 798Z", "rwhole": "M50 488V512H733V488H573V378H210V488Z", "rhalf": "M50 244V268H210V378H573V268H733V244Z", "rquarter": "M147 878 307 683Q257 624 230 581Q203 538 203 494Q203 457 227 416Q251 376 303 314L287 292Q243 320 205 320Q177 320 163 302Q149 283 149 257Q149 225 162 196Q176 168 199 142L186 123Q117 173 84 214Q51 255 51 303Q51 346 78 366Q105 386 143 386Q173 386 221 363V365L67 570Q168 659 168 736Q168 797 104 878Z", "reighth": "M155 269 251 609Q230 590 204 582Q177 574 151 574Q108 574 79 597Q50 620 50 663Q50 691 70 710Q90 730 121 730Q150 730 168 712Q187 693 187 662Q187 640 177 623Q177 617 189 617Q244 617 294 703H312L191 269Z", "rsixteenth": "M155 147 251 487Q230 468 204 460Q177 452 151 452Q108 452 79 475Q50 498 50 541Q50 569 70 588Q89 608 121 608Q150 608 168 590Q187 571 187 540Q187 518 177 501Q177 495 189 495Q230 495 267 541L319 731Q298 712 272 704Q245 696 219 696Q176 696 147 719Q118 742 118 785Q118 813 138 832Q158 852 189 852Q219 852 237 833Q255 814 255 784Q255 774 252 764Q249 753 245 745Q245 739 257 739Q312 739 362 825H380L191 147Z", "rthirtysecond": "M155 -4 251 336Q230 317 204 309Q177 301 151 301Q108 301 79 324Q50 347 50 390Q50 417 70 437Q90 457 121 457Q150 457 168 438Q187 420 187 389Q187 367 177 350Q177 344 189 344Q230 344 267 390L319 580Q298 561 272 553Q245 545 219 545Q176 545 147 568Q118 591 118 634Q118 663 138 682Q158 701 189 701Q219 701 237 682Q255 663 255 633Q255 623 252 612Q249 602 245 594Q245 588 257 588Q298 588 334 633L390 834Q369 815 342 807Q316 799 290 799Q247 799 218 822Q189 845 189 888Q189 917 209 936Q229 955 260 955Q290 955 308 936Q326 917 326 887Q326 877 323 866Q320 856 316 848Q316 842 328 842Q382 842 433 928H451L191 -4Z", "fermata": "M673 648Q671 698 646 743Q621 788 580 823Q538 858 486 878Q434 898 378 898Q324 898 272 879Q221 860 179 826Q137 791 111 746Q85 701 83 648H50Q57 720 83 784Q109 847 152 896Q195 945 252 972Q309 1000 378 1000Q447 1000 506 972Q564 943 608 894Q651 845 677 782Q703 718 708 648ZM378 648Q353 648 337 662Q321 676 321 699Q321 719 338 732Q354 746 378 746Q401 746 417 732Q433 717 433 699Q433 676 417 662Q401 648 378 648Z", "segno": "M238 462Q147 507 100 560Q52 614 52 677Q52 718 72 755Q93 792 128 816Q162 839 204 839Q252 839 285 811Q318 783 318 739Q318 717 302 704Q285 691 265 691Q242 691 230 700Q217 709 212 724L203 752Q198 768 190 778Q182 788 165 788Q143 788 128 766Q113 745 113 720Q113 678 150 642Q187 607 300 560L482 833H536L343 540Q441 490 483 436Q525 383 525 323Q525 280 505 244Q485 207 450 185Q415 163 371 163Q320 163 290 192Q261 220 261 257Q261 280 275 294Q289 308 314 308Q343 308 354 294Q366 279 369 261Q372 243 380 228Q388 214 407 214Q434 214 450 233Q466 252 466 282Q466 345 384 388Q343 409 317 422Q291 436 280 442L103 167H50ZM516 636Q536 636 550 622Q565 607 565 587Q565 567 550 552Q536 538 516 538Q496 538 482 552Q467 567 467 587Q467 607 482 622Q496 636 516 636ZM103 462Q123 462 138 448Q152 433 152 413Q152 393 138 378Q123 364 103 364Q83 364 68 378Q54 393 54 413Q54 433 68 448Q83 462 103 462Z", "coda": "M255 246V303Q194 311 156 358Q117 405 108 484H50V516H108Q117 594 154 641Q191 688 255 697V754H288V697Q353 688 390 640Q426 593 435 516H493V484H435Q426 405 388 358Q350 311 288 303V246ZM255 516V668Q228 667 212 646Q198 627 192 600Q187 573 187 516ZM288 516H356Q356 545 355 566Q354 587 351 600Q345 626 331 646Q317 667 288 668ZM288 484V332Q317 334 331 354Q345 374 350 400Q356 427 356 484ZM255 484H187Q187 456 188 436Q189 415 192 402Q198 376 212 354Q226 333 255 332Z", "trill": "M319 634Q351 634 361 626Q371 617 371 595Q390 616 410 625Q429 634 450 634Q473 634 486 621Q500 608 500 586Q500 569 489 553Q478 537 459 537Q445 537 436 544Q427 551 427 564Q427 573 431 580Q434 586 434 589Q434 599 422 599Q412 599 398 588Q385 577 377 554L308 366H226L237 396L211 380Q193 369 172 360Q151 350 129 350Q99 350 80 362Q60 373 60 399Q60 407 64 422Q69 437 76 459L124 601H50L61 634H134L156 704L237 753H257L216 634ZM296 561Q298 567 299 573Q300 579 300 583Q300 590 295 595Q291 601 269 601H206L145 421Q144 418 144 415Q143 412 143 409Q143 391 161 391Q169 391 186 399Q202 407 221 419Q240 431 253 442Z", "mordent": "M243 497 319 588V532L195 381Q189 374 181 374Q175 374 170 377L67 468Q52 482 42 482Q35 482 24 470L-37 396V454L88 604Q93 609 97 610Q101 612 104 612Q106 612 110 611Q115 610 120 605Z", "turn": "M339 467Q281 514 241 538Q201 562 167 562Q131 562 112 542Q93 521 93 492Q93 469 106 448Q120 427 146 427Q156 427 178 441Q189 448 198 452Q207 456 214 456Q234 456 248 444Q261 433 261 415Q261 392 238 380Q215 368 183 368Q118 368 84 406Q50 444 50 499Q50 533 68 564Q86 594 118 613Q151 632 195 632Q243 632 284 614Q324 595 365 562L405 530Q461 485 506 460Q552 435 576 435Q613 435 632 459Q650 483 650 511Q650 534 636 552Q622 571 597 571Q585 571 563 557Q553 550 543 546Q533 542 525 542Q508 542 495 554Q482 565 482 583Q482 603 504 616Q526 630 560 630Q598 630 628 612Q658 594 676 563Q693 532 693 493Q693 438 653 402Q613 366 548 366Q500 366 459 384Q418 403 377 436Z", "invmordent": "M68 947Q78 942 97 910Q117 877 132 825Q148 773 148 721Q148 645 114 588Q79 531 31 478V535Q68 574 94 624Q119 675 119 735Q119 773 106 815Q93 857 76 891L65 912Q61 922 61 925Q61 930 63 938Q65 946 68 947Z"};
+
+const QL = 'CDEFGAB', QNAT = [0,2,4,5,7,9,11];
+const QREF = {treble:30, bass:18, alto:24, tenor:22}; // diatonic number of the bottom line
+const QCLEF = {treble:{g:'G', pos:0}, bass:{g:'F', pos:0}, alto:{g:'C', pos:0}, tenor:{g:'C', pos:2}};
+const SP = 8, TOPY = 30, BOTY = TOPY + 4*SP, SC = SP/250;
+const posY = p => BOTY - p*SP/2;
+function glyph(name, x, y, s=SC, cls='qg'){ return `<path class="${cls}" d="${QG[name]}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${s} ${-s})"/>`; }
+const QSTEP = {sharp:130, flat:170, nat:130, dsharp:131, dflat:170};
+const ACC_G = {1:'sharp', '-1':'flat', 0:'nat', 2:'dsharp', '-2':'dflat'};
+const ACC_TXT = {0:'', 1:'\u266f', '-1':'\u266d', 2:' double-sharp', '-2':' double-flat'};
+const qnm = n => QL[n.L] + ACC_TXT[n.acc];
+const rnd = n => Math.floor(Math.random()*n);
+const pick = a => a[rnd(a.length)];
+const shuffle = a => { for(let i=a.length-1;i>0;i--){ const j=rnd(i+1); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const ORD = n => n + (n%10===1&&n!==11?'st':n%10===2&&n!==12?'nd':n%10===3&&n!==13?'rd':'th');
+const pcOf = n => ((QNAT[n.L] + n.acc)%12+12)%12;
+const dnOf = n => n.oct*7 + n.L;
+const midiQ = n => (n.oct+1)*12 + QNAT[n.L] + n.acc;
+function noteFrom(L, pc){ let acc = ((pc - QNAT[L])%12+12)%12; if(acc>6) acc -= 12; return {L, acc}; }
+
+/* ---- staff drawing ---- */
+const KEYPOS = {treble:{s:[8,5,9,6,3,7,4], f:[4,7,3,6,2,5,1]}, bass:{s:[6,3,7,4,1,5,2], f:[2,5,1,4,0,3,-1]}, alto:{s:[7,4,8,5,2,6,3], f:[3,6,2,5,1,4,0]}};
+function qStaff(o){
+  const clef = o.clef || 'treble', items = o.notes || [], gap = o.gap || 30;
+  let x = 40, body = '';
+  body += glyph(QCLEF[clef].g, 8, posY(QCLEF[clef].pos));
+  if(o.key){
+    const sh = o.key > 0, list = KEYPOS[clef][sh ? 's' : 'f'];
+    for(let i=0; i<Math.abs(o.key); i++){ body += glyph(sh ? 'sharp' : 'flat', x, posY(list[i]) + QSTEP[sh ? 'sharp' : 'flat']*SC); x += 8; }
+    x += 4;
+  }
+  if(o.time){
+    body += `<text class="qts" x="${x+6}" y="${posY(4)-1}" text-anchor="middle">${o.time[0]}</text><text class="qts" x="${x+6}" y="${posY(0)-1}" text-anchor="middle">${o.time[1]}</text>`;
+    x += 18;
+  }
+  x += 16;
+  for(const it of items){
+    const chord = Array.isArray(it) ? it : [it];
+    let accX = x - 14;
+    for(const n of chord){
+      const p = dnOf(n) - QREF[clef];
+      for(let l=-2; l>=p; l-=2) body += `<line class="qline" x1="${x-9}" x2="${x+9}" y1="${posY(l)}" y2="${posY(l)}"/>`;
+      for(let l=10; l<=p; l+=2) body += `<line class="qline" x1="${x-9}" x2="${x+9}" y1="${posY(l)}" y2="${posY(l)}"/>`;
+      body += glyph('whole', x-6.6, posY(p) + 134*SC);
+      if(n.show !== false && (n.acc || n.showNat)){ const g = ACC_G[n.acc]; body += glyph(g, accX - (n.acc===-2 ? 6 : 0), posY(p) + QSTEP[g]*SC); if(chord.length > 1) accX -= 9; }
+    }
+    x += gap;
+  }
+  const w = Math.max(o.w || 0, x + 4);
+  let s = `<svg class="qstaff" viewBox="0 6 ${w} 92" style="max-width:${Math.round(w*1.9)}px" role="img" aria-label="${o.label || 'Music notation'}">`;
+  for(let i=0; i<5; i++) s += `<line class="qline" x1="4" x2="${w-4}" y1="${TOPY+i*SP}" y2="${TOPY+i*SP}"/>`;
+  return s + body + '</svg>';
+}
+const QGB = {"breve": [50, -31, 663, 301], "whole": [50, 8, 464, 260], "half": [50, -1, 347, 1009], "quarter": [51, 11, 350, 1009], "eighth": [50, 11, 599, 1009], "sixteenth": [50, 11, 607, 1009], "thirtysecond": [50, 11, 609, 1154], "rwhole": [50, 378, 733, 512], "rhalf": [50, 244, 733, 378], "rquarter": [51, 123, 307, 878], "reighth": [50, 269, 312, 730], "rsixteenth": [50, 147, 380, 852], "rthirtysecond": [50, -4, 451, 955], "fermata": [50, 648, 708, 1000], "segno": [50, 163, 565, 839], "coda": [50, 246, 493, 754], "trill": [50, 350, 500, 753], "mordent": [-37, 374, 319, 612], "turn": [50, 366, 693, 632], "invmordent": [31, 478, 148, 947]};
+// A single symbol, framed by its own bounds so every glyph shows at a similar size.
+function qSymbol(name, label){
+  const [x0, y0, x1, y1] = QGB[name], w = x1 - x0, h = y1 - y0, side = Math.max(w, h, 500) + 240;
+  return `<svg class="qsym" viewBox="0 0 ${side} ${side}" role="img" aria-label="${label}"><path class="qg" d="${QG[name]}" transform="translate(${(side - w)/2 - x0} ${(side + h)/2 + y0}) scale(1 -1)"/></svg>`;
+}
+
+/* ---- keys and scales ---- */
+const MAJ_TONIC = f => noteFrom(((4*f)%7+7)%7, ((7*f)%12+12)%12);
+const MIN_TONIC = f => noteFrom(((4*f+5)%7+7)%7, ((7*f+9)%12+12)%12);
+const range = (a, b) => Array.from({length: b-a+1}, (_, i) => a + i);
+const majorsFor = g => g===1 ? [0,1,2,-1] : g===2 ? [0,1,2,3,-1,-2,-3] : g===3 ? range(-4,4) : g===4 ? range(-5,5) : range(-7,7);
+const minorsFor = g => g===1 ? [] : g===2 ? [0,1,-1] : g===3 ? range(-4,4) : g===4 ? range(-5,5) : range(-7,7);
+const SCALE_ST = {major:[0,2,4,5,7,9,11], harmonic:[0,2,3,5,7,8,11], natural:[0,2,3,5,7,8,10], melodic:[0,2,3,5,7,9,11]};
+function scaleOf(tonic, kind, oct=4){
+  return SCALE_ST[kind].concat(12).map((st, i) => { const L = (tonic.L + i)%7, n = noteFrom(L, pcOf(tonic) + st); n.oct = oct + Math.floor((tonic.L + i)/7); return n; });
+}
+const keyAcc = (f, L) => scaleOf(MAJ_TONIC(f), 'major').find(n => n.L === L).acc;
+const keyName = (f, minor) => qnm(minor ? MIN_TONIC(f) : MAJ_TONIC(f)) + (minor ? ' minor' : ' major');
+const sigText = f => f===0 ? 'no sharps or flats' : `${Math.abs(f)} ${f>0 ? (f>1?'sharps':'sharp') : (f<-1?'flats':'flat')}`;
+const SHARP_ORDER = 'F C G D A E B'.split(' '), FLAT_ORDER = 'B E A D G C F'.split(' ');
+const sigList = f => f>0 ? SHARP_ORDER.slice(0,f).map(x=>x+'\u266f').join(', ') : FLAT_ORDER.slice(0,-f).map(x=>x+'\u266d').join(', ');
+
+/* ---- intervals ---- */
+const BASE = [0,2,4,5,7,9,11];
+function intervalName(num, semis){
+  const k = (num-1)%7, base = BASE[k] + 12*Math.floor((num-1)/7), d = semis - base, perf = [0,3,4].includes(k);
+  const q = perf ? {0:'perfect', 1:'augmented', '-1':'diminished'}[d] : {0:'major', '-1':'minor', 1:'augmented', '-2':'diminished'}[d];
+  return q ? `${q} ${num===8 ? 'octave' : ORD(num)}` : null;
+}
+function upper(lower, num, semis){
+  const L = (lower.L + num - 1)%7, n = noteFrom(L, pcOf(lower) + semis);
+  n.oct = lower.oct + Math.floor((lower.L + num - 1)/7);
+  if(midiQ(n) - midiQ(lower) !== semis) n.oct += Math.round((semis - (midiQ(n) - midiQ(lower)))/12);
+  return n;
+}
+const triadText = ns => ns.map(qnm).join('\u2013');
+function triadOn(tonic, minor, deg){ const sc = scaleOf(tonic, minor ? 'harmonic' : 'major'); return [0,2,4].map(i => sc[(deg-1+i)%7]); }
+const QUAL = ns => { const a = (pcOf(ns[1]) - pcOf(ns[0]) + 12)%12, b = (pcOf(ns[2]) - pcOf(ns[0]) + 12)%12; return a===4&&b===7 ? 'major' : a===3&&b===7 ? 'minor' : a===3&&b===6 ? 'diminished' : a===4&&b===8 ? 'augmented' : '?'; };
+const ROMAN = ['I','II','III','IV','V','VI','VII'];
+const TECH = ['tonic','supertonic','mediant','subdominant','dominant','submediant','leading note'];
+
+/* ---- helpers to build a question ---- */
+function mk(q, a, wrong, ex, svg){
+  const opts = [a]; for(const w of wrong){ if(opts.length >= 4) break; if(w && !opts.includes(w)) opts.push(w); }
+  if(opts.length < 3) return null;
+  return {q, a, opts: shuffle(opts), ex, svg};
+}
+function keyChoice(g, allowMinor=true){
+  const minor = allowMinor && minorsFor(g).length && Math.random() < .4;
+  return {minor, f: pick(minor ? minorsFor(g) : majorsFor(g))};
+}
+
+/* ================= generators ================= */
+const GEN = {P:[], K:[], I:[], C:[], R:[], T:[], G:[]};
+
+// Pitch: name the note (grades 1-5)
+GEN.P.push(g => {
+  if(g > 5) return null;
+  const clefs = g<4 ? ['treble','bass'] : g<5 ? ['treble','bass','alto'] : ['treble','bass','alto','tenor'];
+  const clef = pick(clefs), ledg = g===1 ? 1 : g<5 ? 2 : 3;
+  const p = -2*ledg + rnd(8 + 4*ledg + 1), dn = QREF[clef] + p;
+  const r = Math.random(), acc = g>=4 && r<.1 ? pick([2,-2]) : r<(g===1 ? .3 : .45) ? pick([1,-1]) : 0;
+  const n = {L: dn%7, oct: Math.floor(dn/7), acc};
+  const wrong = clefs.concat(['treble','bass']).filter(c => c!==clef).map(c => qnm({L:(QREF[c]+p)%7, acc}));
+  wrong.push(qnm({L:(n.L+1)%7, acc}), qnm({L:(n.L+6)%7, acc}), qnm({L:(n.L+2)%7, acc}));
+  const bottom = {treble:'E', bass:'G', alto:'F', tenor:'D'}[clef];
+  return mk(`Name this note (${clef} clef).`, qnm(n), shuffle(wrong), `It’s ${qnm(n)}${n.acc ? ` (octave ${n.oct}, where middle C is C4)` : n.oct}. In the ${clef} clef the bottom line is ${bottom}${clef==='treble'?4:clef==='bass'?2:3}.`, qStaff({clef, notes:[n], label:`A note in the ${clef} clef`}));
+});
+// Pitch: tones and semitones (grade 1-3)
+GEN.P.push(g => {
+  if(g > 3) return null;
+  const a = {L:rnd(7), acc: g===1 ? 0 : pick([0,0,1,-1])}, semi = Math.random()<.5, other = noteFrom((a.L+1)%7, pcOf(a) + (semi?1:2));
+  if(Math.abs(other.acc) > 1) return null;
+  return mk(`Is ${qnm(a)} up to ${qnm(other)} a tone or a semitone?`, semi ? 'Semitone' : 'Tone', [semi ? 'Tone' : 'Semitone', 'A tone and a half'], semi ? 'They are next-door keys on the piano: a semitone.' : 'There is one key between them on the piano: a tone (two semitones).');
+});
+// Pitch: enharmonic equivalents (grade 4+)
+GEN.P.push(g => {
+  if(g < 4) return null;
+  for(let t=0; t<20; t++){
+    const n = {L:rnd(7), acc:pick([1,-1,2,-2,1,-1])}, pc = pcOf(n);
+    const alts = [-1,1,-2,2].map(d => noteFrom((n.L+d+7)%7, pc)).filter(x => Math.abs(x.acc)<=2 && x.L!==n.L);
+    if(!alts.length) continue;
+    alts.sort((x, y) => Math.abs(x.acc) - Math.abs(y.acc));
+    const a = alts[0], wrong = [noteFrom(a.L, pc+1), noteFrom(a.L, pc-1), noteFrom((n.L+2)%7, pc), noteFrom(n.L, pc+1)].filter(x=>Math.abs(x.acc)<=2).map(qnm);
+    return mk(`Which note is enharmonic with ${qnm(n)} (sounds the same)?`, qnm(a), wrong, `${qnm(n)} and ${qnm(a)} are the same key on the piano, spelled differently.`);
+  }
+  return null;
+});
+// Keys: key signature on the staff (grades 1-5)
+GEN.K.push(g => {
+  if(g > 5) return null;
+  const {minor, f} = keyChoice(g), clef = g>=4 && Math.random()<.25 ? 'alto' : pick(['treble','bass']);
+  const near = [f+1, f-1, -f, f+2, f-2].filter(x => x>=-7 && x<=7 && x!==f);
+  const wrong = near.map(x => keyName(x, minor));
+  return mk(`Which ${minor?'minor':'major'} key has this key signature?`, keyName(f, minor), wrong, `${sigText(f)[0].toUpperCase()+sigText(f).slice(1)}${f?` (${sigList(f)})`:''}: ${keyName(f,false)}, or its relative ${keyName(f,true)}.`, qStaff({clef, key:f, w:150, label:'A key signature'}));
+});
+// Keys: how many sharps/flats (grades 1-4)
+GEN.K.push(g => {
+  if(g > 4) return null;
+  const {minor, f} = keyChoice(g); if(f===0) return null;
+  const word = n => sigText(n);
+  return mk(`How many sharps or flats are in the key signature of ${keyName(f, minor)}?`, word(f), [word(-f), word(f>0?f+1:f-1), word(f>0?f-1:f+1)].filter((x,i)=>!(i>0&&x===word(0))), `${keyName(f,minor)}: ${sigList(f)}.`);
+});
+// Keys: relative major/minor
+GEN.K.push(g => {
+  if(g < 2 || g > 5) return null;
+  const f = pick(minorsFor(g)), toMinor = Math.random()<.5;
+  const a = keyName(f, toMinor), src = keyName(f, !toMinor);
+  const t = toMinor ? MAJ_TONIC(f) : MIN_TONIC(f);
+  const wrong = toMinor ? [qnm(t)+' minor', keyName(f+1, true), keyName(f-1, true)] : [qnm(t)+' major', keyName(f+1, false), keyName(f-1, false)];
+  return mk(`What is the relative ${toMinor?'minor':'major'} of ${src}?`, a, wrong, `Relative keys share a key signature (${sigText(f)}). The relative minor starts a minor 3rd below the major tonic.`);
+});
+// Keys: scale degree (number for grades 1-3, technical name for 4-5)
+GEN.K.push(g => {
+  if(g > 5) return null;
+  const {minor, f} = keyChoice(g), t = minor ? MIN_TONIC(f) : MAJ_TONIC(f), sc = scaleOf(t, minor ? 'harmonic' : 'major'), d = 1 + rnd(6) + (g>=4 ? 0 : 1);
+  const deg = Math.min(d, 7), n = sc[deg-1], kn = keyName(f, minor);
+  const others = sc.slice(0,7).filter((x,i)=>i!==deg-1).map(qnm);
+  if(g < 4) return mk(`In ${kn}, which note is the ${ORD(deg)} degree of the scale?`, qnm(n), shuffle(others), `Count up from ${qnm(t)}: ${sc.slice(0,deg).map(qnm).join(', ')}.`);
+  if(Math.random()<.5) return mk(`In ${kn}, which note is the ${TECH[deg-1]}?`, qnm(n), shuffle(others), `The ${TECH[deg-1]} is the ${ORD(deg)} degree: ${qnm(n)}.`);
+  return mk(`In ${kn}, ${qnm(n)} is the…`, TECH[deg-1], shuffle(TECH.filter((_,i)=>i!==deg-1)), `${qnm(n)} is the ${ORD(deg)} degree of ${kn}, called the ${TECH[deg-1]}.`);
+});
+// Keys: raised notes in minor scales
+GEN.K.push(g => {
+  if(g < 2 || g > 4) return null;
+  const f = pick(minorsFor(g)), t = MIN_TONIC(f), h = scaleOf(t,'harmonic'), nat = scaleOf(t,'natural');
+  if(Math.random()<.5){
+    return mk(`Which note is raised in ${qnm(t)} harmonic minor?`, qnm(h[6]), [qnm(nat[6]), qnm(noteFrom(h[5].L, pcOf(h[5])+1)), qnm(noteFrom(h[3].L, pcOf(h[3])+1))], `The harmonic minor raises the 7th degree by a semitone: ${qnm(nat[6])} becomes ${qnm(h[6])}.`);
+  }
+  const m = scaleOf(t,'melodic'), a = `${qnm(m[5])} and ${qnm(m[6])}`;
+  return mk(`Ascending, which notes are raised in ${qnm(t)} melodic minor?`, a, [`${qnm(nat[5])} and ${qnm(nat[6])}`, `${qnm(h[6])} only`, `${qnm(m[2])} and ${qnm(m[6])}`], `Going up, the melodic minor raises the 6th and 7th degrees; coming down it uses the key signature.`);
+});
+// Keys: which scale is this (grade 2+)
+GEN.K.push(g => {
+  if(g < 2 || g > 4) return null;
+  const minor = Math.random()<.6;
+  const f = minor ? pick(minorsFor(g)) : pick(majorsFor(g));
+  const t = minor ? MIN_TONIC(f) : MAJ_TONIC(f), kind = minor ? pick(['harmonic','melodic']) : 'major';
+  const notes = scaleOf(t, kind, 4);
+  const clef = 'treble';
+  notes.forEach(n => n.showNat = false);
+  const T = qnm(t), names = {major:`${T} major`, harmonic:`${T} harmonic minor`, melodic:`${T} melodic minor`};
+  const wrong = [`${T} major`, `${T} harmonic minor`, `${T} melodic minor`, `${T} natural minor`].filter(x=>x!==names[kind]);
+  return mk('Which scale is this (written with accidentals, no key signature)?', names[kind], wrong, kind==='major' ? 'Tones and semitones follow T T S T T T S: a major scale.' : kind==='harmonic' ? 'Minor 3rd, minor 6th and a raised 7th: harmonic minor.' : 'Minor 3rd with raised 6th and 7th going up: melodic minor.', qStaff({clef, notes, gap:22, label:'A scale'}));
+});
+// Intervals (grades 1-5)
+GEN.I.push(g => {
+  if(g > 5) return null;
+  let lower, up, num, semis, ctx = '';
+  if(g <= 3){
+    const {minor, f} = keyChoice(g), t = minor ? MIN_TONIC(f) : MAJ_TONIC(f);
+    const oct = t.L >= 3 ? 4 : 4; const sc = scaleOf(t, minor ? 'harmonic' : 'major', oct);
+    num = 2 + rnd(7); lower = sc[0]; up = sc[num-1]; semis = midiQ(up) - midiQ(lower); ctx = ` (in ${keyName(f, minor)}, above the tonic)`;
+  } else {
+    const pool = [[2,1],[2,2],[2,3],[3,3],[3,4],[4,5],[4,6],[5,6],[5,7],[5,8],[6,8],[6,9],[6,10],[7,9],[7,10],[7,11],[8,12],[3,2],[4,4],[6,7]];
+    for(let t=0; t<30; t++){
+      const [n, s] = pick(pool), comp = g>=5 && Math.random()<.4;
+      lower = {L: comp ? rnd(4) : rnd(7), acc:pick([0,0,1,-1]), oct:4}; num = n + (comp?7:0); semis = s + (comp?12:0);
+      if(comp && n > 5) continue;
+      up = upper(lower, num, semis); if(Math.abs(up.acc) <= 2) break;
+    }
+  }
+  const name = intervalName(num, semis); if(!name) return null;
+  const clef = 'treble';
+  const notes = [lower, up];
+  let opts;
+  if(g <= 2){
+    const nn = n => n===8 ? '8th (octave)' : ORD(n);
+    return mk(`Give the number of this interval${ctx}.`, nn(num), [num-1, num+1, num+2, num-2].filter(x=>x>=2&&x<=8).map(nn), `Count the letter names from ${qnm(lower)} up to ${qnm(up)}, including both: ${ORD(num)}.`, qStaff({clef, notes: num>=3 && Math.random()<.5 ? [notes] : notes, gap:30, label:'Two notes'}));
+  }
+  const k = (num-1)%7, perf = [0,3,4].includes(k), q = name.split(' ')[0], rest = name.slice(q.length+1);
+  const quals = perf ? ['perfect','augmented','diminished'] : ['major','minor','augmented','diminished'];
+  opts = quals.filter(x=>x!==q).map(x=>`${x} ${rest}`);
+  const near = intervalName(num+1, semis) || intervalName(num-1, semis); if(near) opts.unshift(near);
+  return mk(`Describe this interval${ctx}.`, name, opts, `${qnm(lower)} up to ${qnm(up)}: ${ORD(num)}${num>8?` (a compound ${ORD(num-7)})`:''}, ${semis} semitone${semis===1?'':'s'}, so ${name}.`, qStaff({clef, notes: num>=3 && Math.random()<.5 ? [notes] : notes, gap:30, label:'Two notes'}));
+});
+// Chords: tonic triad notes
+GEN.C.push(g => {
+  if(g > 3) return null;
+  const {minor, f} = keyChoice(g), t = minor ? MIN_TONIC(f) : MAJ_TONIC(f), tr = triadOn(t, minor, 1);
+  const alt = [...tr]; alt[1] = noteFrom(tr[1].L, pcOf(tr[1]) + (minor?1:-1));
+  const iv = triadOn(t, minor, 4), v = triadOn(t, minor, 5);
+  return mk(`Which notes make the tonic triad of ${keyName(f, minor)}?`, triadText(tr), [triadText(alt), triadText(iv), triadText(v)], `The tonic triad is the 1st, 3rd and 5th degrees: ${triadText(tr)}.`);
+});
+// Chords: tonic triad on the staff (grades 1-3)
+GEN.C.push(g => {
+  if(g > 3) return null;
+  const {minor, f} = keyChoice(g), t = minor ? MIN_TONIC(f) : MAJ_TONIC(f);
+  const tr = scaleOf(t, minor ? 'harmonic' : 'major', 4); const ch = [tr[0], tr[2], tr[4]];
+  const wrong = [keyName(f, !minor), keyName(f+1, minor), keyName(f-1, minor)];
+  if(!minorsFor(g).length) wrong.splice(0,1);
+  return mk(`This is the tonic triad of which key?`, keyName(f, minor), wrong, `${triadText(ch)}: root ${qnm(t)} with a ${minor?'minor':'major'} 3rd above.`, qStaff({clef:'treble', notes:[ch], w:120, label:'A triad'}));
+});
+// Chords: primary and secondary triads (grades 4-6)
+GEN.C.push(g => {
+  if(g < 4 || g > 6) return null;
+  const {minor, f} = keyChoice(g), t = minor ? MIN_TONIC(f) : MAJ_TONIC(f);
+  const degs = g===4 ? [1,4,5] : [1,2,4,5].concat(g>=6 ? [6] : []);
+  const d = pick(degs), tr = triadOn(t, minor, d);
+  const roman = ROMAN[d-1];
+  if(Math.random()<.5) return mk(`In ${keyName(f, minor)}, which notes form chord ${roman}?`, triadText(tr), degs.filter(x=>x!==d).map(x=>triadText(triadOn(t, minor, x))).concat([triadText(triadOn(t, minor, d===7?1:d+1))]), `Chord ${roman} is built on the ${TECH[d-1]} (${qnm(tr[0])}): ${triadText(tr)}, a ${QUAL(tr)} triad.`);
+  return mk(`In ${keyName(f, minor)}, this chord is…`, roman, degs.filter(x=>x!==d).map(x=>ROMAN[x-1]).concat(['VI','III']), `${triadText(tr)} is built on the ${TECH[d-1]}, so it is chord ${roman}.`, qStaff({clef:'treble', key:f, notes:[tr.map((n,i)=>({...n, oct: 4 + Math.floor((tr[0].L + 2*i)/7) - (tr[0].L>=5?1:0), show: n.acc !== keyAcc(f, n.L), showNat: true}))], w:150, label:'A chord'}));
+});
+// Chords: inversions (grades 5-7)
+GEN.C.push(g => {
+  if(g < 5 || g > 7) return null;
+  const {minor, f} = keyChoice(g), t = minor ? MIN_TONIC(f) : MAJ_TONIC(f), d = pick([1,2,4,5]), tr = triadOn(t, minor, d), inv = pick(['a','b','c']);
+  const bass = tr[{a:0,b:1,c:2}[inv]];
+  return mk(`In ${keyName(f, minor)}, which note is in the bass of chord ${ROMAN[d-1]}${inv}?`, qnm(bass), tr.filter(n=>n!==bass).map(qnm).concat([qnm(triadOn(t, minor, d===5?1:5)[0])]), `${ROMAN[d-1]} is ${triadText(tr)}. ${inv==='a'?'Root position (a) has the root':inv==='b'?'First inversion (b) has the 3rd':'Second inversion (c) has the 5th'} in the bass: ${qnm(bass)}.`);
+});
+// Chords: cadences (grades 5-7)
+GEN.C.push(g => {
+  if(g < 5 || g > 7) return null;
+  const types = [['V','I','perfect'],['IV','I','plagal'],['I','V','imperfect'],['IV','V','imperfect'],['ii','V','imperfect']].concat(g>=6 ? [['V','vi','interrupted']] : []);
+  const [a, b, kind] = pick(types), f = pick(majorsFor(g)), t = MAJ_TONIC(f);
+  const deg = r => ['I','ii','iii','IV','V','vi'].indexOf(r) + 1;
+  const ch = r => { const tr = triadOn(t, false, deg(r)); return `${qnm(tr[0])} ${QUAL(tr)}`; };
+  const all = ['perfect','imperfect','plagal','interrupted'];
+  return mk(`In ${keyName(f,false)}, a phrase ends ${ch(a)} \u2192 ${ch(b)}. Which cadence is this?`, kind, all.filter(x=>x!==kind), `${ch(a)} is chord ${a} and ${ch(b)} is chord ${b}: ${a}\u2013${b} is ${kind==='perfect'?'a perfect cadence':kind==='plagal'?'a plagal cadence':kind==='interrupted'?'an interrupted cadence':'an imperfect cadence (ending on V)'}.`);
+});
+// Chords: secondary dominant, Neapolitan, diminished 7th (grade 6+)
+GEN.C.push(g => {
+  if(g < 6) return null;
+  const r = Math.random();
+  if(r < .35){
+    const f = pick(majorsFor(g)), t = MAJ_TONIC(f), ii = triadOn(t, false, 2), vv = [ii[0], noteFrom(ii[1].L, pcOf(ii[0])+4), ii[2]];
+    return mk(`In ${keyName(f,false)}, which chord is V of V (the dominant of the dominant)?`, `${qnm(vv[0])} major (${triadText(vv)})`, [`${qnm(ii[0])} minor (${triadText(ii)})`, `${qnm(triadOn(t,false,5)[0])} major`, `${qnm(triadOn(t,false,6)[0])} major`], `The dominant of ${keyName(f,false)} is ${qnm(triadOn(t,false,5)[0])}; its own dominant is ${qnm(vv[0])} major, so the 3rd is raised.`);
+  }
+  if(r < .7 && g >= 7){
+    const f = pick(minorsFor(g)), t = MIN_TONIC(f), n2 = noteFrom((t.L+1)%7, pcOf(t)+1), nap = [n2, noteFrom((t.L+3)%7, pcOf(t)+5), noteFrom((t.L+5)%7, pcOf(t)+8)];
+    if(nap.some(x=>Math.abs(x.acc)>1)) return null;
+    return mk(`In ${keyName(f,true)}, the Neapolitan 6th is built on which chord?`, `${qnm(n2)} major`, [`${qnm(noteFrom((t.L+1)%7, pcOf(t)+2))} minor`, `${qnm(noteFrom((t.L+5)%7, pcOf(t)+8))} major`, `${qnm(noteFrom((t.L+3)%7, pcOf(t)+5))} minor`], `The Neapolitan is a major chord on the flattened supertonic (${triadText(nap)}), usually in first inversion.`);
+  }
+  const f = pick(minorsFor(g)), t = MIN_TONIC(f), h = scaleOf(t, 'harmonic'), d7 = [h[6], h[1], h[3], h[5]];
+  return mk(`In ${keyName(f,true)}, which notes form the diminished 7th on the leading note?`, triadText(d7), [triadText([h[4], h[6], h[1], h[3]]), triadText([noteFrom(h[6].L, pcOf(h[6])-1), h[1], h[3], h[5]]), triadText([h[6], h[1], h[3], noteFrom(h[5].L, pcOf(h[5])+1)])], `Stack minor 3rds on the leading note (${qnm(h[6])}): ${triadText(d7)}.`);
+});
+// Rhythm: name the note or rest
+const VALUES = [['breve','breve','double whole note',8],['whole','semibreve','whole note',4],['half','minim','half note',2],['quarter','crotchet','quarter note',1],['eighth','quaver','eighth note',.5],['sixteenth','semiquaver','sixteenth note',.25],['thirtysecond','demisemiquaver','thirty-second note',.125]];
+const valsFor = g => VALUES.filter(v => v[0]==='breve' ? g>=4 : v[0]==='sixteenth' ? g>=2 : v[0]==='thirtysecond' ? g>=3 : true);
+GEN.R.push(g => {
+  if(g > 4) return null;
+  const vs = valsFor(g).filter(v => v[0]!=='breve' || true), v = pick(vs), rest = Math.random()<.35 && v[0]!=='breve';
+  const glyphName = rest ? 'r' + v[0] : v[0];
+  return mk(`What is this ${rest?'rest':'note'} called?`, v[1] + (rest?' rest':''), shuffle(valsFor(Math.max(g,3)).filter(x=>x!==v).map(x=>x[1]+(rest?' rest':''))), `A ${v[1]} (${v[2]}) lasts ${v[3]===1?'1 crotchet beat':v[3]>1?v[3]+' crotchet beats':({.5:'half',.25:'a quarter of',.125:'an eighth of'})[v[3]]+' a crotchet beat'}.`, qSymbol(glyphName, rest ? 'A rest' : 'A note'));
+});
+// Rhythm: value arithmetic (grades 1-4)
+GEN.R.push(g => {
+  if(g > 4) return null;
+  const vs = valsFor(g).filter(v=>v[3]<=4);
+  for(let t=0; t<20; t++){
+    const big = pick(vs), small = pick(vs), dot = g>=1 && Math.random()<.5, dd = g>=4 && dot && Math.random()<.3;
+    const bv = big[3]*(dd?1.75:dot?1.5:1), n = bv/small[3];
+    if(!(n>=2 && n<=16 && Number.isInteger(n))) continue;
+    const label = (dd?'double-dotted ':dot?'dotted ':'') + big[1];
+    return mk(`How many ${small[1]}s make one ${label}?`, String(n), [n+1, n-1, n*2, n/2, n+2].filter(x=>Number.isInteger(x)&&x>0&&x!==n).map(String), `A ${label} lasts ${bv} crotchet beat${bv===1?'':'s'}; a ${small[1]} lasts ${small[3]}. ${bv} \u00f7 ${small[3]} = ${n}.`);
+  }
+  return null;
+});
+// Rhythm: time signatures
+const TS = [[2,4,'simple duple',1],[3,4,'simple triple',1],[4,4,'simple quadruple',1],[2,2,'simple duple',2],[3,2,'simple triple',2],[4,2,'simple quadruple',2],[3,8,'simple triple',3],[6,8,'compound duple',3],[9,8,'compound triple',3],[12,8,'compound quadruple',3],[6,4,'compound duple',4],[9,16,'compound triple',4],[12,16,'compound quadruple',4],[5,4,'irregular (quintuple)',5],[7,8,'irregular (septuple)',5],[5,8,'irregular (quintuple)',5],[7,4,'irregular (septuple)',5]];
+const BEAT = {'4s':'crotchet','2s':'minim','8s':'quaver','16s':'semiquaver','8c':'dotted crotchet','4c':'dotted minim','16c':'dotted quaver'};
+GEN.R.push(g => {
+  if(g > 5) return null;
+  const ts = pick(TS.filter(t => t[3] <= g)), [a, b, desc] = ts, comp = desc.startsWith('compound'), irr = desc.startsWith('irregular');
+  const beats = comp ? a/3 : a, beat = BEAT[b + (comp?'c':'s')];
+  if(g >= 4 && Math.random()<.5){
+    const all = ['simple duple','simple triple','simple quadruple','compound duple','compound triple','compound quadruple'].concat(g>=5?['irregular (quintuple)','irregular (septuple)']:[]);
+    return mk(`How do you describe the time signature ${a}/${b}?`, desc, shuffle(all.filter(x=>x!==desc)), comp ? `${a}/${b}: beats divide into three, so compound; ${beats} beats a bar.` : irr ? `${a} beats a bar don’t fall into regular groups of 2, 3 or 4: irregular time.` : `${a}/${b}: ${a} ${beat} beats, each dividing into two, so ${desc}.`, qStaff({clef:'treble', time:[a,b], w:110, label:`Time signature ${a} ${b}`}));
+  }
+  if(irr) return null;
+  const ans = `${beats} ${beat} beat${beats>1?'s':''}`;
+  const wrong = comp ? [`${a} ${BEAT[b+'s']} beats`, `${beats} ${BEAT[b+'s']} beats`, `${beats} ${beat==='dotted crotchet'?'minim':'crotchet'} beats`] : [`${a} ${BEAT[(b*2)+'s'] || 'quaver'} beats`, `${a*2} ${BEAT[(b*2)+'s'] || 'quaver'} beats`, `${a} ${BEAT[(b/2)+'s'] || 'semibreve'} beats`];
+  return mk(`How many beats are in a bar of ${a}/${b}?`, ans, wrong, comp ? `In compound time, divide the top number by 3: ${a} ${BEAT[b+'s']}s make ${beats} ${beat} beats.` : `The top number is how many beats; the bottom number ${b} means ${beat} beats.`, qStaff({clef:'treble', time:[a,b], w:110, label:`Time signature ${a} ${b}`}));
+});
+// Terms: meaning, or which term
+let GRADE_TERMS = null;
+function gradeTerms(){
+  if(GRADE_TERMS) return GRADE_TERMS;
+  const L = {1:'Accelerando,Adagio,Allegretto,Allegro,Andante,Cantabile,Crescendo,Da capo,Dal segno,Decrescendo,Diminuendo,Fine,Forte,Fortissimo,Legato,Lento,Mezzo forte,Mezzo piano,Moderato,Piano,Pianissimo,Rallentando,Ritardando,Staccato,A tempo,Accent,Fermata',
+    2:'Allargando,Andantino,Assai,Con,Dolce,Espressivo,Grave,Largo,Meno,Molto,Ma non troppo,Più,Poco,Presto,Ritenuto,Senza,Sforzando,Simile,Sostenuto,Sotto voce,Tenuto,Vivace,Fortepiano,Più mosso,Meno mosso,Ottava,Loco,Da capo al fine,Dal segno al fine,Coda,Segno,Mano destra,Mano sinistra,Solo,Trill,Pedale',
+    3:'Affettuoso,Agitato,Animato,Con brio,Comodo,Energico,Giocoso,Grazioso,Leggiero,Maestoso,Marcato,Morendo,Nobilmente,Pesante,Quasi,Sempre,Smorzando,Stringendo,Subito,Tranquillo,Con moto,Con spirito,Con fuoco,Con forza,Prima volta,Seconda volta,Poco a poco,Allegro moderato,Allegro ma non troppo,Allegro assai,Allegro vivace,Non legato,Staccatissimo,Ottava bassa,Da capo al coda,Dal segno al coda,Pianississimo,Fortississimo,Unisono,Bis',
+    4:'Cédez,Retenu,En dehors,Animé,Doux,Lent,Modéré,Vif,Très,Calando,Perdendosi,Rubato,Tempo primo,L\'istesso tempo,Larghetto,Prestissimo,Vivacissimo,Appassionato,Doloroso,Lamentoso,Mesto,Misterioso,Scherzando,Semplice,Teneramente,Pizzicato,Arco,Con sordino,Senza sordino,Una corda,Tre corde,Tremolo,Glissando,Adagietto,Portato,Rinforzando,Amabile,Brillante,Con anima,Furioso,Lugubre,Marziale,Spiritoso,Vigoroso,Segue,Caesura',
+    5:'Langsam,Mäßig,Schnell,Lebhaft,Bewegt,Ruhig,Zart,Etwas,Sehr,Nicht zu schnell,Ohne,Mit,Breit,Fließend,Kräftig,Innig,Schwer,Wieder,Ziemlich,Ein wenig,Mit Dämpfer,Ohne Dämpfer,Gestopft,Attacca,Tacet,Divisi,Tutti,Sul ponticello,Sul tasto,Col legno,Ossia,Cadenza,Ad libitum,Tempo giusto,Alla breve,Senza misura'};
+  const by = new Map(TERMS_RAW.map(e => [e.t, e])), used = new Set();
+  GRADE_TERMS = {};
+  for(const g of [1,2,3,4,5]) GRADE_TERMS[g] = L[g].split(',').map(t => { used.add(t); return by.get(t); }).filter(Boolean);
+  const rest = TERMS_RAW.filter(e => !used.has(e.t));
+  // Grades 6-8: the less common Italian markings and the longer German ones
+  GRADE_TERMS[6] = rest.filter(e => e.l!=='German').concat(rest.filter(e => e.l==='German').slice(0, 20)); GRADE_TERMS[7] = rest.filter(e => e.l==='German'); GRADE_TERMS[8] = rest;
+  return GRADE_TERMS;
+}
+GEN.T.push(g => {
+  const G = gradeTerms(), pool = G[g]; if(!pool || !pool.length) return null;
+  const e = pick(pool), near = [].concat(G[g], G[Math.max(1,g-1)], G[Math.min(8,g+1)]).filter(x => x.d !== e.d && x.t !== e.t);
+  const same = shuffle(near.filter(x => x.c === e.c)), other = shuffle(near.filter(x => x.c !== e.c)), ds = same.concat(other);
+  if(Math.random() < .6) return mk(`What does \u201c${e.t}\u201d mean?`, e.d, ds.map(x => x.d), `${e.t} (${e.l}): ${e.d}`);
+  return mk(`Which term means: \u201c${e.d.replace(/\.$/,'')}\u201d?`, e.t, ds.map(x => x.t), `${e.t} (${e.l}): ${e.d}`);
+});
+// Terms: signs drawn as symbols
+const SIGNS = [[1,'fermata','Pause (fermata): hold the note longer than written','The pause sign: hold the note or rest for longer than its value.'],[1,'segno','Segno: the sign D.S. sends you back to','D.S. (dal segno) means go back to this sign.'],[2,'coda','Coda sign: jump to the coda here','“To Coda” sends you to the section marked with this sign.'],[4,'trill','Trill','tr: alternate rapidly between the written note and the note above.'],[4,'turn','Turn','Note above, main note, note below, main note.']];
+GEN.T.push(g => {
+  if(g > 5) return null;
+  const avail = SIGNS.filter(s => s[0] <= g); if(avail.length < 3) return null;
+  const s = pick(avail), wrong = SIGNS.filter(x => x !== s).map(x => x[2]);
+  return mk('What does this sign mean?', s[2], shuffle(wrong), s[3], qSymbol(s[1], 'A music sign'));
+});
+
+// Keys: related keys and modulation targets (grades 6-8)
+GEN.K.push(g => {
+  if(g < 6) return null;
+  const minor = Math.random()<.4, f = pick(range(-4,4)), home = keyName(f, minor);
+  const opts = minor
+    ? [['dominant', keyName(f+1, true), 'its dominant minor (the key a 5th above)'], ['subdominant', keyName(f-1, true), 'its subdominant minor (the key a 5th below)'], ['relative major', keyName(f, false), 'its relative major (same key signature)']]
+    : [['dominant', keyName(f+1, false), 'its dominant (the key a 5th above)'], ['subdominant', keyName(f-1, false), 'its subdominant (the key a 5th below)'], ['relative minor', keyName(f, true), 'its relative minor (same key signature)'], ['relative minor of the dominant', keyName(f+1, true), 'the dominant’s relative minor']];
+  const [what, a, why] = pick(opts);
+  const wrong = [keyName(f+1, !minor), keyName(f-1, !minor), keyName(f+2, minor), keyName(f-1, minor), keyName(f+1, minor), keyName(f, !minor)].filter(x => x !== a);
+  return mk(`A piece in ${home} modulates to the ${what}. Which key is that?`, a, shuffle(wrong), `From ${home}, the ${what} is ${a}: ${why}.`);
+});
+// Intervals: inverting intervals, including augmented and diminished (grades 6-8)
+GEN.I.push(g => {
+  if(g < 6) return null;
+  const q = pick(['major','minor','perfect','augmented','diminished']), n = q==='perfect' ? pick([4,5]) : q==='major' || q==='minor' ? pick([2,3,6,7]) : pick([2,3,4,5,6,7]);
+  const inv = {major:'minor', minor:'major', perfect:'perfect', augmented:'diminished', diminished:'augmented'}[q];
+  const name = (qq, nn) => `${qq} ${ORD(nn)}`;
+  const a = name(inv, 9-n), wrong = [name(q, 9-n), name(inv, 8-n), name(inv, 10-n), name(q==='perfect'?'augmented':q, n)].filter(x => x!==a && !/ (1st|0th|9th)$/.test(x));
+  return mk(`What is a ${name(q, n)} when inverted?`, a, wrong, `Inverted intervals add up to 9 (${n} + ${9-n}); major ↔ minor, augmented ↔ diminished, perfect stays perfect.`);
+});
+
+// grade | category | question | answer | wrong 1 | wrong 2 | wrong 3 | explanation
+const QBANK_RAW = `
+1|R|How many crotchet beats is a semibreve worth?|4|2|3|8|A semibreve (whole note) lasts four crotchet beats.
+1|R|How many quavers make one crotchet?|2|4|3|1|Two quavers fit into one crotchet beat.
+1|R|What does the top number of a time signature tell you?|How many beats are in each bar|What kind of note gets one beat|How fast to play|How many bars are in the piece|The top number counts the beats in a bar; the bottom number shows the type of beat.
+1|R|In 4/4, the bottom number 4 means the beat is a…|crotchet|minim|quaver|semibreve|A bottom number of 4 means crotchet (quarter-note) beats.
+1|R|What does a dot after a note do?|Adds half the note’s value|Doubles the note’s value|Makes the note short and detached|Adds one beat whatever the note|A dot adds half the value: a dotted minim = 2 + 1 = 3 crotchet beats.
+1|R|What does a tie do?|Joins two notes of the same pitch into one longer sound|Tells you to play notes of different pitch smoothly|Shortens the first note|Repeats the note|A tie joins notes of the same pitch; only the first is played, held for both values.
+1|R|A dotted crotchet lasts as long as…|three quavers|two quavers|three crotchets|four quavers|A crotchet (2 quavers) plus half again (1 quaver) = 3 quavers.
+1|R|In 3/4 time, a whole bar of rest is usually written as…|a semibreve rest|a dotted minim rest|three crotchet rests|a minim rest|A semibreve rest is used for a complete bar’s rest in any time signature.
+1|R|What is the American name for a crotchet?|Quarter note|Half note|Eighth note|Whole note|Crotchet = quarter note; minim = half note; quaver = eighth note.
+1|R|What is the American name for a minim?|Half note|Quarter note|Whole note|Eighth note|Minim = half note.
+1|R|How many crotchet beats are in a bar of 3/4?|3|4|2|6|The top number 3 means three crotchet beats per bar.
+1|P|Where is middle C written in the treble clef?|On the first ledger line below the staff|On the bottom line|On the first ledger line above the staff|In the bottom space|Middle C sits on a ledger line just below the treble staff.
+1|P|Where is middle C written in the bass clef?|On the first ledger line above the staff|On the top line|On the first ledger line below the staff|In the top space|Middle C sits on a ledger line just above the bass staff.
+1|P|What does a sharp sign do?|Raises a note by a semitone|Lowers a note by a semitone|Raises a note by a tone|Cancels a sharp or flat|A sharp raises the pitch by one semitone.
+1|P|What does a flat sign do?|Lowers a note by a semitone|Raises a note by a semitone|Lowers a note by a tone|Cancels a sharp or flat|A flat lowers the pitch by one semitone.
+1|P|What does a natural sign do?|Cancels a sharp or flat|Raises a note by a semitone|Lowers a note by a semitone|Repeats the note|A natural returns the note to its plain (white-key) pitch.
+1|P|How long does an accidental last?|Until the end of the bar|For that one note only|Until the end of the piece|Until the next line of music|Accidentals apply to that pitch for the rest of the bar.
+1|P|Which pair of notes is a semitone apart?|E and F|F and G|C and D|A and B|E–F and B–C have no black key between them: semitones.
+1|P|Which pair of notes is a tone apart?|C and D|E and F|B and C|F♯ and G|C to D has a black key between them: a tone.
+1|P|The treble clef is also called the…|G clef|F clef|C clef|alto clef|Its curl circles the G line.
+1|P|The bass clef is also called the…|F clef|G clef|C clef|tenor clef|Its two dots sit either side of the F line.
+1|P|In the treble clef, the notes on the lines (bottom to top) are…|E G B D F|F A C E G|G B D F A|C E G B D|Lines: E G B D F; spaces: F A C E.
+1|P|In the bass clef, the notes in the spaces (bottom to top) are…|A C E G|F A C E|G B D F|B D F A|Bass clef spaces: A C E G; lines: G B D F A.
+1|K|Which note has a sharp in G major?|F♯|C♯|G♯|B♭|G major has one sharp: F♯.
+1|K|Which note has a flat in F major?|B♭|E♭|F♭|A♭|F major has one flat: B♭.
+1|K|Which two notes are sharp in D major?|F♯ and C♯|F♯ and G♯|C♯ and G♯|D♯ and F♯|D major has two sharps: F♯ and C♯.
+1|K|In a major scale, the semitones fall between degrees…|3–4 and 7–8|2–3 and 5–6|3–4 and 6–7|4–5 and 7–8|The pattern is tone, tone, semitone, tone, tone, tone, semitone.
+1|K|The pattern of a major scale is…|T T S T T T S|T S T T S T T|T T T S T T S|S T T T S T T|Tone–tone–semitone–tone–tone–tone–semitone.
+1|K|What is the 1st degree of a scale called (its home note)?|The tonic|The dominant|The octave|The leading note|The tonic is the keynote the scale is built on.
+1|I|When you count the number of an interval, you…|count both the bottom and the top letter names|count only the notes in between|count the semitones|count the black keys|C up to E is C, D, E: a 3rd.
+1|I|An interval of an 8th is also called…|an octave|a unison|a 7th|a tonic|Eight letter names apart, same letter name: an octave.
+1|I|What interval number is C up to G?|5th|4th|6th|3rd|C, D, E, F, G: five letter names.
+1|C|A triad is made of…|three notes, each a 3rd apart|three notes next to each other|two notes a 3rd apart|four notes a 3rd apart|A triad stacks two 3rds: root, 3rd and 5th.
+1|C|In C major, the tonic triad is…|C–E–G|C–D–E|C–F–A|G–B–D|The tonic triad uses scale degrees 1, 3 and 5.
+1|C|The lowest note of a root-position triad is the…|root|3rd|5th|octave|In root position the root is at the bottom.
+1|T|Which dynamic is the quietest?|pp|p|mp|mf|pp (pianissimo) means very quiet.
+1|T|What does mf stand for?|Mezzo forte: moderately loud|Mezzo piano: moderately quiet|Molto forte: very loud|Meno forte: less loud|Mezzo = half/moderately; forte = loud.
+1|T|A curved line over notes of different pitch is a…|slur: play them smoothly|tie: hold them as one note|phrase mark: breathe after each note|repeat sign|A slur joins different pitches: play them legato.
+1|T|A dot above or below a note means…|staccato: short and detached|hold the note longer|add half the value|play louder|A dot above or below the notehead means staccato.
+1|T|What does the sign > above a note mean?|Accent: play it with emphasis|Get gradually louder|Get gradually softer|Hold the note|The accent sign asks for extra stress on that note.
+1|T|What does “D.C. al Fine” tell you?|Go back to the beginning and stop at Fine|Go back to the sign and stop at Fine|Play to the end and stop|Repeat the last bar|D.C. = da capo (from the head/start); al Fine = to the end marked Fine.
+1|G|How many lines does a music staff (stave) have?|5|4|6|11|A staff has five lines and four spaces.
+1|G|What is the vertical line that divides music into bars?|Bar line|Ledger line|Stem|Tie|Bar lines separate the bars (measures).
+1|G|What does a double bar line with two dots ( :‖ ) mean?|Repeat the section|The end of the piece|A pause|Change of key|Dots before a double bar mean go back and repeat.
+1|G|What is a ledger line?|A short extra line for notes above or below the staff|A line joining notes of the same pitch|A line dividing bars|A line under the title|Ledger lines extend the staff for higher or lower notes.
+1|G|Which family does the trumpet belong to?|Brass|Woodwind|Strings|Percussion|The trumpet is a brass instrument.
+1|G|Which family does the violin belong to?|Strings|Brass|Woodwind|Percussion|The violin is the smallest member of the string family.
+1|G|Which family does the flute belong to?|Woodwind|Brass|Strings|Percussion|Even though it is often made of metal, the flute is a woodwind instrument.
+1|G|Which of these instruments is played with a bow?|Cello|Trumpet|Flute|Snare drum|Violin, viola, cello and double bass are bowed.
+1|G|Which of these is a percussion instrument?|Xylophone|Oboe|Viola|Horn|It is played by striking bars with beaters.
+1|G|How many keys does a standard piano have?|88|76|61|100|52 white keys and 36 black keys.
+1|G|What is a bar (measure)?|A group of beats between two bar lines|A single long note|A one-beat rest|The end of a piece|Bars divide music into regular groups of beats.
+2|G|Which brass instrument plays the lowest notes?|Tuba|Trumpet|Horn|Cornet|The tuba is the bass of the brass family.
+2|G|Which woodwind instrument plays the lowest notes in the standard orchestra?|Bassoon|Piccolo|Oboe|Clarinet|Its long tube is folded in two; only the contrabassoon goes lower.
+2|G|A conductor’s main job is to…|keep the ensemble together and shape the performance|play the loudest part|tune the instruments|write the music|They show the beat, entries and expression.
+3|G|Which of these woodwind instruments uses a single reed?|Saxophone|Oboe|Bassoon|Flute|Clarinets and saxophones use a single reed; oboes and bassoons use a double reed.
+3|G|What does “ensemble” mean?|A group of musicians performing together|A piece for one player|A slow movement|A type of drum|From the French for “together”.
+3|G|Which instrument has pedals that change the pitch of its strings?|Harp|Violin|Guitar|Cello|The concert harp has seven pedals, one for each letter name.
+3|G|What is a duet?|A piece for two performers|A piece for two orchestras|A bar with two beats|A slow dance|A trio is for three, a quartet for four.
+4|G|A string quartet is made up of…|two violins, viola and cello|violin, viola, cello and double bass|four violins|piano, violin, viola and cello|The classic chamber ensemble of Haydn and Mozart.
+4|G|Which of these woodwind instruments sounds as written (does not transpose)?|Oboe|Clarinet in B♭|Cor anglais|Alto saxophone|Flutes, oboes and bassoons are written at concert pitch.
+4|G|Which brass instrument usually reads the bass clef at concert pitch?|Trombone|Trumpet in B♭|Horn in F|Cornet|Trombones read bass (and tenor) clef without transposing.
+5|G|Which is the highest male voice in SATB?|Tenor|Bass|Baritone|Alto|SATB stands for soprano, alto, tenor and bass.
+5|G|In an orchestral score, which family is usually printed just below the woodwind?|Brass|Strings|Percussion|Harp|The usual order is woodwind, brass, percussion, then strings.
+2|R|How many semiquavers make one crotchet?|4|2|3|8|Four semiquavers (sixteenth notes) fit into one crotchet beat.
+2|R|What is a triplet?|Three notes played in the time of two of the same kind|Three notes played in the time of one beat only in 3/4|A group of three tied notes|Three notes played louder|A 3 over the group means three in the time of two.
+2|R|In 3/2 time, what is the beat?|A minim|A crotchet|A quaver|A semibreve|A bottom number of 2 means minim (half-note) beats.
+2|R|Which time signature means four minim beats in a bar?|4/2|4/4|2/4|2/2|Top number 4 beats, bottom number 2 = minims.
+2|R|2/2 is also known as…|alla breve (cut time)|common time|compound time|simple triple time|2/2 is often written as a C with a line through it.
+2|R|How many semiquavers are in a dotted crotchet?|6|4|3|8|A dotted crotchet = 3 quavers = 6 semiquavers.
+2|R|The sign C as a time signature means…|4/4 (common time)|2/2|3/4|6/8|C stands for common time, 4/4.
+2|R|What is an anacrusis?|An upbeat: note(s) before the first full bar|A pause at the end|A repeated rhythm|A type of rest|An anacrusis (pick-up) leads into the first strong beat.
+2|R|If a 4/4 piece starts with a one-beat anacrusis, the final bar usually has…|three beats|four beats|one beat|five beats|The upbeat and the last bar together make one complete bar.
+2|R|What is a semiquaver called in American terms?|Sixteenth note|Eighth note|Thirty-second note|Quarter note|Semiquaver = sixteenth note.
+2|P|What is the note on the second ledger line below the treble staff?|A|C|B|G|Below the staff: C (1st ledger), B (space), A (2nd ledger).
+2|P|What is the note on the second ledger line above the bass staff?|E|C|D|F|Above the bass staff: C (1st ledger), D (space), E (2nd ledger).
+2|P|What is the note on the second ledger line above the treble staff?|C|A|B|D|Above the treble staff: A (1st ledger), B (space), C (2nd ledger).
+2|P|What is the note on the second ledger line below the bass staff?|C|E|D|B|Below the bass staff: E (1st ledger), D (space), C (2nd ledger).
+2|K|Which two forms of minor scale does ABRSM theory use?|Harmonic and melodic|Natural and major|Melodic and chromatic|Harmonic and pentatonic|Both forms are tested: harmonic, and melodic (different going up and down).
+2|K|In the harmonic minor, which degree is raised?|The 7th|The 6th|The 3rd|The 6th and 7th|The harmonic minor raises the 7th, both up and down.
+2|K|In the melodic minor ascending, which degrees are raised?|The 6th and 7th|The 7th only|The 3rd and 6th|None|Going up, the 6th and 7th are raised; coming down they follow the key signature.
+2|K|Descending, the melodic minor scale…|follows the key signature (no raised notes)|keeps the raised 6th and 7th|raises only the 7th|raises the 3rd|Coming down, it uses the notes of the key signature.
+2|K|A minor shares its key signature with…|C major|A major|E minor|G major|A minor is the relative minor of C major: no sharps or flats.
+2|K|Which minor key has one sharp?|E minor|G minor|B minor|D minor|E minor is the relative minor of G major.
+2|K|Which minor key has one flat?|D minor|F minor|B♭ minor|G minor|D minor is the relative minor of F major.
+2|K|Which major key has three flats?|E♭ major|A♭ major|B♭ major|F major|E♭ major: B♭, E♭, A♭.
+2|K|Which major key has three sharps?|A major|E major|D major|B major|A major: F♯, C♯, G♯.
+2|I|In A minor (harmonic), what interval number is A up to G♯?|7th|6th|8th|2nd|A, B, C, D, E, F, G: seven letter names.
+2|C|Which is the tonic triad of A minor?|A–C–E|A–C♯–E|A–D–F|E–G♯–B|A minor’s tonic triad has a minor 3rd: A–C–E.
+2|C|Which is the tonic triad of E♭ major?|E♭–G–B♭|E♭–G♭–B♭|E–G♯–B|B♭–D–F|E♭ major: E♭, G, B♭.
+2|T|What does 8va above some notes mean?|Play an octave higher than written|Play an octave lower than written|Play eight times|Play in octaves|8va (ottava) means sound an octave higher.
+2|T|What does sfz mean?|A sudden strong accent|Very soft|Gradually louder|Hold the note|Sforzando: forced, a sudden accent.
+2|T|A line over or under a note (tenuto mark) means…|hold the note for its full length|play it very short|play it louder|slide to the next note|Tenuto: held, with a slight stress.
+2|T|What do the hairpins < and > mean?|Get gradually louder, then gradually softer|Accent, then staccato|Faster, then slower|Higher, then lower|< is crescendo, > is diminuendo.
+2|G|What does ♩ = 60 at the start of a piece mean?|60 crotchet beats per minute|Play for 60 seconds|60 bars in the piece|Use the 60th fingering|The metronome mark gives beats per minute.
+2|G|What does M.M. stand for in M.M. ♩ = 96?|Maelzel’s Metronome|Moderato Molto|Mezzo Marcato|Music Measure|Johann Maelzel patented the metronome in 1815.
+2|G|Which of these is a woodwind instrument?|Clarinet|Trumpet|Viola|Timpani|The clarinet is a single-reed woodwind instrument.
+2|G|Which string instrument is the lowest in the orchestra?|Double bass|Cello|Viola|Harp|The double bass is the largest and lowest bowed string instrument.
+3|R|Which of these is a compound time signature?|6/8|3/4|2/2|4/4|In compound time each beat divides into three: 6/8, 9/8, 12/8.
+3|R|How many beats are in a bar of 6/8?|2 dotted-crotchet beats|6 crotchet beats|3 crotchet beats|6 dotted-crotchet beats|Six quavers grouped in two threes: two dotted-crotchet beats.
+3|R|12/8 is…|compound quadruple time|simple quadruple time|compound triple time|simple duple time|Twelve quavers = four dotted-crotchet beats.
+3|R|9/8 is…|compound triple time|simple triple time|compound duple time|compound quadruple time|Nine quavers = three dotted-crotchet beats.
+3|R|How many demisemiquavers make one quaver?|4|2|8|3|Demisemiquaver = 1/8 of a crotchet; a quaver is 1/2: four of them.
+3|R|In 6/8, quavers are usually beamed in groups of…|three|two|four|six|Each dotted-crotchet beat holds three quavers, beamed together.
+3|R|Which time signature is the compound equivalent of 3/4 (three beats)?|9/8|6/8|3/8|12/8|9/8 has three dotted-crotchet beats.
+3|R|Which time signature is the compound equivalent of 2/4 (two beats)?|6/8|12/8|9/8|2/8|6/8 has two dotted-crotchet beats.
+3|R|How many beats does a dotted minim last in 6/8?|2|3|6|1|A dotted minim = 6 quavers = two dotted-crotchet beats.
+3|R|A demisemiquaver has…|three flags or beams|two flags or beams|one flag|no flag|Quaver 1, semiquaver 2, demisemiquaver 3.
+3|K|Which major key has four flats?|A♭ major|E♭ major|D♭ major|F major|A♭ major: B♭, E♭, A♭, D♭.
+3|K|Which major key has four sharps?|E major|A major|B major|D major|E major: F♯, C♯, G♯, D♯.
+3|K|What is the relative minor of E major?|C♯ minor|E minor|G♯ minor|B minor|C♯ minor shares E major’s four sharps.
+3|K|What is the order of sharps in key signatures?|F C G D A E B|B E A D G C F|C G D A E B F|F G A B C D E|Father Charles Goes Down And Ends Battle.
+3|K|What is the order of flats in key signatures?|B E A D G C F|F C G D A E B|B A D G E C F|E A D G C F B|The order of flats is the order of sharps reversed.
+3|K|In C harmonic minor, which accidental appears?|B♮|B♭|E♮|A♮|C minor has B♭ in the key; the harmonic minor raises it to B♮.
+3|K|In G harmonic minor, which accidental appears?|F♯|F♮|E♮|C♯|G minor has two flats; the raised 7th is F♯.
+3|K|In F♯ harmonic minor, which accidental appears?|E♯|E♮|F double-sharp|D♯|F♯ minor’s 7th degree is E; raised, it becomes E♯.
+3|I|Above the tonic in a major key, the 2nd, 3rd, 6th and 7th are all…|major|minor|perfect|augmented|In a major scale, every interval above the tonic is major or perfect.
+3|I|Above the tonic, the 4th, 5th and octave are…|perfect|major|minor|diminished|Unisons, 4ths, 5ths and octaves are called perfect.
+3|I|In a harmonic minor key, the 3rd above the tonic is…|minor|major|perfect|augmented|A minor 3rd above the tonic is what makes the key minor.
+3|I|In a harmonic minor key, the 7th above the tonic is…|major|minor|perfect|diminished|The raised leading note makes a major 7th above the tonic.
+3|I|In a harmonic minor key, the 6th above the tonic is…|minor|major|perfect|augmented|The 6th degree is not raised in harmonic minor: minor 6th.
+3|I|How many semitones are in a major 3rd?|4|3|5|2|C to E: C♯, D, D♯, E = 4 semitones.
+3|I|How many semitones are in a perfect 5th?|7|5|6|8|C to G = 7 semitones.
+3|C|Which is the tonic triad of C♯ minor?|C♯–E–G♯|C♯–E♯–G♯|C–E♭–G|E–G♯–B|C♯ minor: root C♯, minor 3rd E, perfect 5th G♯.
+3|C|Which is the tonic triad of A♭ major?|A♭–C–E♭|A♭–C♭–E♭|A–C♯–E|E♭–G–B♭|A♭ major: A♭, C, E♭.
+3|C|Which is the tonic triad of F minor?|F–A♭–C|F–A–C|F–A♭–C♭|C–E♭–G|F minor: F, A♭, C.
+3|T|What does the 1. bracket over a bar (prima volta) mean?|Play this ending the first time only|Play this bar once at the end|Play the first beat only|Start here|First-time bar: play it before the repeat, then skip it.
+3|T|What does “D.S. al Fine” mean?|Go back to the sign and play to Fine|Go back to the beginning and play to Fine|Jump to the coda|Repeat the last section twice|D.S. = dal segno, from the sign.
+3|G|What does 8vb (ottava bassa) mean?|Play an octave lower than written|Play an octave higher than written|Play eight beats|Play softly|8vb or 8va bassa: sound an octave lower.
+3|G|Which of these is a percussion instrument with definite pitch?|Timpani|Snare drum|Bass drum|Cymbals|Timpani (kettledrums) are tuned to specific notes.
+3|G|Which brass instrument uses a slide to change pitch?|Trombone|Trumpet|French horn|Tuba|The trombone’s slide changes the tube length.
+4|R|How many semibreves is a breve worth?|2|4|1½|8|A breve (double whole note) = two semibreves = 8 crotchets.
+4|R|A double-dotted minim lasts how many quavers?|7|6|5|8|Minim 4 quavers + 2 + 1 = 7 quavers.
+4|R|What is a duplet?|Two notes played in the time of three of the same kind|Two notes tied together|Two beats in a bar|Two notes played at once|Duplets appear in compound time: two in the time of three.
+3|R|Describe 3/2.|Simple triple|Compound triple|Simple duple|Compound duple|Three minim beats, each dividing into two.
+4|R|Describe 12/16.|Compound quadruple|Simple quadruple|Compound triple|Simple triple|Twelve semiquavers = four dotted-quaver beats.
+4|R|Describe 6/4.|Compound duple|Simple triple|Compound triple|Simple duple|Six crotchets = two dotted-minim beats.
+4|P|In the alto clef, which note is on the middle line?|Middle C|G above middle C|F below middle C|A above middle C|The alto (C) clef centres on middle C.
+4|P|Which instrument reads mainly from the alto clef?|Viola|Cello|Violin|Double bass|Viola music is written in alto clef.
+4|P|What does a double sharp do?|Raises a note by two semitones|Raises a note by one semitone|Lowers a note by two semitones|Cancels a sharp|A double sharp (×) raises by a tone.
+4|P|What does a double flat do?|Lowers a note by two semitones|Lowers a note by one semitone|Raises a note by two semitones|Cancels a flat|A double flat (♭♭) lowers by a tone.
+4|P|How many different notes are in a chromatic scale within one octave?|12|7|8|13|All 12 semitones; 13 if you count the top note.
+4|P|A chromatic scale moves by…|semitones|tones|3rds|tones and semitones|Each step is a semitone.
+4|P|Which note is enharmonic with E♯?|F|E|F♯|D♯|E♯ sounds the same as F.
+4|P|Which note is enharmonic with C♭?|B|C|B♭|D♭|C♭ sounds the same as B.
+4|K|Which major key has five sharps?|B major|E major|F♯ major|A major|B major: F♯, C♯, G♯, D♯, A♯.
+4|K|Which major key has five flats?|D♭ major|A♭ major|G♭ major|E♭ major|D♭ major: B♭, E♭, A♭, D♭, G♭.
+4|K|The supertonic is which degree of the scale?|2nd|3rd|4th|6th|Super = above: the note above the tonic.
+4|K|The submediant is which degree of the scale?|6th|4th|2nd|7th|The submediant is the 6th, halfway between tonic and the lower subdominant.
+4|K|The leading note is…|the 7th degree, a semitone below the tonic|the 2nd degree|the 5th degree|the 6th degree|It “leads” up to the tonic.
+4|K|What is the relative minor of D♭ major?|B♭ minor|D♭ minor|F minor|A♭ minor|B♭ minor shares five flats with D♭ major.
+4|K|How many sharps are in G♯ minor?|5|4|6|3|G♯ minor is the relative of B major: five sharps.
+4|I|How many semitones are in an augmented 4th?|6|5|7|4|Perfect 4th (5) + 1 = 6 semitones: the tritone.
+4|I|A diminished 5th sounds the same as…|an augmented 4th|a perfect 4th|a perfect 5th|a minor 6th|Both span six semitones.
+4|I|How many semitones are in a minor 6th?|8|9|7|10|Minor 6th = 8 semitones (e.g. C–A♭).
+4|I|How many semitones are in a diminished 7th?|9|10|8|11|Diminished 7th = 9 semitones (e.g. B–A♭).
+4|I|What is a major 3rd turned upside down (inverted)?|Minor 6th|Major 6th|Perfect 5th|Minor 3rd|Numbers add to 9; major becomes minor.
+4|I|In a harmonic minor scale, the augmented 2nd falls between…|the 6th and 7th degrees|the 2nd and 3rd degrees|the 5th and 6th degrees|the 7th and 8th degrees|E.g. A minor: F to G♯.
+4|C|Chords I, IV and V are called the…|primary triads|secondary triads|inversions|cadences|They’re built on the tonic, subdominant and dominant.
+4|C|In a minor key, chord V is…|major, because of the raised leading note|minor|diminished|augmented|E.g. A minor: E–G♯–B.
+4|C|In a major key, chords I, IV and V are all…|major|minor|diminished|augmented|They contain a major 3rd and perfect 5th.
+4|C|Chord IV is built on the…|subdominant|supertonic|dominant|submediant|IV = 4th degree = subdominant.
+4|T|An acciaccatura is…|a very quick “crushed” grace note|a long leaning note|a quick alternation with the note above|a note held over the bar line|Written as a small note with a stroke through the stem.
+4|T|An appoggiatura usually…|takes half the value of the main note|is played as fast as possible|is played after the beat|doubles the main note|A “leaning” note, usually taking half the main note’s time.
+4|T|A turn (∾) above a note means play…|note above, main note, note below, main note|main note, note above, main note|note below, main note|a fast trill|The turn circles round the main note.
+4|T|What does the French term “cédez” mean?|Slow down|Speed up|Get louder|Sweetly|Cédez: yield, relax the tempo.
+4|G|Which of these is a transposing instrument in B♭?|Clarinet|Flute|Oboe|Bassoon|The B♭ clarinet sounds a tone lower than written.
+4|G|Which instrument uses a double reed?|Oboe|Clarinet|Flute|Saxophone|Oboe and bassoon use double reeds.
+4|G|The horn in F sounds…|a perfect 5th lower than written|a perfect 5th higher than written|as written|an octave lower|Written C sounds as F below.
+4|G|Which string instrument sounds an octave lower than written?|Double bass|Cello|Viola|Harp|It’s written an octave higher to avoid ledger lines.
+4|G|What does pizzicato tell a string player?|Pluck the string|Use the bow|Play near the bridge|Play with a mute|Pizz. = pluck; arco = bow again.
+4|G|Which woodwind instrument has no reed?|Flute|Oboe|Clarinet|Bassoon|The flute sounds by blowing across an embouchure hole.
+4|G|How do brass players play different notes on the same valve combination?|By changing lip tension and air (different harmonics)|By covering holes|By changing reeds|By using a mute|Each fingering gives a series of harmonics chosen with the lips.
+5|R|Which of these is an irregular time signature?|5/4|6/8|3/2|12/8|Five beats don’t divide into regular groups of 2, 3 or 4.
+5|R|A bar of 7/8 is often grouped as…|2+2+3 quavers|4+4 quavers|3+3+3 quavers|7 crotchets|Seven quavers in uneven groups such as 2+2+3 or 3+2+2.
+5|R|What is a quintuplet?|Five notes in the time of four of the same kind|Five notes in the time of three|Five beats in a bar|Five tied notes|Usually five in the time of four.
+5|R|A sextuplet is…|six notes in the time of four|six notes in the time of three|six beats in a bar|two triplets in the time of one|Six in the time of four of the same kind.
+5|R|Describe 5/8.|Irregular quintuple time|Simple duple|Compound duple|Simple quadruple|Five quaver beats.
+5|P|In the tenor clef, middle C is on…|the 4th line from the bottom|the middle line|the bottom line|the top line|The tenor C clef centres on the second line from the top.
+5|P|Which instruments use the tenor clef for their higher notes?|Cello, bassoon and trombone|Violin, flute and oboe|Viola only|Trumpet and horn|They read bass clef, switching to tenor clef higher up.
+5|K|Which major key has seven sharps?|C♯ major|F♯ major|B major|G♯ major|C♯ major: every note sharpened.
+5|K|Which major key has six flats?|G♭ major|D♭ major|C♭ major|E♭ major|G♭ major: B♭ E♭ A♭ D♭ G♭ C♭.
+5|K|Which key is enharmonic with F♯ major?|G♭ major|G major|F major|E♭ major|F♯ major (6 sharps) sounds the same as G♭ major (6 flats).
+5|K|How many sharps are in D♯ minor?|6|5|7|4|D♯ minor is relative to F♯ major: six sharps.
+5|K|Which minor key has six flats?|E♭ minor|B♭ minor|A♭ minor|G♭ minor|E♭ minor is the relative minor of G♭ major.
+5|I|A compound 3rd is also called a…|10th|9th|11th|13th|3 + 7 = 10.
+5|I|A major 9th is…|a major 2nd plus an octave|a major 3rd plus an octave|nine semitones|a minor 2nd plus an octave|Add 7 to the number: 2 + 7 = 9.
+5|I|A perfect 12th is a…|perfect 5th plus an octave|perfect 4th plus an octave|perfect octave plus a tone|major 6th plus an octave|5 + 7 = 12.
+5|C|In a major key, chord ii is…|minor|major|diminished|augmented|E.g. C major: D–F–A.
+5|C|What does chord Ic mean?|The tonic chord in second inversion (5th in the bass)|The tonic chord in first inversion|Chord I with a 7th|The tonic chord in a minor key|b = first inversion; c = second inversion.
+5|C|Chord Vb has which note in the bass?|The 3rd of the chord (the leading note)|The root|The 5th|The 7th|First inversion puts the 3rd in the bass.
+5|C|A perfect cadence is…|V–I|IV–I|I–V|V–VI|Dominant to tonic: it sounds finished.
+5|C|An imperfect cadence ends on…|chord V|chord I|chord IV|chord vi|Any chord moving to V: it sounds unfinished.
+5|C|A plagal cadence is…|IV–I|V–I|I–IV|ii–V|Often called the “Amen” cadence.
+5|T|In piano music, “Ped.” followed by ✱ means…|press, then release the sustain pedal|use the soft pedal|play with the left hand|play louder|Ped. = put the sustain pedal down; ✱ = lift it.
+5|T|What does “langsam” mean?|Slowly|Fast|Lively|Calmly|German for slow.
+5|G|The B♭ clarinet sounds…|a major 2nd lower than written|a major 2nd higher than written|a minor 3rd lower than written|as written|Written D sounds as concert C.
+5|G|To write a concert-pitch melody for B♭ clarinet, you transpose it…|up a major 2nd|down a major 2nd|up a minor 3rd|up a perfect 5th|The instrument sounds a tone lower, so its part is written a tone higher.
+5|G|The clarinet in A sounds…|a minor 3rd lower than written|a major 2nd lower than written|a minor 3rd higher than written|as written|Written C sounds as A below.
+5|G|The E♭ alto saxophone sounds…|a major 6th lower than written|a minor 3rd lower than written|a major 6th higher than written|a perfect 5th lower|Written C sounds as E♭ a major 6th below.
+5|G|To write for horn in F, you transpose concert pitch…|up a perfect 5th|down a perfect 5th|up a perfect 4th|up a major 2nd|The horn sounds a 5th lower than written.
+5|G|In SATB, which is the lowest female voice?|Alto|Soprano|Tenor|Mezzo|S = soprano, A = alto (female); T = tenor, B = bass (male).
+5|G|What is open score?|Each voice or part on its own staff|Four parts on two staves|A melody with chord symbols|A piano reduction|Short score puts SATB on two staves; open score gives each its own.
+5|G|In short score (SATB on two staves), the tenor part is written…|on the bass staff with stems up|on the treble staff with stems down|on the bass staff with stems down|on its own staff|Soprano & alto share the treble staff; tenor (stems up) & bass (stems down) share the bass staff.
+5|G|In open score, the tenor part is often written…|in a treble clef sounding an octave lower|in the alto clef|in the bass clef an octave higher|in the soprano clef|The “tenor G clef” (often with a small 8 below) sounds an octave lower.
+6|C|Figured bass 6 (or 6/3) shows…|a first-inversion chord|a second-inversion chord|a root-position chord|a 7th chord|The 6 and 3 are intervals above the bass: the 3rd of the chord is in the bass.
+6|C|Figured bass 6/4 shows…|a second-inversion chord|a first-inversion chord|a root-position chord|a suspension|The 5th of the chord is in the bass.
+6|C|A cadential 6/4 is…|Ic moving to V at a cadence|IV moving to I|V7 moving to I|Ib moving to IV|The 6/4 resolves to 5/3 over the same dominant bass.
+6|C|A sharp written alone under a bass note means…|raise the 3rd above the bass|raise the bass note|play a major 6th|add a 7th|An accidental alone applies to the 3rd above the bass.
+6|C|Which parallel intervals should be avoided between two parts?|Perfect 5ths and octaves|Thirds and sixths|Seconds and sevenths|Major and minor 3rds|Consecutive 5ths and octaves weaken the independence of parts.
+6|C|An interrupted cadence is…|V–VI|V–I|IV–I|I–V|The expected tonic is replaced by chord VI.
+6|C|In four-part writing, which note of a major triad is usually doubled?|The root|The 3rd|The 5th|The leading note|Doubling the root is the safest choice.
+6|C|In V–I, the leading note should usually…|rise to the tonic|fall to the dominant|stay where it is|leap down an octave|The leading note pulls up by a semitone.
+6|C|The 7th of a dominant 7th chord usually…|falls by step|rises by step|stays the same|leaps up a 4th|E.g. in C major, the F of G7 falls to E.
+6|C|A suspension has three stages:|preparation, suspension, resolution|attack, sustain, release|tonic, dominant, tonic|root, 3rd, 5th|A note is held over into a chord where it clashes, then resolves by step.
+6|C|A 4–3 suspension resolves…|down by step to the 3rd|up by step to the 5th|down a 3rd|up to the octave|The 4th above the bass falls to the 3rd.
+6|C|A pedal (pedal point) is…|a sustained or repeated bass note under changing harmonies|a fast passage for the feet|a chord on the subdominant|a long rest|Usually on the tonic or dominant.
+6|C|A tierce de Picardie is…|a major tonic chord ending a minor-key piece|a minor chord ending a major piece|a chord on the 3rd degree|a type of suspension|The final chord’s 3rd is raised.
+6|C|In a major key, chord vii is…|diminished|minor|major|augmented|E.g. C major: B–D–F.
+6|C|In a harmonic minor key, chord III is…|augmented|major|minor|diminished|E.g. A minor: C–E–G♯.
+6|C|A passing 6/4 is…|a second-inversion chord on a passing bass note, e.g. I–Vc–Ib|a cadential chord|a root-position chord on IV|a chord with an added 6th|The bass moves by step through the 5th of the passing chord.
+6|K|Which keys are most closely related to G major?|D major, C major, E minor, B minor and A minor|G minor, D minor and F major|A major, E major and B minor|C major and F major only|The dominant, subdominant and the relative minors of all three.
+6|K|Modulating from C major to G major moves to the…|dominant|subdominant|relative minor|tonic minor|G is the 5th degree of C.
+6|K|Modulating from C major to F major moves to the…|subdominant|dominant|relative minor|supertonic|F is the 4th degree of C.
+5|K|What is the tonic minor of E♭ major?|E♭ minor|C minor|G minor|B♭ minor|Tonic (parallel) minor shares the same tonic.
+6|I|What is the inversion of a minor 7th?|Major 2nd|Minor 2nd|Major 7th|Perfect 4th|9 − 7 = 2; minor becomes major.
+6|I|What is the inversion of an augmented 6th?|Diminished 3rd|Augmented 3rd|Minor 3rd|Major 3rd|9 − 6 = 3; augmented becomes diminished.
+6|I|Which interval is the inversion of a perfect 4th?|Perfect 5th|Perfect 4th|Augmented 5th|Major 6th|Perfect intervals stay perfect when inverted.
+6|G|Which period is roughly 1600–1750?|Baroque|Classical|Renaissance|Romantic|Monteverdi to the death of J. S. Bach.
+6|G|The Classical period is roughly…|1750–1820|1600–1750|1820–1900|1900–1950|Haydn, Mozart and early Beethoven.
+6|G|Which composer belongs to the Classical period?|Haydn|Chopin|Debussy|Monteverdi|Haydn (1732–1809).
+6|G|Who composed “The Well-Tempered Clavier”?|J. S. Bach|Handel|Vivaldi|Mozart|Two books of preludes and fugues in all 24 keys.
+6|G|Who composed “The Four Seasons”?|Vivaldi|Bach|Handel|Corelli|Four violin concertos from 1725.
+6|G|Basso continuo usually consists of…|a keyboard (harpsichord or organ) with a bass instrument|a string quartet|a solo voice and piano|brass and percussion|The continuo fills in harmony from a figured bass.
+6|G|Binary form is…|AB|ABA|ABACA|ABCD|Two sections, each often repeated.
+6|G|Ternary form is…|ABA|AB|ABACA|AABB|A first section returns after a contrasting middle.
+6|G|Rondo form is…|ABACA|ABA|AB|AABA|A recurring main theme alternates with episodes.
+6|G|The main sections of sonata form are…|exposition, development, recapitulation|verse, chorus, bridge|prelude, fugue, coda|introduction, theme, variations|Often with an introduction and a coda.
+6|G|A fugue begins with…|the subject in one voice alone|all voices together|the countersubject|a cadenza|Other voices then enter with the subject or answer.
+6|G|Ritornello form is typical of…|the Baroque concerto|the Romantic song|the Classical minuet|the 20th-century symphony|A returning orchestral refrain frames solo episodes.
+6|G|Which is a Baroque dance often found in suites?|Sarabande|Waltz|Mazurka|Tango|Allemande, courante, sarabande and gigue are the core dances.
+7|C|The Neapolitan sixth is…|a major chord on the flattened 2nd degree, usually in first inversion|a minor chord on the 6th degree|a diminished chord on the 7th degree|an augmented 6th chord|E.g. in A minor: B♭ major, with D in the bass.
+7|C|The Neapolitan sixth usually leads to…|chord V (often via Ic)|chord IV|chord VI|chord iii|It acts as a predominant chord.
+7|C|A diminished 7th chord is built from…|stacked minor 3rds|stacked major 3rds|perfect 4ths|a major triad plus a minor 7th|Four notes each a minor 3rd apart.
+7|C|How many different diminished 7th chords are there (counting enharmonic spellings as one)?|3|4|12|7|Each covers four of the 12 notes, so three cover all.
+7|C|V of V is…|a major chord on the supertonic|a minor chord on the supertonic|a major chord on the subdominant|the dominant chord in the relative minor|It acts as the dominant of the dominant.
+7|C|A dominant 9th chord…|adds a 9th above the root of a dominant 7th|is a chord on the 9th degree|has nine notes|is a minor triad with a 6th|E.g. in C major: G–B–D–F–A.
+7|C|Enharmonic modulation often pivots on…|a diminished 7th or German 6th chord|a perfect 5th|a tonic triad|a plagal cadence|These chords can be respelled to point to a new key.
+7|K|Mixolydian mode is like the major scale but with…|a flattened 7th|a raised 4th|a flattened 3rd|a flattened 2nd|White notes G to G.
+7|K|Dorian mode is like the natural minor but with…|a raised 6th|a flattened 2nd|a raised 7th|a raised 4th|White notes D to D.
+7|K|Lydian mode is like the major scale but with…|a raised 4th|a flattened 7th|a flattened 6th|a raised 5th|White notes F to F.
+7|K|Phrygian mode is like the natural minor but with…|a flattened 2nd|a raised 6th|a raised 3rd|a flattened 5th|White notes E to E.
+7|K|A whole-tone scale has how many different notes?|6|7|5|8|Six notes, all a tone apart.
+7|K|A pentatonic scale has how many notes?|5|6|7|4|E.g. the black keys of the piano.
+7|I|A tritone is…|an interval of three whole tones (augmented 4th / diminished 5th)|three semitones|a chord of three notes|a perfect 4th|Six semitones, exactly half an octave.
+7|I|A diminished 4th sounds the same as…|a major 3rd|a perfect 4th|a minor 3rd|an augmented 4th|Both are four semitones, e.g. C♯–F and C♯–E♯.
+7|R|A hemiola is…|two bars of triple time felt as three bars of duple time|a triplet in the bass|a bar with five beats|a sudden pause|Common at Baroque cadences in triple time.
+7|T|In Baroque music, a trill usually starts on…|the note above|the main note|the note below|a grace note two notes above|Baroque trills begin on the upper auxiliary.
+7|T|In 19th-century music, a trill usually starts on…|the main note|the note above|the note below|a turn|Later practice begins on the written note.
+7|T|An upper mordent on C (in C major) is played…|C–D–C|C–B–C|D–C–B–C|C–D–E|A quick alternation with the note above.
+7|T|A turn on E in C major is played…|F–E–D–E|E–F–E–D|D–E–F–E|E–D–E–F|Note above, main, below, main.
+7|G|Which composer wrote many nocturnes for solo piano?|Chopin|Haydn|Handel|Stravinsky|Building on John Field’s nocturnes.
+7|G|A leitmotif is closely associated with…|Wagner|Bach|Mozart|Vivaldi|A recurring theme linked to a character or idea.
+7|G|A Lied (plural Lieder) is…|a German art song|an Italian opera aria|a French dance|a choral mass|Schubert, Schumann and Brahms wrote hundreds.
+7|G|Who composed “Symphonie fantastique”?|Berlioz|Liszt|Brahms|Tchaikovsky|1830: an early landmark of programme music.
+7|G|Programme music is…|instrumental music that tells a story or depicts a scene|music for a concert programme|music for church services|music without any title|E.g. symphonic poems.
+7|G|Which work is a song cycle?|Winterreise (Schubert)|The Messiah (Handel)|The Rite of Spring (Stravinsky)|Eine kleine Nachtmusik (Mozart)|24 songs telling one story.
+7|G|Impressionism in music is most associated with…|Debussy|Beethoven|Bach|Verdi|Also Ravel.
+7|G|Twelve-tone (serial) technique was devised by…|Schoenberg|Stravinsky|Debussy|Mahler|Arnold Schoenberg, in the early 1920s.
+7|G|Which is a Romantic-era composer?|Brahms|Purcell|Corelli|Haydn|Brahms (1833–1897).
+8|C|In C major, the German 6th is…|A♭–C–E♭–F♯|A♭–C–F♯|A♭–C–D–F♯|A♭–C–E♭–F|Italian plus the flattened 3rd above the bass.
+8|C|In A minor, the Italian 6th is…|F–A–D♯|F–A–D|F–A–C–D♯|F–A–B–D♯|Flattened 6th, tonic and raised 4th.
+8|C|In C major, the French 6th is…|A♭–C–D–F♯|A♭–C–E♭–F♯|A♭–C–F♯|A♭–D–F–B|Italian plus the 2nd degree.
+8|C|Which augmented 6th chord sounds the same as a dominant 7th?|German 6th|Italian 6th|French 6th|Neapolitan 6th|A♭–C–E♭–F♯ sounds like A♭7.
+8|C|A German 6th often resolves to…|Ic then V, avoiding parallel 5ths|I directly|IV|VI|Going straight to V creates consecutive 5ths.
+8|C|Augmented 6th chords are built on…|the flattened 6th degree|the 2nd degree|the leading note|the dominant|The augmented 6th expands outwards to the dominant octave.
+8|C|A retardation is…|a suspension that resolves upwards|a slowing of tempo|a delayed cadence|a passing note|E.g. 7–8 over the bass.
+8|C|An anticipation is…|a note sounded early, before the chord it belongs to|a note held over from the previous chord|a note a step away that returns|a chromatic bass note|Common in the top part at cadences.
+8|C|An échappée (escape note)…|steps away from a harmony note and then leaps in the opposite direction|leaps then returns|is held over a bar line|is always chromatic|A non-chord note approached by step and left by leap.
+8|C|An added 6th chord is…|a major triad with a major 6th added above the root|a first-inversion triad|an augmented 6th chord|a chord on the 6th degree|E.g. F–A–C–D.
+8|G|In an orchestral score, which family is printed at the top?|Woodwind|Strings|Brass|Percussion|Woodwind, brass, percussion, then strings at the bottom.
+8|G|Usual order of the woodwind in a score (top down) is…|flute, oboe, clarinet, bassoon|oboe, flute, bassoon, clarinet|clarinet, flute, oboe, bassoon|bassoon, clarinet, oboe, flute|Roughly highest to lowest.
+8|G|Which instrument sounds an octave higher than written?|Piccolo|Double bass|Contrabassoon|Bass clarinet|Piccolo is written an octave lower than it sounds.
+8|G|The cor anglais sounds…|a perfect 5th lower than written|a major 2nd lower than written|an octave lower|as written|It is a transposing instrument in F.
+8|G|The trumpet in D sounds…|a major 2nd higher than written|a major 2nd lower than written|a minor 3rd higher|as written|Written C sounds as D above.
+8|G|The glockenspiel usually sounds…|two octaves higher than written|an octave lower than written|as written|a 5th higher|Written lower to avoid ledger lines.
+8|G|Who composed “The Rite of Spring”?|Stravinsky|Ravel|Prokofiev|Bartók|Premiered in Paris in 1913.
+8|G|Neoclassicism in 20th-century music was…|a return to earlier forms and clarity|a revival of Greek folk music|serial technique|electronic music|E.g. Stravinsky’s Pulcinella.
+8|G|Minimalism is most associated with…|Steve Reich and Philip Glass|Schoenberg and Berg|Brahms and Wagner|Debussy and Ravel|Repetition of short patterns that change slowly.
+8|G|Aleatoric music is…|music with elements of chance|music for voices only|music in a minor key|music based on folk songs|E.g. John Cage.
+8|G|Polytonality is…|two or more keys at the same time|music without a key|frequent modulation|one key throughout|E.g. Milhaud, and Stravinsky’s Petrushka chord.
+8|G|A passacaglia is…|variations over a repeated bass line|a fast Italian dance|a solo cadenza|a sacred motet|Similar to the chaconne.
+8|G|Sprechstimme (speech-song) is used in…|Schoenberg’s Pierrot lunaire|Bach’s St Matthew Passion|Verdi’s Aida|Handel’s Messiah|Half-sung, half-spoken pitch.
+8|K|A key change written without a new key signature, using accidentals only, is often called…|a transitory modulation|a pivot chord|a tonic pedal|a false relation|A brief move to a new key before returning.
+8|K|A false relation is…|a note and its chromatic alteration in different parts close together|a wrong note in the bass|a key signature mistake|a perfect cadence in the wrong key|E.g. F in one part and F♯ in another.
+6|R|In a Baroque sarabande in 3/4, the stress often falls on…|the second beat|the first beat only|the last quaver|every beat equally|A characteristic of the dance.
+6|R|The slow opening of a French overture is known for…|dotted rhythms|triplet quavers throughout|irregular time signatures|constant syncopation|Often played over-dotted.
+6|T|In Baroque performance, notes inégales means…|playing evenly written quavers unevenly (long–short)|playing every note detached|ornamenting every note|playing in strict even quavers|A French Baroque convention.
+6|T|Tasto solo in a continuo part means…|play the bass note alone, without chords|play the chords only|play with the soft pedal|repeat the bass an octave higher|Often marked over a pedal or unison passage.
+7|R|In a 3-against-2 cross-rhythm, the two parts coincide on…|the first beat only|every beat|the second beat|no beat at all|Three evenly spaced notes against two only line up at the start of the beat.
+7|R|In Chopin, rubato usually means…|the melody bends while the accompaniment keeps steady|both hands speed up together|the whole piece slows down|playing without a pulse|The melody pulls against a steady left hand.
+7|T|An inverted mordent (lower mordent) on D in C major is played…|D–C–D|D–E–D|C–D–E–D|E–D–C–D|Main note, the note below, main note.
+8|I|In C major, the German 6th on A♭ spans A♭ up to…|F♯ (an augmented 6th)|F (a major 6th)|G (a minor 7th)|E♭ (a perfect 5th)|The augmented 6th gives the chord its name.
+8|I|A diminished 7th above C♯ is…|B♭|B|A♯|C|C♯ up to B is a minor 7th; a semitone smaller is B♭.
+8|I|Which interval sounds the same as a minor 6th?|augmented 5th|major 6th|diminished 6th|perfect 5th|Both span 8 semitones.
+8|R|Polyrhythm is…|two or more conflicting rhythms at the same time, such as 3 against 2|a rhythm that repeats every bar|very fast semiquavers|a change of time signature|Common in Brahms and in African music.
+8|R|A metric modulation is…|a tempo change where a note value in the old tempo equals a different value in the new|a key change in the middle of a bar|a change of time signature without a tempo change|an accelerando over many bars|Associated with Elliott Carter.
+8|R|Additive rhythms such as 3+3+2 quavers are typical of…|Bartók and Balkan folk music|Baroque dance suites|Gregorian chant|Classical minuets|Bars built from unequal groups of 2s and 3s.
+8|K|Which key is a tritone away from C major?|F♯ major|G major|F major|D♭ major|C to F♯ is an augmented 4th: three whole tones.
+8|K|From C major, a move to the flattened submediant goes to…|A♭ major|A minor|E♭ major|F minor|A third-related key, common in Romantic music.
+8|K|An octatonic scale alternates…|tones and semitones|tones only|semitones only|minor 3rds and semitones|Used by Stravinsky and Messiaen.
+8|T|“a 2” in a wind part of a score means…|both players play the same line|play the passage twice|count two beats|play the second ending|Common in orchestral wind parts.
+8|T|“Col legno battuto” means…|strike the strings with the wood of the bow|draw the hair close to the bridge|pluck with the left hand|bow over the fingerboard|A percussive string effect.
+8|T|“Sul G” on a violin part means…|play the passage on the G string|play near the bridge|play an octave higher|use the G harmonic|Keeps one tone colour across the passage.
+8|R|In 3/4, an accent pattern of two-beat groups across two bars creates a…|hemiola|syncopation-free rhythm|duplet|ritardando|Three minims across two bars of 3/4.
+3|R|Syncopation is…|accenting weak beats or off-beats|a slowing of tempo|a repeated bass line|a sudden pause|Displacing the expected stress.
+`;
+/* ================= quiz engine ================= */
+const QCATS = {R:'Rhythm & time', P:'Pitch & clefs', K:'Keys & scales', I:'Intervals', C:'Chords & harmony', T:'Terms & signs', G:'Instruments & music'};
+const QBANK = QBANK_RAW.trim().split('\n').map(l => { const [g, c, q, a, w1, w2, w3, ex] = l.split('|'); return {g:+g, c, q, a, w:[w1,w2,w3], ex}; });
+function staticQ(g, c, used){
+  const rows = QBANK.filter(r => r.g===g && r.c===c && !used.has(r.q)); if(!rows.length) return null;
+  const r = pick(rows); return {q:r.q, a:r.a, opts:shuffle([r.a, ...r.w]), ex:r.ex};
+}
+function makeQ(g, c, used){
+  const gens = GEN[c] || [], hasStatic = QBANK.some(r => r.g===g && r.c===c && !used.has(r.q));
+  for(let t=0; t<8; t++){
+    const useGen = gens.length && (!hasStatic || Math.random() < .55);
+    let q = null;
+    // Each question generator is used at most once per quiz, so the same kind of question doesn't repeat.
+    const fn = useGen ? pick(gens) : null; if(fn && (used.fnUse?.get(fn) || 0) >= (used.fnMax || 1)) continue;
+    try{ q = fn ? fn(g) : staticQ(g, c, used); }catch(e){ q = null; }
+    if(q && !used.has(q.q + '|' + q.a)){ if(fn) q.fn = fn; q.lv = g; return q; }
+  }
+  return null;
+}
+function buildQuiz(g){
+  const cats = Object.keys(QCATS);
+  let plan;
+  if(g <= 5){
+    // Grades 1-5: one question from every area, plus three on what this grade adds.
+    const focus = {1:'RPKT', 2:'RKPT', 3:'RKIC', 4:'PIKCG', 5:'CIKG'}[g];
+    plan = cats.slice(); while(plan.length < 10) plan.push(pick(focus.split('')));
+  } else {
+    // Grades 6-8 assume the Grade 5 basics: harmony, keys, history and terms lead.
+    plan = {6:'CCCKKGGTTI', 7:'CCKKGGTTIR', 8:'CCCKGGTTIR'}[g].split('');
+  }
+  shuffle(plan);
+  const used = new Set(), out = [];
+  for(const c of plan){
+    let q = null;
+    for(let t=0; t<12 && !q; t++){
+      // Some review from the grade or two below, never from the basics at Grades 6-8.
+      const lo = g >= 6 ? 6 : Math.max(1, g-2), gg = g > lo && Math.random() < .25 ? lo + rnd(g-lo) : g;
+      q = makeQ(gg, c, used);
+    }
+    if(!q) for(const c2 of shuffle(cats.slice())){ q = makeQ(g, c2, used); if(q){ q.cat = c2; break; } }
+    if(!q && g >= 6) for(const c2 of shuffle(cats.slice())){ q = makeQ(g-1, c2, used); if(q){ q.cat = c2; break; } }
+    if(!q) continue;
+    q.cat = q.cat || c; used.add(q.q); used.add(q.q + '|' + q.a); if(q.fn) noteFn(used, q.fn); out.push(q);
+  }
+  return out.slice(0, 10);
+}
+
+function noteFn(used, fn){ if(!used.fnUse) used.fnUse = new Map(); used.fnUse.set(fn, (used.fnUse.get(fn) || 0) + 1); }
+// Topic quizzes: 10 questions from one area, spread across the grades in the chosen level.
+const QLEVELS = {all:[1,8,'All grades'], low:[1,3,'Grades 1–3'], mid:[4,5,'Grades 4–5'], high:[6,8,'Grades 6–8']};
+const QTOPIC_TXT = {R:'Note values, time signatures, triplets, syncopation and hemiola', P:'Reading notes in all four clefs, accidentals and enharmonics', K:'Key signatures, scales, modes and modulation', I:'Interval numbers, qualities and inversions', C:'Triads, inversions, cadences, figured bass and chromatic chords', T:'Italian, German and French terms, signs and ornaments', G:'Instruments, transposition, voices, history and form'};
+function buildTopicQuiz(cat, lvl){
+  const [lo, hi] = QLEVELS[lvl], grades = range(lo, hi), used = new Set(), out = [];
+  used.fnMax = 3; // a topic quiz may reuse a question type a few times (e.g. several key signatures)
+  let order = [];
+  for(let t=0; t<80 && out.length<10; t++){
+    if(!order.length) order = shuffle(grades.slice()); // cycle through every grade in the level
+    const g = order.pop(), q = makeQ(g, cat, used);
+    if(!q) continue;
+    q.cat = cat; used.add(q.q); used.add(q.q + '|' + q.a); if(q.fn) noteFn(used, q.fn); out.push(q);
+  }
+  return shuffle(out).sort((a, b) => a.lv - b.lv);
+}
+const topicOK = {};
+function topicAvailable(cat, lvl){
+  const k = cat + lvl; if(topicOK[k] === undefined) topicOK[k] = [0,1,2].every(() => buildTopicQuiz(cat, lvl).length >= 10);
+  return topicOK[k];
+}
+
+/* ---- quiz screens ---- */
+const quiz = {g:1, mode:'grade', cat:'T', lvl:'all', qs:[], i:0, score:0, answered:false, wrong:[]};
+try{ quiz.g = +(localStorage.getItem('quizGrade') || 1); const t = JSON.parse(localStorage.getItem('quizTopic') || 'null'); if(t){ quiz.mode = t.mode || 'grade'; quiz.cat = t.cat || 'T'; quiz.lvl = t.lvl || 'all'; } }catch(e){}
+const saveTopic = () => { try{ localStorage.setItem('quizTopic', JSON.stringify({mode:quiz.mode, cat:quiz.cat, lvl:quiz.lvl})); }catch(e){} };
+const quizKey = () => quiz.mode==='grade' ? quiz.g : `${quiz.cat}:${quiz.lvl}`;
+const quizLabel = () => quiz.mode==='grade' ? `Grade ${quiz.g}` : `${QCATS[quiz.cat]} (${QLEVELS[quiz.lvl][2]})`;
+function quizBest(){ try{ return JSON.parse(localStorage.getItem('quizBest') || '{}'); }catch(e){ return {}; } }
+function quizHome(){
+  const best = quizBest();
+  $('quizRun').hidden = true; $('quizHome').hidden = false;
+  $('qGrades').innerHTML = '';
+  for(let g=1; g<=8; g++){
+    const b = document.createElement('button');
+    b.className = 'qgrade'; b.setAttribute('aria-pressed', g===quiz.g);
+    b.innerHTML = `<b>Grade ${g}</b><span>${best[g]!==undefined ? `Best ${best[g]}/10` : 'Not tried'}</span>`;
+    b.addEventListener('click', () => { quiz.g = g; try{ localStorage.setItem('quizGrade', g); }catch(e){} quizHome(); });
+    $('qGrades').appendChild(b);
+  }
+  const topic = quiz.mode==='topic';
+  $('qmGrade').setAttribute('aria-pressed', !topic); $('qmTopic').setAttribute('aria-pressed', topic);
+  $('qGradeBox').hidden = topic; $('qTopicBox').hidden = !topic;
+  if(topic){
+    $('qTopics').innerHTML = '';
+    for(const c of Object.keys(QCATS)){
+      const b = document.createElement('button'); b.className = 'qtopic'; b.setAttribute('aria-pressed', c===quiz.cat);
+      b.innerHTML = '<b></b><span></span>'; b.firstChild.textContent = QCATS[c]; b.lastChild.textContent = QTOPIC_TXT[c];
+      b.addEventListener('click', () => { quiz.cat = c; if(!topicAvailable(c, quiz.lvl)) quiz.lvl = 'all'; saveTopic(); quizHome(); });
+      $('qTopics').appendChild(b);
+    }
+    $('qLvls').innerHTML = '';
+    for(const [k, [, , name]] of Object.entries(QLEVELS)){
+      const b = document.createElement('button'), ok = topicAvailable(quiz.cat, k);
+      const bs = best[`${quiz.cat}:${k}`];
+      b.textContent = name + (bs!==undefined ? ` · best ${bs}/10` : ''); b.setAttribute('aria-pressed', k===quiz.lvl); b.disabled = !ok;
+      if(!ok) b.title = 'Not enough questions on this topic at this level yet';
+      b.addEventListener('click', () => { quiz.lvl = k; saveTopic(); quizHome(); });
+      $('qLvls').appendChild(b);
+    }
+  }
+  $('qStart').textContent = topic ? `Start ${QCATS[quiz.cat]} quiz` : `Start Grade ${quiz.g} quiz`;
+}
+$('qmGrade').addEventListener('click', () => { quiz.mode = 'grade'; saveTopic(); quizHome(); });
+$('qmTopic').addEventListener('click', () => { quiz.mode = 'topic'; if(!topicAvailable(quiz.cat, quiz.lvl)) quiz.lvl = 'all'; saveTopic(); quizHome(); });
+function quizStart(){
+  quiz.qs = quiz.mode==='topic' ? buildTopicQuiz(quiz.cat, quiz.lvl) : buildQuiz(quiz.g); quiz.i = 0; quiz.score = 0; quiz.wrong = [];
+  track('quiz_start', quiz.mode==='topic' ? {topic: quiz.cat, level: quiz.lvl} : {grade: quiz.g});
+  $('quizHome').hidden = true; $('quizRun').hidden = false;
+  quizShow();
+}
+function quizShow(){
+  const q = quiz.qs[quiz.i], n = quiz.qs.length;
+  quiz.answered = false;
+  const box = $('quizRun');
+  box.innerHTML = `<div class="qtop"><span>${quiz.mode==='topic' ? QCATS[quiz.cat] : `Grade ${quiz.g}`} \u00b7 Question ${quiz.i+1} of ${n}</span><button class="qquit">Quit</button></div>
+    <div class="qbar"><i style="width:${quiz.i/n*100}%"></i></div>
+    <p class="qcat">${quiz.mode==='topic' ? `Grade ${q.lv}` : QCATS[q.cat]}</p><h2 class="qq"></h2>${q.svg ? `<div class="qfig">${q.svg}</div>` : ''}
+    <div class="qopts"></div><div class="qfeed" aria-live="polite"></div>`;
+  box.querySelector('.qq').textContent = q.q;
+  box.querySelector('.qquit').addEventListener('click', quizHome);
+  const opts = box.querySelector('.qopts');
+  q.opts.forEach((o, k) => {
+    const b = document.createElement('button'); b.className = 'qopt';
+    b.innerHTML = `<span class="qk">${'ABCD'[k]}</span><span class="qt"></span>`; b.querySelector('.qt').textContent = o;
+    b.addEventListener('click', () => quizAnswer(b, o));
+    opts.appendChild(b);
+  });
+  box.scrollIntoView({block:'nearest'});
+}
+function quizAnswer(btn, o){
+  if(quiz.answered) return; quiz.answered = true;
+  const q = quiz.qs[quiz.i], ok = o === q.a;
+  if(ok) quiz.score++; else quiz.wrong.push({q, picked:o});
+  for(const b of $('quizRun').querySelectorAll('.qopt')){
+    b.disabled = true;
+    const t = b.querySelector('.qt').textContent;
+    if(t === q.a) b.classList.add('right'); else if(b === btn) b.classList.add('wrong');
+  }
+  const f = $('quizRun').querySelector('.qfeed'), last = quiz.i === quiz.qs.length - 1;
+  f.innerHTML = `<p class="qverdict ${ok?'ok':'no'}">${ok ? 'Correct' : 'Not quite'}</p><p class="qex"></p><button class="primary qnext">${last ? 'See my score' : 'Next question'}</button>`;
+  f.querySelector('.qex').textContent = q.ex || '';
+  f.querySelector('.qnext').addEventListener('click', () => { quiz.i++; if(quiz.i < quiz.qs.length) quizShow(); else quizEnd(); });
+  f.querySelector('.qnext').focus({preventScroll:true});
+  f.scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+function quizEnd(){
+  const n = quiz.qs.length, s = quiz.score, best = quizBest();
+  const key = quizKey(), newBest = best[key] === undefined || s > best[key];
+  if(newBest){ best[key] = s; try{ localStorage.setItem('quizBest', JSON.stringify(best)); }catch(e){} }
+  track('quiz_end', quiz.mode==='topic' ? {topic: quiz.cat, level: quiz.lvl, score: s} : {grade: quiz.g, score: s});
+  const msg = s===n ? (quiz.mode==='topic' ? 'Perfect score! Try a higher level or another topic.' : 'Perfect score! Ready to try the next grade?') : s>=8 ? 'Excellent work.' : s>=6 ? 'Good effort. Review the ones you missed below.' : 'Keep practising. The explanations below will help.';
+  const box = $('quizRun');
+  box.innerHTML = `<div class="qresult"><p class="qcat">${quizLabel()} quiz</p><p class="qscore">${s}<small>/${n}</small></p><p>${msg}${newBest && s ? ' <b>New best!</b>' : ''}</p>
+    <div class="row qend"><button class="primary qagain">Try another ${quiz.mode==='topic' ? QCATS[quiz.cat] : `Grade ${quiz.g}`} quiz</button><button class="qhome">${quiz.mode==='topic' ? 'Choose a topic' : 'Choose a grade'}</button></div></div>
+    ${quiz.wrong.length ? '<h2 class="qrevh">Questions to review</h2><div class="qreview"></div>' : ''}`;
+  box.querySelector('.qagain').addEventListener('click', quizStart);
+  box.querySelector('.qhome').addEventListener('click', quizHome);
+  const rv = box.querySelector('.qreview');
+  for(const {q, picked} of quiz.wrong){
+    const d = document.createElement('div'); d.className = 'qrev';
+    d.innerHTML = `<p class="qcat">${QCATS[q.cat]} \u00b7 Grade ${q.lv}</p><p class="qq2"></p>${q.svg ? `<div class="qfig">${q.svg}</div>` : ''}<p class="qmine">Your answer: <span></span></p><p class="qans">Answer: <b></b></p><p class="qex"></p>`;
+    d.querySelector('.qq2').textContent = q.q; d.querySelector('.qmine span').textContent = picked;
+    d.querySelector('.qans b').textContent = q.a; d.querySelector('.qex').textContent = q.ex || '';
+    rv.appendChild(d);
+  }
+  box.scrollIntoView({block:'start'});
+}
+$('qStart').addEventListener('click', quizStart);
+document.addEventListener('keydown', e => {
+  if($('viewQuiz').hidden || $('quizRun').hidden || e.target.matches('input,textarea,select')) return;
+  const k = e.key.toUpperCase(), i = 'ABCD1234'.indexOf(k);
+  const opts = $('quizRun').querySelectorAll('.qopt');
+  if(i >= 0 && opts[i%4] && !quiz.answered) opts[i%4].click();
+});
+quizHome();
 
 /* ---------- metronome ---------- */
 const metro = {bpm:100, beats:4, sub:1, ctx:null, playing:false, next:0, step:0, timer:null, queue:[], taps:[]};
