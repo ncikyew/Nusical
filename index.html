@@ -720,9 +720,27 @@ function audioCtx(){
     const comp = sound.ctx.createDynamicsCompressor(), g = sound.ctx.createGain();
     g.gain.value = .55; g.connect(comp); comp.connect(sound.ctx.destination); sound.out = g;
   }
-  if(sound.ctx.state==='suspended') sound.ctx.resume();
+  if(sound.ctx.state!=='running') sound.ctx.resume().catch(()=>{});
   return sound.ctx;
 }
+// Browsers start audio "suspended" until a tap, and resuming takes a moment. Sounds scheduled
+// before that can be lost, which made the first tap silent. So: wait until audio is running
+// before scheduling anything, and wake audio up on the very first tap anywhere in the app.
+function whenAudio(fn){
+  const ctx = audioCtx(); if(!ctx) return false;
+  if(ctx.state==='running'){ fn(ctx); return true; }
+  const token = sound.token = (sound.token || 0) + 1;
+  ctx.resume().catch(()=>{}).then(() => { if(token===sound.token && ctx.state==='running') fn(ctx); });
+  // Some browsers report running a beat late; check again shortly.
+  setTimeout(() => { if(token===sound.token && ctx.state==='running' && !sound.started) fn(ctx); }, 300);
+  return true;
+}
+function unlockAudio(){
+  const ctx = audioCtx(); if(!ctx) return;
+  // A silent blip lets iOS treat this tap as permission to play sound.
+  const b = ctx.createBuffer(1, 1, 22050), s = ctx.createBufferSource(); s.buffer = b; s.connect(ctx.destination); s.start(0);
+}
+for(const ev of ['pointerdown','keydown','touchend']) document.addEventListener(ev, unlockAudio, {once:true, capture:true});
 const midiOf = n => NAT[n.L] + n.acc + (n.oct+1)*12;
 // Playback follows the tuner's reference pitch (A4 = 442 by default).
 const hzOf = m => ((typeof tuner!=='undefined' && tuner.a4) || 440) * Math.pow(2, (m-69)/12);
@@ -741,14 +759,19 @@ function voice(m, t, dur, vel){
   }
 }
 function stopSound(){
+  sound.token = (sound.token || 0) + 1; // cancel anything still waiting for audio to start
   for(const o of sound.nodes){ try{ o.stop(); }catch(e){} }
   sound.nodes = []; sound.timers.forEach(clearTimeout); sound.timers = [];
   const f = sound.onStop; sound.onStop = null; if(f) f();
 }
 // steps: [[midi, midi…], …] one entry per beat; each beat may be a single note or a chord.
-function playSteps(steps, {gap=.45, dur=.42, vels, durs, onStep, onEnd}={}){
+function playSteps(steps, opts={}){
   stopSound();
-  const ctx = audioCtx(); if(!ctx) return false;
+  sound.started = false; sound.onStop = opts.onEnd || null; // so Stop works even while audio is waking up
+  return whenAudio(ctx => scheduleSteps(ctx, steps, opts));
+}
+function scheduleSteps(ctx, steps, {gap=.45, dur=.42, vels, durs, onStep, onEnd}={}){
+  if(sound.started) return; sound.started = true;
   const t0 = ctx.currentTime + .05;
   steps.forEach((ms, i) => {
     const t = t0 + i*gap, vel = (vels ? vels[i] : 1)/Math.sqrt(ms.length);
@@ -758,7 +781,6 @@ function playSteps(steps, {gap=.45, dur=.42, vels, durs, onStep, onEnd}={}){
   sound.onStop = onEnd || null;
   const last = durs ? Math.max(...durs.map((d, i) => i*gap + d)) : (steps.length-1)*gap + dur;
   sound.timers.push(setTimeout(stopSound, (last + .45)*1000 + 50));
-  return true;
 }
 document.addEventListener('visibilitychange', () => { if(document.hidden) stopSound(); });
 const PLAY_ICON = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>';
@@ -3165,8 +3187,14 @@ function drawDroneNotes(){
   });
 }
 function startDrone(){
-  const ctx = audioCtx(); if(!ctx) return;
   fadeDrone();
+  drone.on = true; setPlaying($('dPlay'), true); $('dPlay').querySelector('.t').textContent = 'Stop drone';
+  const id = drone.id = (drone.id || 0) + 1;
+  const ctx = audioCtx(); if(!ctx) return;
+  const go = () => { if(drone.id===id && drone.on && !drone.out && ctx.state==='running') buildDrone(ctx); };
+  if(ctx.state==='running') go(); else { ctx.resume().catch(()=>{}).then(go); setTimeout(go, 300); }
+}
+function buildDrone(ctx){
   drone.out = ctx.createGain(); drone.out.gain.setValueAtTime(0.0001, ctx.currentTime);
   drone.out.gain.exponentialRampToValueAtTime(.32*drone.vol, ctx.currentTime + .35);
   drone.out.connect(sound.out);
@@ -3177,7 +3205,6 @@ function startDrone(){
       o.connect(g); g.connect(lp); o.start(); drone.nodes.push(o);
     }
   }
-  drone.on = true; setPlaying($('dPlay'), true); $('dPlay').querySelector('.t').textContent = 'Stop drone';
 }
 function fadeDrone(){
   if(!drone.out) return;
