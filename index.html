@@ -128,6 +128,31 @@ button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font
 .scale .ns span.ct{color:var(--brass);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .scale p{margin:.05rem 0 0;font-size:.82rem;color:var(--muted)}
 .legend{font-size:.8rem;color:var(--muted);margin:.2rem 0 .3rem}
+/* click to listen */
+.listen{display:flex;flex-wrap:wrap;gap:.4rem;margin:.55rem 0 .1rem}
+.listen button,.scale .pl{display:inline-flex;align-items:center;gap:.35rem;font-size:.85rem;border-radius:999px;padding:.3rem .8rem}
+.listen button svg,.scale .pl svg{width:.75rem;height:.75rem;fill:currentColor}
+.listen button[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+button.tone{background:none;border:0;padding:.1rem .2rem;border-radius:6px;cursor:pointer;color:inherit;font:inherit}
+button.tone:hover .n,button.tone.on .n{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+button.tone.on{background:var(--brass-soft)}
+.scale .shead{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.scale .pl{padding:.15rem .6rem;font-size:.78rem}
+.scale .ns button{background:none;border:0;padding:0 .1rem;margin-right:.45rem;border-radius:4px;font:inherit;color:inherit;cursor:pointer}
+.scale .ns button.ct{color:var(--brass);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.scale .ns button.on{background:var(--brass-soft)}
+.listen button,.scale .pl{transition:background-color .15s,border-color .15s,color .15s,transform .1s}
+.listen button:active,.scale .pl:active,button.tone:active,.scale .ns button:active{transform:scale(.94)}
+.listen button.playing,.scale .pl.playing{background:var(--brass);border-color:var(--brass);color:#fff}
+.eq{display:inline-flex;align-items:flex-end;gap:2px;width:.75rem;height:.75rem}
+.eq i{display:block;width:2px;height:40%;background:currentColor;border-radius:1px;animation:eqb .8s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:-.27s}.eq i:nth-child(3){animation-delay:-.53s}
+@keyframes eqb{0%,100%{height:30%}50%{height:100%}}
+button.tone.on .n,.scale .ns button.on{animation:npop .35s ease-out}
+@keyframes npop{0%{transform:scale(1)}40%{transform:scale(1.2)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.eq i,button.tone.on .n,.scale .ns button.on{animation:none}.eq i{height:70%}}
+.notation g.note{cursor:pointer}
+.notation g.note.on{color:var(--brass);fill:var(--brass)}
 /* scales view */
 .scale-pick{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:.5rem}
 .notation{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin:.8rem 0 .5rem;min-height:5rem;overflow:hidden}
@@ -224,6 +249,55 @@ body.about-open{background:color-mix(in srgb, var(--bg) 65%, var(--brass-soft))}
 .link-chip{display:inline-flex;align-items:center;gap:.3rem;border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem;color:var(--ink);text-decoration:none;font-size:.9rem;background:var(--bg)}
 .link-chip::after{content:"↗";color:var(--brass);font-size:.8rem}
 .link-chip:hover{border-color:var(--brass);background:var(--brass-soft)}
+/* fingering charts */
+.fchart .map{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.7rem .8rem .6rem;margin-top:.8rem}
+.fchart .map > svg{display:block;width:100%;max-width:640px;height:auto;margin:0 auto}
+.fchart .groups{display:flex;flex-wrap:wrap;gap:.2rem 1.2rem;font-size:.82rem;color:var(--muted);margin:.4rem 0 0;padding:0;list-style:none}
+.fchart .keylegend{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin:.6rem 0 0;font-size:.85rem;align-items:center}
+.fchart .keylegend span{display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap}
+.fchart .fdot{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink);display:inline-block}
+.fchart .fdot.p{background:var(--ink)} .fchart .fdot.o{background:var(--surface)} .fchart .fdot.t{background:var(--brass);border-color:var(--brass)}
+.fchart .intro{color:var(--muted);font-size:.88rem;margin:.9rem 0 0}
+.fchart h2{font:600 1.25rem Spectral,Georgia,serif;margin:1.3rem 0 .1rem}
+.fchart h2 small{font:400 .85rem Figtree,sans-serif;color:var(--muted);margin-left:.4rem}
+.fchart .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.6rem;margin-top:.6rem}
+.fchart .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem}
+.fchart .card h3{font:600 1.35rem/1.1 Spectral,Georgia,serif;margin:0}
+.fchart .card h3 .enh{font:400 .85rem Figtree,sans-serif;color:var(--muted);margin-left:.4rem}
+.fchart .nhead{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.fchart .nhead svg.staff{width:52px;margin:-.35rem -.2rem -.6rem 0}
+.fchart .card > .fing{margin-top:.25rem}
+.fchart svg.fing{display:block;width:100%;height:auto}
+.fchart svg.fing.valves{max-width:200px;margin:0 auto}
+.fchart svg.fing.slide{max-width:420px;margin:0 auto}
+.fchart .map > svg.valves{max-width:200px}
+.fchart svg.staff{display:block;height:auto}
+.fchart .tip{margin:.3rem 0 0;font-size:.84rem;color:var(--muted)}
+.fchart .move{margin:.3rem 0 0;font-size:.9rem}
+.fchart .move b{color:var(--brass)}
+.fchart details{margin-top:.5rem;border-top:1px solid var(--line);padding-top:.4rem}
+.fchart summary{cursor:pointer;font-weight:600;font-size:.85rem;color:var(--brass)}
+.fchart .alt{margin-top:.5rem}
+.fchart .none{font-size:.9rem;color:var(--muted);margin:.6rem 0 0}
+.fchart svg.fing.board{max-width:440px;margin:0 auto}
+.fchart svg.board .bodyline{fill:var(--bg)}
+.fchart .str{stroke:var(--muted);stroke-width:1}
+.fchart .nut{stroke:var(--ink);stroke-width:2.5}
+.fchart .fret{stroke:var(--line);stroke-width:1;stroke-dasharray:2 2}
+.fchart .fnum{font:700 6.5px Figtree,sans-serif;fill:var(--surface);text-anchor:middle;pointer-events:none}
+.fchart .k.harm{fill:var(--surface);stroke-width:1.8}
+.fchart .k{stroke:var(--ink);stroke-width:1.6}
+.fchart .k.p{fill:var(--ink)} .fchart .k.o{fill:var(--surface)}
+.fchart .k.opt{stroke-dasharray:2 1.6}
+.fchart .k.t{fill:var(--brass);stroke:var(--brass);animation:fblink .5s steps(1,end) infinite}
+.fchart.paused .k.t{animation:none}
+@keyframes fblink{0%{fill:var(--brass)}50%{fill:var(--surface)}}
+@media (prefers-reduced-motion:reduce){.fchart .k.t{animation:none}}
+.fchart .bodyline{fill:var(--line)}
+.fchart .lbl{font-family:Figtree,sans-serif;font-size:6.2px;fill:var(--muted);text-anchor:middle}
+.fchart .st-line{stroke:var(--muted);stroke-width:.9}
+.fchart .st-head{fill:var(--ink)}
+.fchart .st-txt{font-family:Spectral,Georgia,serif;fill:var(--ink)}
 /* terms view */
 input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.55rem .7rem}
 .sugg{display:grid;gap:.35rem;margin:.7rem 0 0}
@@ -310,8 +384,15 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
   <section id="viewFinger" hidden>
     <label for="fInst">Instrument</label>
     <select id="fInst" style="font:500 1rem Figtree,sans-serif"></select>
+    <div class="row" style="margin-top:.7rem;justify-content:space-between">
+      <div class="seg" id="fViews" style="margin:0">
+        <button data-v="notes" aria-pressed="true">Notes</button><button data-v="trills" aria-pressed="false">Trills</button><button data-v="trems" aria-pressed="false">Tremolos</button><button data-v="harm" aria-pressed="false" hidden>Harmonics</button>
+      </div>
+      <button id="fPause" aria-pressed="false" style="font-size:.85rem;border-radius:999px;padding:.3rem .8rem">Pause blinking</button>
+    </div>
+    <div id="fChart" class="fchart"></div>
     <div id="fLinks"></div>
-    <p class="legend" style="margin-top:1rem">These links open trusted outside charts in a new tab. Charts belong to their publishers: the Woodwind Fingering Guide (wfg.woodwind.org), Mouthpiece Express, Brass Techniques and Pedagogy by Brian N. Weidner (PALNI Open Press) and StepWise Publications.</p>
+    <p class="legend" style="margin-top:1rem">Outside charts open in a new tab and belong to their publishers: the Woodwind Fingering Guide (wfg.woodwind.org), Mouthpiece Express, Brass Techniques and Pedagogy by Brian N. Weidner (PALNI Open Press) and StepWise Publications.</p>
   </section>
 
   <section id="viewAbout" hidden>
@@ -396,7 +477,9 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <div><label for="sClef">Clef</label><select id="sClef" style="font:500 1rem Figtree,sans-serif"><option value="treble">Treble</option><option value="bass">Bass</option></select></div>
     </div>
     <div class="interval" id="sMap" style="margin:.7rem 0 0"></div>
+    <div class="listen"><button id="sPlay" aria-pressed="false"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg><span class="t">Play scale</span></button></div>
     <div class="notation" id="notation"></div>
+    <p class="legend" style="margin-top:-.2rem">Tap a note to hear it. Playback is at concert pitch.</p>
     <p class="status" id="sStatus" style="margin:.2rem 0"></p>
     <div class="formula" id="formula"></div>
     <p class="legend" id="sTip"></p>
@@ -522,6 +605,65 @@ const ivDown = sh => IV[((7-sh.letters)%7)+','+((12-sh.semis)%12)] || ['', ''];
 
 /* ---------- shared UI ---------- */
 const $ = id => document.getElementById(id);
+
+/* ---------- click to listen: a small Web Audio synth for chords and scales ---------- */
+const sound = {ctx:null, out:null, nodes:[], timers:[], onStop:null};
+function audioCtx(){
+  if(!sound.ctx){
+    const C = window.AudioContext || window.webkitAudioContext; if(!C) return null;
+    sound.ctx = new C();
+    const comp = sound.ctx.createDynamicsCompressor(), g = sound.ctx.createGain();
+    g.gain.value = .55; g.connect(comp); comp.connect(sound.ctx.destination); sound.out = g;
+  }
+  if(sound.ctx.state==='suspended') sound.ctx.resume();
+  return sound.ctx;
+}
+const midiOf = n => NAT[n.L] + n.acc + (n.oct+1)*12;
+// Playback follows the tuner's reference pitch (A4 = 442 by default).
+const hzOf = m => ((typeof tuner!=='undefined' && tuner.a4) || 440) * Math.pow(2, (m-69)/12);
+function voice(m, t, dur, vel){
+  const ctx = sound.ctx, f = hzOf(m), g = ctx.createGain(), lp = ctx.createBiquadFilter();
+  lp.type = 'lowpass'; lp.frequency.value = Math.min(9000, f*7); lp.connect(sound.out); g.connect(lp);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(.42*vel, t+.012);
+  g.gain.exponentialRampToValueAtTime(.16*vel, t+.3);
+  g.gain.setValueAtTime(.16*vel, t+dur);
+  g.gain.exponentialRampToValueAtTime(0.0001, t+dur+.35);
+  for(const [type, mult, lvl] of [['triangle',1,1],['sine',2,.18],['sine',1,.35]]){
+    const o = ctx.createOscillator(), og = ctx.createGain();
+    o.type = type; o.frequency.value = f*mult; og.gain.value = lvl;
+    o.connect(og); og.connect(g); o.start(t); o.stop(t+dur+.4); sound.nodes.push(o);
+  }
+}
+function stopSound(){
+  for(const o of sound.nodes){ try{ o.stop(); }catch(e){} }
+  sound.nodes = []; sound.timers.forEach(clearTimeout); sound.timers = [];
+  const f = sound.onStop; sound.onStop = null; if(f) f();
+}
+// steps: [[midi, midi…], …] one entry per beat; each beat may be a single note or a chord.
+function playSteps(steps, {gap=.45, dur=.42, onStep, onEnd}={}){
+  stopSound();
+  const ctx = audioCtx(); if(!ctx) return false;
+  const t0 = ctx.currentTime + .05;
+  steps.forEach((ms, i) => {
+    const t = t0 + i*gap, vel = 1/Math.sqrt(ms.length);
+    for(const m of ms) voice(m, t, dur, vel);
+    if(onStep) sound.timers.push(setTimeout(() => onStep(i), (t - ctx.currentTime)*1000));
+  });
+  sound.onStop = onEnd || null;
+  sound.timers.push(setTimeout(stopSound, ((steps.length-1)*gap + dur + .45)*1000 + 50));
+  return true;
+}
+document.addEventListener('visibilitychange', () => { if(document.hidden) stopSound(); });
+const PLAY_ICON = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>';
+const EQ_ICON = '<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>';
+// Play buttons turn brass, show moving bars and become Stop while they sound.
+function setPlaying(b, on){
+  if(!b || !b.isConnected) return;
+  b.classList.toggle('playing', on); b.setAttribute('aria-pressed', on);
+  const ic = b.querySelector('svg, .eq'); if(ic) ic.outerHTML = on ? EQ_ICON : PLAY_ICON;
+  const t = b.querySelector('.t'); if(t){ if(!b.dataset.label) b.dataset.label = t.textContent; t.textContent = on ? 'Stop' : b.dataset.label; }
+}
 const pretty = k => fmt(parse(k));
 for(const [k] of KEYS) for(const sel of [$('src'),$('tgt')]) sel.add(new Option(pretty(k), k));
 for(const k of MAJORS) $('sigIn').add(new Option(pretty(k)+' major', k));
@@ -600,6 +742,7 @@ function route(){
   const solo = ['chords','scales','terms','metronome','tuner','fingering','about'].includes(v);
   if(v==='fingering' && window.fingerReady) renderFinger();
   if(v!=='tuner' && window.tunerReady) stopTuner();
+  stopSound();
   if(v!=='metronome' && window.metroReady && metro.playing) stopMetro();
   document.querySelector('.keys').hidden = solo;
   $('interval').hidden = solo;
@@ -836,12 +979,20 @@ function showChord(root, type, bass){
     const altTones = type.t.map(x => fmt(spell(alt,x))).join(' ');
     h += `<p class="legend" style="margin:.35rem 0 0">Sounds the same as <button class="chip" id="enhBtn" style="padding:.1rem .6rem;font-size:.95rem">${chordName(alt,type,bass,sh)}</button> <span>(${altTones})</span>. Use the spelling that fits the key of the piece.</p>`;
   }
-  h += '<div class="tones">' + type.t.map(x=>`<div class="tone"><div class="n">${fmt(spell(r,x))}</div><div class="d">${degLabel(x)}</div></div>`).join('') + '</div>';
-  h += '<p class="legend">Chord tones are the safest notes to land on. Scales that fit:</p>';
+  // Sound: root between F3 and E4, chord tones stacked above it, a slash bass below.
+  let rm = 48 + NAT[r.L] + r.acc; if(rm < 53) rm += 12;
+  const tm = type.t.map(([s]) => rm + s);
+  const bm = bass && bass.pc !== r.pc ? rm - (((r.pc - bass.pc)%12+12)%12 || 12) : null;
+  const block = (bm!==null ? [bm] : []).concat(tm);
+  h += `<div class="listen"><button data-steps="${block.join('+')}" data-dur="1.6" aria-label="Play the chord">${PLAY_ICON}<span class="t">Play chord</span></button><button data-steps="${block.join(',')}" data-gap=".3" data-hl=".tones" data-off="${bm!==null?1:0}" aria-label="Play the chord one note at a time">${PLAY_ICON}<span class="t">Arpeggio</span></button></div>`;
+  h += '<div class="tones">' + type.t.map((x,i)=>`<button class="tone" data-steps="${tm[i]}" aria-label="Play ${fmt(spell(r,x))}"><div class="n">${fmt(spell(r,x))}</div><div class="d">${degLabel(x)}</div></button>`).join('') + '</div>';
+  h += '<p class="legend">Tap a note or a scale to hear it. Chord tones are the safest notes to land on. Scales that fit:</p>';
   for(const id of type.sc){
     const sc = SCALES[id];
-    const ns = sc.s.map(x=>{ const n = spell(r,stepFor(r,x)); return `<span${pcs.has(n.pc)?' class="ct"':''}>${fmt(n)}</span>`; }).join('');
-    h += `<div class="scale"><h3>${fmt(r)} ${sc.name}</h3><div class="ns">${ns}</div><p>${sc.tip}</p></div>`;
+    const st = sc.s.map(x => stepFor(r,x));
+    const ns = st.map(x=>{ const n = spell(r,x); return `<button data-steps="${rm+x[0]}" aria-label="Play ${fmt(n)}"${pcs.has(n.pc)?' class="ct"':''}>${fmt(n)}</button>`; }).join('');
+    const seq = st.map(x => rm + x[0]).concat(rm + 12);
+    h += `<div class="scale"><div class="shead"><h3>${fmt(r)} ${sc.name}</h3><button class="pl" data-steps="${seq.join(',')}" data-hl=".ns" aria-label="Play ${fmt(r)} ${sc.name}">${PLAY_ICON}<span class="t">Play</span></button></div><div class="ns">${ns}</div><p>${sc.tip}</p></div>`;
   }
   $('chordOut').innerHTML = h;
   if(alt) $('enhBtn').addEventListener('click', () => {
@@ -930,6 +1081,21 @@ $('analyse').addEventListener('click', () => {
   matches = res.filter(m=>!exact || !m.note || m.note==='no 5th').slice(0,6); matchSel = 0; renderChords();
 });
 
+// Any [data-steps] button in the chord view plays: "60+64+67" sounds together, "60,64,67" one after another.
+$('chordOut').addEventListener('click', e => {
+  const b = e.target.closest('[data-steps]'); if(!b) return;
+  if(b.classList.contains('playing')){ stopSound(); return; }
+  const ctl = !!b.querySelector('svg');
+  const steps = b.dataset.steps.split(',').map(s => s.split('+').map(Number));
+  const box = b.dataset.hl ? (b.closest('.scale') || $('chordOut')).querySelector(b.dataset.hl) : null;
+  const items = box ? [...box.children] : [b];
+  const clear = () => { for(const el of $('chordOut').querySelectorAll('.on')) el.classList.remove('on'); };
+  track('listen', {what: b.dataset.hl ? 'sequence' : 'chord'});
+  if(playSteps(steps, {gap: +(b.dataset.gap || .42), dur: +(b.dataset.dur || .4),
+    onStep: i => { clear(); const el = box ? items[i - (+b.dataset.off || 0)] : (i===0 ? b : null); if(el) el.classList.add('on'); },
+    onEnd: () => { clear(); if(ctl) setPlaying(b, false); }}) && ctl) setPlaying(b, true);
+});
+
 function renderChords(){
   if(chordMode==='name'){
     const v = $('chordIn').value;
@@ -1014,6 +1180,10 @@ async function renderScale(){
   $('formula').innerHTML = sc.s.map(x=>`<span>${degLabel(stepFor(root,x))}</span>`).join('');
   $('sTip').textContent = sc.tip + (sc===SCALES.mel ? ' In classical music it usually comes down as natural minor.' : '');
   const notes = scaleNotes(root, sc, clef);
+  // Sounding pitch: written pitch moved back down by the instrument's transposition.
+  const semis = shiftOf('C', inst).semis, up = notes.map(n => midiOf(n) - semis);
+  scaleSound = up.concat(up.slice(0,-1).reverse());
+  stopSound();
   if(!tk) $('sStatus').textContent = 'Loading notation…';
   try{
     const t = await getToolkit();
@@ -1025,10 +1195,25 @@ async function renderScale(){
     t.loadData(scaleXml(notes, clef));
     let h = ''; for(let i=1;i<=t.getPageCount();i++) h += t.renderToSVG(i);
     box.innerHTML = h;
+    box.querySelectorAll('g.note').forEach((g, i) => { g.dataset.i = i; });
     $('sStatus').textContent = '';
   }catch(e){ $('sStatus').textContent = 'Couldn’t draw the notation. Check your connection and try again.'; }
 }
 for(const id of ['sRoot','sType','sClef','sInst']) $(id).addEventListener('change', renderScale);
+let scaleSound = [];
+const scaleMark = i => { for(const g of $('notation').querySelectorAll('g.note')) g.classList.toggle('on', +g.dataset.i===i); };
+function scaleIdle(){ scaleMark(-1); setPlaying($('sPlay'), false); }
+$('sPlay').addEventListener('click', () => {
+  if($('sPlay').classList.contains('playing')){ stopSound(); return; }
+  if(!scaleSound.length) return;
+  track('listen', {what:'scale'});
+  if(playSteps(scaleSound.map(m => [m]), {gap:.42, dur:.4, onStep: scaleMark, onEnd: scaleIdle})) setPlaying($('sPlay'), true);
+});
+$('notation').addEventListener('click', e => {
+  const g = e.target.closest('g.note'); if(!g || scaleSound[+g.dataset.i]===undefined) return;
+  const i = +g.dataset.i;
+  playSteps([[scaleSound[i]]], {dur:.7, onStep: () => scaleMark(i), onEnd: scaleIdle});
+});
 
 /* ---------- terms ---------- */
 // term | other spellings & abbreviations | language | category | meaning | approx BPM
@@ -1589,7 +1774,7 @@ function stopTuner(){
 $('tStart').addEventListener('click', ()=> tuner.stream ? stopTuner() : startTuner());
 window.tunerReady = true;
 
-/* ---------- fingering (links to trusted charts) ---------- */
+/* ---------- fingering: link data ---------- */
 const WFG = 'https://www.wfg.woodwind.org/', ME = 'https://mouthpieceexpress.com/blogs/resources/';
 const SW = 'https://www.stepwisepublications.com/storage/19387/a1f47e4a-6b77-49c0-a962-43303a425908/', SWP = 'https://www.stepwisepublications.com/free-fingering-charts';
 const BTP = 'https://pressbooks.palni.org/brasstechniquesandpedagogy/wp-content/uploads/sites/4/', BTPAGE = 'https://pressbooks.palni.org/brasstechniquesandpedagogy/chapter/fingering-charts/';
@@ -1645,26 +1830,1568 @@ const FINGER = [
   {id:'db', fam:'Strings', name:'Double bass', groups:[['Printable charts', [['Bass fingering chart (PDF)', SW+'____bass_essential_fingering_chart.pdf'], ['All StepWise charts', SWP]]]]}
 ];
 const STRINGS_NOTE = 'These charts cover the essential range (first position, and the lower positions on bass). For higher positions, shifting and extensions, your teacher’s fingerings are the best guide.';
-const BRASS_NOTE = 'Brass trills are usually lip trills (same valves, moving between harmonics) or valve trills. Your teacher can show which suits each passage.';
-let fFam = '', fOg = null;
-for(const i of FINGER){ if(i.fam!==fFam){ fOg = document.createElement('optgroup'); fOg.label = i.fam; $('fInst').appendChild(fOg); fFam = i.fam; } fOg.appendChild(new Option(i.name, i.id)); }
-try{ const s = localStorage.getItem('fingerInst'); if(s && FINGER.some(i=>i.id===s)) $('fInst').value = s; }catch(e){}
+const FLUTE_CHART = (function(){
+/* ---------- key geometry ---------- */
+const K = {
+  TBb:{x:14,y:21,w:15,h:9,lbl:'B♭',ly:13},
+  TB: {x:14,y:36,w:17,h:11,lbl:'B',ly:51},
+  L1:{x:44,y:36,r:10,lbl:'1',ly:57}, L2:{x:70,y:36,r:10,lbl:'2',ly:57}, L3:{x:96,y:36,r:10,lbl:'3',ly:57},
+  GS:{x:117,y:53,w:15,h:8,lbl:'G♯',ly:65},
+  SB:{x:135,y:21,w:8,h:14,lbl:'B♭',ly:10},
+  R1:{x:150,y:36,r:10,lbl:'1',ly:57},
+  TR1:{x:163,y:17,w:9,h:7,lbl:'T1',ly:9},
+  R2:{x:176,y:36,r:10,lbl:'2',ly:57},
+  TR2:{x:189,y:17,w:9,h:7,lbl:'T2',ly:9},
+  R3:{x:202,y:36,r:10,lbl:'3',ly:57},
+  EB:{x:225,y:24,w:15,h:8,lbl:'E♭',ly:16},
+  CS:{x:224,y:47,w:10,h:15,lbl:'C♯',ly:65},
+  C: {x:238,y:47,w:10,h:15,lbl:'C',ly:65},
+  B: {x:252,y:47,w:10,h:15,lbl:'B',ly:65,opt:1},
+  GZ:{x:252,y:27,w:7,h:7,lbl:'Gz',ly:19,opt:1}
+};
+const NAMES = {TBb:'thumb B♭ lever',TB:'thumb B key',L1:'LH 1',L2:'LH 2',L3:'LH 3',GS:'G♯ key',SB:'side B♭ lever',
+  R1:'RH 1',TR1:'trill key 1',R2:'RH 2',TR2:'trill key 2',R3:'RH 3',EB:'E♭ key',CS:'C♯ roller',C:'C roller',B:'B roller',GZ:'gizmo'};
+const ORDER = ['TBb','TB','L1','L2','L3','GS','SB','R1','TR1','R2','TR2','R3','EB','CS','C','B','GZ'];
+
+/* ---------- parser: WFG-style text, [ ] marks keys that trill ---------- */
+const TOKS = ['Bb','G#','D#','C#','Eb','T','B','C','D','ß','1','2','3','-'];
+function tokenize(str){
+  const out=[]; let tr=false, i=0; str=str.replace(/[–—]/g,'-');
+  while(i<str.length){
+    const ch=str[i];
+    if(ch===' '){i++;continue}
+    if(ch==='['){tr=true;i++;continue}
+    if(ch===']'){tr=false;i++;continue}
+    const t=TOKS.find(t=>str.startsWith(t,i));
+    if(!t) throw new Error('Bad token in '+str+' at '+i);
+    out.push({t,tr}); i+=t.length;
+  }
+  return out;
+}
+function parse(s){
+  const st={}; const [L,R]=s.split('|');
+  const set=(id,tok)=>{st[id]=tok.tr?2:1};
+  const l=tokenize(L); let i=0;
+  if(l[i] && ['T','B','Bb'].includes(l[i].t)){ set(l[i].t==='Bb'?'TBb':'TB', l[i]); i++; }
+  ['L1','L2','L3'].forEach(id=>{ const tk=l[i++]; if(!tk) throw new Error('LH short '+s); if(tk.t!=='-') set(id,tk); else if(tk.tr) st[id]=2; });
+  if(l[i] && l[i].t==='G#'){ set('GS',l[i]); i++; }
+  const r=tokenize(R); i=0;
+  if(r[i] && r[i].t==='Bb'){ set('SB',r[i]); i++; }
+  const pos=id=>{ const tk=r[i++]; if(!tk||!/^[123-]$/.test(tk.t)) throw new Error('RH bad '+s); if(tk.t!=='-') set(id,tk); else if(tk.tr) st[id]=2; };
+  pos('R1'); if(r[i] && r[i].t==='D'){ set('TR1',r[i]); i++; }
+  pos('R2'); if(r[i] && r[i].t==='D#'){ set('TR2',r[i]); i++; }
+  pos('R3');
+  const foot={Eb:'EB','C#':'CS',C:'C',B:'B','ß':'GZ'};
+  for(;i<r.length;i++){ const id=foot[r[i].t]; if(!id) throw new Error('Foot bad '+s); set(id,r[i]); }
+  return st;
+}
+
+/* ---------- drawing ---------- */
+function shape(id,k,cls){
+  if(k.r) return `<circle class="${cls}" cx="${k.x}" cy="${k.y}" r="${k.r}"/>`;
+  const rx=Math.min(k.w,k.h)/2;
+  return `<rect class="${cls}" x="${k.x-k.w/2}" y="${k.y-k.h/2}" width="${k.w}" height="${k.h}" rx="${rx}"/>`;
+}
+function describe(st){
+  const p=ORDER.filter(id=>st[id]===1).map(id=>NAMES[id]);
+  const t=ORDER.filter(id=>st[id]===2).map(id=>NAMES[id]);
+  let d='Press '+(p.length?p.join(', '):'nothing');
+  if(t.length) d+='; trill '+t.join(', ');
+  return d;
+}
+let PIC=false; const FOOT=['CS','C','B','GZ'];
+function fingSVG(st,labels){
+  const w=PIC?236:266, vb=labels?`0 4 ${w} 66`:`0 6 ${w} 62`;
+  let s=`<svg class="fing" viewBox="${vb}" role="img" aria-label="${describe(st)}">`;
+  s+=`<rect class="bodyline" x="2" y="33" width="${PIC?226:262}" height="6" rx="3"/>`;
+  for(const id of ORDER){
+    if(PIC && FOOT.includes(id)) continue;
+    const k=K[id], v=st[id]||0;
+    let cls='k '+(v===2?'t':v===1?'p':'o'); if(k.opt) cls+=' opt';
+    s+=shape(id,k,cls);
+    if(labels) s+=`<text class="lbl" x="${k.x}" y="${k.ly}">${k.lbl}</text>`;
+  }
+  return s+'</svg>';
+}
+const LET='CDEFGAB';
+function pretty(n){ return n.replace(/^([A-G])#/,'$1♯').replace(/^([A-G])b(?=\d)/,'$1♭'); }
+function staffSVG(n){
+  const m=n.match(/^([A-G])(#|b)?(\d)$/); const L=m[1],acc=m[2],o=+m[3];
+  let d=(o-4)*7+LET.indexOf(L)-2; const ott=d>=17; if(ott) d-=7;
+  const Y=v=>66-v*3, x=36;
+  let s=`<svg class="staff" viewBox="0 0 52 84" aria-hidden="true">`;
+  for(let v=0;v<=8;v+=2) s+=`<line class="st-line" x1="4" x2="50" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d<=-2) for(let v=-2;v>=d;v-=2) s+=`<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d>=10) for(let v=10;v<=d;v+=2) s+=`<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  s+=`<ellipse class="st-head" cx="${x}" cy="${Y(d)}" rx="4.4" ry="3.1" transform="rotate(-20 ${x} ${Y(d)})"/>`;
+  if(acc) s+=`<text class="st-txt" x="${x-12}" y="${Y(d)+4}" font-size="11" text-anchor="middle">${acc==='#'?'♯':'♭'}</text>`;
+  if(ott) s+=`<text class="st-txt" x="6" y="8" font-size="8" font-style="italic">8va</text>`;
+  return s+'</svg>';
+}
+
+/* ---------- data: notes (first fingering = standard) ---------- */
+const BF='Needs a B footjoint';
+const NOTES=[
+ ['Low register','B3 to C♯5',[
+  ['B3','', [['T 123|123B',BF]]],
+  ['C4','', [['T 123|123C','']]],
+  ['C#4','Db4',[['T 123|123C#','']]],
+  ['D4','', [['T 123|123','Pinky stays off the E♭ key']]],
+  ['D#4','Eb4',[['T 123|123Eb','']]],
+  ['E4','', [['T 123|12-Eb','']]],
+  ['F4','', [['T 123|1--Eb','']]],
+  ['F#4','Gb4',[['T 123|--3Eb',''],['T 123|-2-Eb','Smoother from E in fast passages']]],
+  ['G4','', [['T 123|---Eb','']]],
+  ['G#4','Ab4',[['T 123G#|---Eb','']]],
+  ['A4','', [['T 12-|---Eb','']]],
+  ['A#4','Bb4',[['Bb 1--|---Eb','Thumb B♭: best in flat keys with no B natural nearby'],['T 1--|1--Eb','“One and one”: easy in most passages'],['T 1--|Bb---Eb','Side lever: best for chromatic runs']]],
+  ['B4','', [['T 1--|---Eb','']]],
+  ['C5','', [['1--|---Eb','']]],
+  ['C#5','Db5',[['---|---Eb',''],['---|-23Eb','Steadier pitch and tone for long notes']]]
+ ]],
+ ['Middle register','D5 to C♯6',[
+  ['D5','', [['T -23|123','LH 1 lifts; pinky off E♭']]],
+  ['D#5','Eb5',[['T -23|123Eb','']]],
+  ['E5','', [['T 123|12-Eb','Same as low E, more air']]],
+  ['F5','', [['T 123|1--Eb','']]],
+  ['F#5','Gb5',[['T 123|--3Eb',''],['T 123|-2-Eb','Smoother from E in fast passages']]],
+  ['G5','', [['T 123|---Eb','']]],
+  ['G#5','Ab5',[['T 123G#|---Eb','']]],
+  ['A5','', [['T 12-|---Eb','']]],
+  ['A#5','Bb5',[['Bb 1--|---Eb','Thumb B♭'],['T 1--|1--Eb','“One and one”'],['T 1--|Bb---Eb','Side lever: best for chromatic runs']]],
+  ['B5','', [['T 1--|---Eb','']]],
+  ['C6','', [['1--|---Eb','']]],
+  ['C#6','Db6',[['---|---Eb',''],['---|-23Eb','Steadier pitch and tone']]]
+ ]],
+ ['High register','D6 to C7',[
+  ['D6','', [['T -23|---Eb',''],['T -23G#|1--Eb','Very sharp; useful for soft playing']]],
+  ['D#6','Eb6',[['T 123G#|123Eb',''],['T -23|--D#-Eb','Smooth slur up from D6'],['T 123G#|123Eb C#','Slightly flat; strong when loud']]],
+  ['E6','', [['T 12-|12-Eb',''],['T 12-|12-','Flatter; good for hard attacks'],['T 12-|12D#-Eb','Sharper; less likely to crack to A5']]],
+  ['F6','', [['T 1-3|1--Eb',''],['T 1-3|1-D#3Eb','Good for soft playing'],['T 1-3|1-3Eb','Flatter']]],
+  ['F#6','Gb6',[['T 1-3|--3Eb',''],['T 1-3|-2-Eb','Smoother slur with E6'],['T 1-3|-23Eb','Flatter']]],
+  ['G6','', [['123|---Eb','Thumb off'],['123|---C#','C♯ roller instead of E♭; pairs with the A6 alternate']]],
+  ['G#6','Ab6',[['-23G#|---Eb','Thumb off'],['-23G#|-23Eb','Flatter; good when loud']]],
+  ['A6','', [['T -2-|1--Eb',''],['T -2-|1-3C#','Smoother slur to F6 or F♯6']]],
+  ['A#6','Bb6',[['T ---|1D--','RH 1 presses trill key 1 as well'],['T 1--|1D--','Smoother slur with F6 or A6'],['Bb 1--|1D--B','More in tune; needs a B footjoint']]],
+  ['B6','', [['T 1-3|--D#-',''],['Bb 1-3|--D#-B','Clearer and more in tune; needs a B footjoint'],['T 1-3|--D#3','Flatter']]],
+  ['C7','', [['123G#|1--','C footjoint'],['123G#|1--ß','B footjoint: add the gizmo'],['T 123G#|1--','More in tune but stuffier'],['123G#|1-3','Better balance on a C footjoint']]]
+ ]],
+ ['Extreme register','C♯7 to C8, varies by flute',[
+  ['C#7','Db7',[['-2-G#|1--',''],['-2-|1--C',''],['-2-G#|123Eb','']]],
+  ['D7','', [['T --3|12-C',''],['T --3|12-Eb',''],['Bb ---|--3B','Good response; needs a B footjoint']]],
+  ['D#7','Eb7',[['T --3G#|-D2-',''],['T --3|1D--Eb','Flat'],['T 123G#|1D-3Eb','']]],
+  ['E7','', [['12-|-2D#-','Tends sharp'],['123|-2D#-',''],['12-|-D-3C','Good response']]],
+  ['F7','', [['-2-|-2D#-','']]],
+  ['F#7','Gb7',[['T -23G#|-23',''],['T 1-3|1-3Eb C#','Excellent response']]],
+  ['G7','', [['T -23G#|-D2-','']]],
+  ['G#7','Ab7',[['T -23G#|-D23B',BF]]],
+  ['C8','', [['1-3G#|1-D#-Eb','Very difficult; A7 to B7 have no reliable fingering']]]
+ ]]
+];
+
+/* ---------- data: trills [low, high, fingering, tip] ---------- */
+const TRILLS=[
+ ['Low register',[
+  ['C4','C#4',null,'No practical trill; use a fast lip or finger slur'],
+  ['C4','D4','T 123|123[C]','Roll the pinky on and off the C roller'],
+  ['C#4','D4','T 123|123[C#]',''],
+  ['C#4','D#4',null,'No practical trill fingering'],
+  ['D4','Eb4','T 123|123[Eb]',''],
+  ['D4','E4','T 123|12[3]',''],
+  ['Eb4','E4','T 123|12[3]Eb',''],
+  ['Eb4','F4','T 123|1[23]Eb',''],
+  ['E4','F4','T 123|1[2]-Eb',''],
+  ['E4','F#4','T 123|[1]2-Eb',''],
+  ['F4','Gb4','T 123|[1]-3Eb',''],
+  ['F4','G4','T 123|[1]--Eb',''],
+  ['F#4','G4','T 123|--[3]Eb',''],
+  ['F#4','G#4','T 123[G#]|--3Eb',''],
+  ['G4','Ab4','T 123[G#]|---Eb',''],
+  ['G4','A4','T 12[3]|---Eb',''],
+  ['G#4','A4','T 12[3]G#|---Eb',''],
+  ['Ab4','Bb4','Bb 1[23]G#|---Eb',''],
+  ['A4','Bb4','Bb 1[2]-|---Eb',''],
+  ['A4','B4','T 1[2]-|---Eb',''],
+  ['Bb4','B4','T 1--|[Bb]---Eb',''],
+  ['Bb4','C5','[Bb] 1--|---Eb',''],
+  ['B4','C5','[T] 1--|---Eb',''],
+  ['B4','C#5','[T] [1]--|---Eb',''],
+  ['C5','C#5','[1]--|---Eb',''],
+  ['C5','D5','1--|-[D]--Eb',''],
+  ['C#5','D5','---|-[D]--Eb',''],
+  ['C#5','D#5','---|--[D#]-Eb','']
+ ]],
+ ['Middle register',[
+  ['D5','Eb5','T -23|123[Eb]',''],
+  ['D5','E5','T -23|12[3]',''],
+  ['Eb5','E5','T -23|12[3]Eb',''],
+  ['Eb5','F5','T 123|1[23]Eb',''],
+  ['E5','F5','T 123|1[2]-Eb','E5 up to C♯6: same as the low octave'],
+  ['A#5','B5','T 1--|[Bb]---Eb',''],
+  ['C6','C#6','[1]--|---Eb',''],
+  ['C6','D6','1--|--[D#]-Eb','Trill key 2, not 1'],
+  ['C#6','D6','---|-[D]--Eb',''],
+  ['C#6','D#6','---|-[D]-[D#]-Eb','Both trill keys together']
+ ]],
+ ['High register',[
+  ['D6','Eb6','T -23|--[D#]-Eb',''],
+  ['D6','E6','T -2[3]|---Eb',''],
+  ['Eb6','E6','T 12[3]G#|123Eb',''],
+  ['Eb6','F6','T 1[23]G#|123Eb',''],
+  ['E6','F6','T 1[2]-|12-Eb',''],
+  ['E6','F#6','[T] 12-|12-Eb','F♯ a little flat'],
+  ['F6','Gb6','T 1-3|[1]-3Eb',''],
+  ['F6','G6','[T] 1-3|[1]-3Eb','Thumb and RH 1 together'],
+  ['F#6','G6','[T] 1-3|--3Eb','G a little flat'],
+  ['F#6','G#6','[T] [1]-3|--3Eb',''],
+  ['G6','Ab6','123|-[D]--Eb',''],
+  ['G6','A6','T -2[3]|-23Eb','A a little flat'],
+  ['G6','A6','123[G#]|-[D]-[D#]-Eb','In tune, better tone'],
+  ['G#6','A6','-23G#|-[D]--Eb',''],
+  ['Ab6','Bb6','-23G#|-[D]-[D#]-Eb',''],
+  ['A6','Bb6','T -[2]-|1--Eb',''],
+  ['A6','Bb6','T -2-|1[D]-[D#]-Eb','Better B♭'],
+  ['A6','B6','T 123|[1]-[3]','B a little flat'],
+  ['A#6','B6','T 1-3|[1D]-D#-','RH 1 and trill key 1 together'],
+  ['Bb6','C7','[Bb] 1-3|--3C',''],
+  ['B6','C7','[T] 1-3|--D#-Eb',''],
+  ['B6','C#7','[T] [1]-3|--D#-','C footjoint'],
+  ['C7','D7','[T] 123G#|1--C','C footjoint']
+ ]]
+];
+
+/* ---------- data: tremolos ---------- */
+const TREMS=[
+ ['Low register',[
+  ['D4','F4','T 123|1[23]','Lift the pinky for both notes'],
+  ['E4','G4','T 123|[12]-Eb',''],
+  ['F4','A4','T 12[3]|[1]--Eb',''],
+  ['F#4','A4','T 12[3]|--[3]Eb',''],
+  ['G4','Bb4','Bb 1[23]|---Eb',''],
+  ['G4','B4','T 1[23]|---Eb',''],
+  ['G#4','B4','T 1[23]G#|---Eb',''],
+  ['A4','C5','[T] 1[2]-|---Eb',''],
+  ['A4','C#5','[T] [12]-|---Eb',''],
+  ['Bb4','Db5','[Bb] [1]--|---Eb','']
+ ]],
+ ['Middle register',[
+  ['E5','G5','T 123|[12]-Eb','Same as the low octave'],
+  ['F5','A5','T 12[3]|[1]--Eb',''],
+  ['F#5','A5','T 12[3]|--[3]Eb',''],
+  ['G5','Bb5','Bb 1[23]|---Eb',''],
+  ['G5','B5','T 1[23]|---Eb',''],
+  ['G#5','B5','T 1[23]G#|---Eb',''],
+  ['A5','C6','[T] 1[2]-|---Eb',''],
+  ['A5','C#6','[T] [12]-|---Eb',''],
+  ['Bb5','Db6','[Bb] [1]--|---Eb','']
+ ]],
+ ['High register',[
+  ['C6','E6','T 12[3]|[1]--Eb','Uses the F4–A4 fingering, overblown'],
+  ['C#6','E6','T 12[3]|--3Eb',''],
+  ['Db6','F6','[T] [1]-3|1--Eb',''],
+  ['D6','F6','Bb 1[23]|---Eb',''],
+  ['D6','F#6','T 1[23]|---Eb',''],
+  ['Eb6','Gb6','T 1[23]G#|---Eb',''],
+  ['Eb6','G6','[T] 1[2]3G#|---Eb',''],
+  ['E6','G6','[T] 1[2]-|---Eb',''],
+  ['E6','G#6','[T] [12]-|---Eb',''],
+  ['F6','Ab6','[Bb] [1]--|---Eb',''],
+  ['F#6','A6','T 12[3]|--[3]C#',''],
+  ['G6','Bb6','Bb 1[23]|---Eb',''],
+  ['G6','B6','[T] 1-[3]|--[D#]-C#',''],
+  ['G#6','B6','T 1[23]G#|---Eb',''],
+  ['Ab6','C7','123G#|[1]--','C footjoint'],
+  ['A6','C7','[T] 1[2]-G#|---C',''],
+  ['A6','C#7','[T] -2-|1--C','Favour the C♯; A speaks more easily'],
+  ['Bb6','Db7','-2-G#|1[D]-[D#]-','Favour the D♭'],
+  ['Bb6','D7','T --3|12[3]C','Adjust the air for each note']
+ ]]
+];
+
+/* ---------- render ---------- */
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const reg=t=>{const m=t.match(/^(.*?) /);return m?m[1]:t};
+function noteCard([n,enh,fs]){
+  const [main,...alts]=fs; const st=parse(main[0]);
+  let h=`<article class="card"><div class="nhead"><h3>${pretty(n)}${enh?`<span class="enh">${pretty(enh)}</span>`:''}</h3>${staffSVG(n)}</div>`;
+  h+=`<div class="fing">${fingSVG(st)}</div>`;
+  if(main[1]) h+=`<p class="tip">${esc(main[1])}</p>`;
+  if(alts.length){
+    h+=`<details><summary>${alts.length} alternate${alts.length>1?'s':''}</summary>`;
+    for(const [f,t] of alts) h+=`<div class="alt">${fingSVG(parse(f))}${t?`<p class="tip">${esc(t)}</p>`:''}</div>`;
+    h+=`</details>`;
+  }
+  return h+'</article>';
+}
+function moving(st){ return ORDER.filter(id=>st[id]===2).map(id=>NAMES[id]).join(' + '); }
+function pairCard([a,b,f,t],sym){
+  let h=`<article class="card"><h3>${pretty(a)} ${sym} ${pretty(b)}</h3>`;
+  if(!f){ return h+`<p class="none">${esc(t)}</p></article>`; }
+  const st=parse(f);
+  h+=`<div class="fing" style="margin-top:.4rem">${fingSVG(st)}</div><p class="move">Move <b>${moving(st)}</b></p>`;
+  if(t) h+=`<p class="tip">${esc(t)}</p>`;
+  return h+'</article>';
+}
+const range=list=>{const a=list[0][0],b=list[list.length-1][1];return `${pretty(a)} to ${pretty(b)}`};
+
+const sec = (title, sub, list, fn) => `<h2>${title}<small>${sub}</small></h2><div class="grid">${list.map(fn).join('')}</div>`;
+
+/* ---------- piccolo: flute fingerings without the C footjoint (written D4 to C7),
+   plus piccolo alternates from the Woodwind Fingering Guide ---------- */
+const MIDI=n=>{const m=n.match(/^([A-G])(#|b)?(\d)$/);return [0,2,4,5,7,9,11][LET.indexOf(m[1])]+(m[2]==='#'?1:m[2]==='b'?-1:0)+(+m[3]+1)*12};
+const inPicc=n=>MIDI(n)>=62&&MIDI(n)<=96;
+const noFoot=f=>{const st=parse(f);return !FOOT.some(id=>st[id])};
+const PICC_HIGH={
+  D6:[['T -23|---Eb',''],['T -23G#|1--Eb','Sharp'],['T -23G#|-2-Eb','Sharper; good for very soft playing']],
+  E6:[['T 12-|12-Eb',''],['T 12-|1D2-Eb','Less likely to crack'],['T 12-|12D#-Eb','Sharp; less likely to crack'],['T 12-|12-','Hard to crack; flatter']],
+  F6:[['T 1-3|1--Eb',''],['T 1-3|1-3Eb','Flatter; good when loud']],
+  'F#6':[['T 1-3|-23','Piccolo fingering: great for hard attacks'],['T 1-3|--3Eb','Flute fingering: harder to start, avoid hard attacks'],['T 1-3|-2-Eb','Flat; good when loud'],['T 1-3|-23Eb','Flatter; good when loud']]
+};
+const PICC_NOTES=NOTES.map(([t,,list])=>[t,list.filter(([n])=>inPicc(n)).map(([n,enh,fs])=>{
+  if(PICC_HIGH[n]) return [n,enh,PICC_HIGH[n]];
+  const out=fs.filter(([f])=>noFoot(f)).filter(([,tip],i)=>i===0||!/footjoint/.test(tip)).map(([f,tip])=>[f,/footjoint/.test(tip)?'':tip]);
+  return [n,enh,out];
+})]).filter(([,list])=>list.length).map(([t,list])=>[t,`${pretty(list[0][0])} to ${pretty(list[list.length-1][0])}`,list]);
+const pPairs=src=>src.map(([t,list])=>[t,list.filter(([a,b,f])=>inPicc(a)&&inPicc(b)&&(!f||noFoot(f))).map(([a,b,f,tip])=>[a,b,f,/footjoint/.test(tip)?'':tip])]).filter(([,l])=>l.length);
+const PICC_TRILLS=pPairs(TRILLS), PICC_TREMS=pPairs(TREMS);
+const PICC_ABOVE='<h2>Above C7<small>C♯7 and up</small></h2><div class="grid"><article class="card"><h3>Top notes</h3><p class="tip">Piccolos differ most at the very top. The Woodwind Fingering Guide lists piccolo options up to E7: see More charts below.</p></article></div>';
+const run=(v,fn)=>{PIC=v==='picc';try{return fn()}finally{PIC=false}};
+return {
+  keymap: v => run(v, () => fingSVG({}, true).replace(/aria-label="[^"]*"/, `aria-label="Map of the ${PIC?'piccolo':'flute'} keys"`)),
+  notes: v => run(v, () => PIC ? PICC_NOTES.map(([t,sub,list]) => sec(t, sub, list, noteCard)).join('') + PICC_ABOVE : NOTES.map(([t,sub,list]) => sec(t, sub, list, noteCard)).join('')),
+  trills: v => run(v, () => (PIC?PICC_TRILLS:TRILLS).map(([t,list]) => sec(t, range(list), list, x => pairCard(x,'⇄'))).join('')),
+  trems: v => run(v, () => (PIC?PICC_TREMS:TREMS).map(([t,list]) => sec(t, range(list), list, x => pairCard(x,'⇄'))).join(''))
+};
+})();
+/* ---------- brass charts: worked out from the harmonic series ---------- */
+const BRASS_CHART = (function(){
+// brass parts usually spell black keys this way: F\u266f and C\u266f, but B\u266d, E\u266d and A\u266d
+const PRI = ['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'], ALT = ['','Db','','D#','','','Gb','','G#','','A#',''];
+const nm = m => PRI[m%12] + (Math.floor(m/12)-1);
+const enh = m => ALT[m%12] ? ALT[m%12] + (Math.floor(m/12)-1) : '';
+const pretty = n => n.replace(/^([A-G])#/,'$1\u266f').replace(/^([A-G])b(?=\d)/,'$1\u266d');
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const ord = n => n + (n===1?'st':n===2?'nd':n===3?'rd':'th');
+const LET = 'CDEFGAB';
+
+function staffSVG(n, clef){
+  const m = n.match(/^([A-G])(#|b)?(\d)$/), L = m[1], acc = m[2], o = +m[3];
+  let d = clef==='bass' ? (o-2)*7 + LET.indexOf(L) - 4 : (o-4)*7 + LET.indexOf(L) - 2;
+  let mark = '';
+  if(d >= 17){ d -= 7; mark = '8va'; } else if(d <= -9){ d += 7; mark = '8vb'; }
+  const Y = v => 66 - v*3, x = 36;
+  let s = `<svg class="staff" viewBox="0 0 52 84" aria-hidden="true">`;
+  for(let v=0; v<=8; v+=2) s += `<line class="st-line" x1="4" x2="50" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d <= -2) for(let v=-2; v>=d; v-=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d >= 10) for(let v=10; v<=d; v+=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  s += `<ellipse class="st-head" cx="${x}" cy="${Y(d)}" rx="4.4" ry="3.1" transform="rotate(-20 ${x} ${Y(d)})"/>`;
+  if(acc) s += `<text class="st-txt" x="${x-12}" y="${Y(d)+4}" font-size="11" text-anchor="middle">${acc==='#'?'\u266f':'\u266d'}</text>`;
+  s += `<text class="st-txt" x="5" y="8" font-size="7" font-style="italic">${clef==='bass'?'bass':''}${mark?(clef==='bass'?' ':'')+mark:''}</text>`;
+  return s + '</svg>';
+}
+
+/* harmonic series, valve combinations, slide positions */
+const partials = (fund, from, to) => { const out = []; for(let n=from; n<=to; n++){ const e = 12*Math.log2(n), r = Math.round(e); out.push({n, p: fund + r, dev: Math.round((e - r)*100)}); } return out; };
+const C3V = [['0',0],['2',1],['1',2],['12',3],['3',3],['23',4],['13',5],['123',6]];
+const C4V = [['0',0],['2',1],['1',2],['12',3],['3',3],['23',4],['4',5],['13',5],['24',6],['123',6],['14',7],['124',8],['34',8],['234',9],['134',10],['1234',11]];
+function valveOpts(cfg, m, side){
+  const fund = side==='B' ? cfg.fundB : cfg.fund, nv = cfg.valves, combos = nv===4 ? C4V : C3V, maxL = nv===4 ? 11 : 6, out = [];
+  for(const {n,p,dev} of partials(fund, 2, cfg.top || 16)){
+    const L = p - m; if(L < 0 || L > maxL || Math.abs(dev) > 35) continue;
+    for(const [v,l] of combos) if(l===L) out.push({v, n, L, side, dev});
+  }
+  const keep = out.some(o => o.L <= 6) ? out.filter(o => o.L <= 6) : out;
+  const pref = cfg.pref, first = nv===4 ? {5:'4', 6:'24'} : {};
+  const score = o => (pref.includes(o.n) ? 0 : 50) + (o.dev < -20 ? 100 : 0) + o.L*3 + (first[o.L] && first[o.L]!==o.v ? 1 : 0) + (o.v==='3' ? 1 : 0);
+  return keep.sort((a,b) => score(a)-score(b) || a.n-b.n);
+}
+function slideOpts(cfg, m){
+  const out = [];
+  for(const {n,p,dev} of partials(cfg.fund, cfg.pedal ? 1 : 2, 16)){
+    if(Math.abs(dev) > 35) continue;
+    const L = p - m;
+    if(L >= 0 && L <= 6) out.push({pos: L+1, n, L, dev});
+    if(cfg.trigger && L >= 5 && L <= 10) out.push({pos: L-4, trig: true, n, L, dev});
+  }
+  const score = o => (o.dev < -20 ? 100 : 0) + (o.trig ? (o.L > 6 ? 0 : 8) : 0) + o.pos*2;
+  return out.sort((a,b) => score(a)-score(b) || a.n-b.n);
+}
+function options(cfg, m){
+  if(cfg.kind==='slide') return slideOpts(cfg, m);
+  if(cfg.kind==='double'){
+    const F = valveOpts(cfg, m, 'F'), B = valveOpts(cfg, m, 'B');
+    return m >= cfg.switchAt ? [...B, ...F] : [...F, ...B];
+  }
+  return valveOpts(cfg, m, '');
+}
+
+/* words */
+function label(cfg, f){
+  if(cfg.kind==='slide') return (f.trig ? 'Trigger + position ' : 'Position ') + f.pos;
+  const v = f.v==='0' ? 'Open' : (f.v.length===1 ? 'Valve ' : 'Valves ') + f.v.split('').join(' + ');
+  return (f.side==='B' ? 'B\u266d side (thumb) \u00b7 ' : f.side==='F' ? 'F side \u00b7 ' : '') + v;
+}
+function tip(cfg, f){
+  const t = [label(cfg, f), ord(f.n) + ' partial' + (f.n===1 ? ' (pedal)' : '')];
+  if(f.dev < -20) t.push(cfg.kind==='slide' ? 'naturally flat: raise the slide slightly' : 'naturally flat: lip it up');
+  if(cfg.kind!=='slide' && /1/.test(f.v) && /3/.test(f.v) && !/4/.test(f.v)) t.push(cfg.slides ? 'runs sharp: kick out the 3rd-valve slide' : 'runs sharp: lip down');
+  if(cfg.kind!=='slide' && f.v==='3') t.push('same note as 1 + 2; tuning differs slightly');
+  if(f.trig && f.L <= 6) t.push('trigger positions sit further out than normal ones');
+  return t.join(' \u00b7 ');
+}
+
+/* drawing: valves (and horn thumb) or the slide */
+function valveSVG(cfg, f, moving){
+  const nv = cfg.valves, thumb = cfg.kind==='double', w = 30 + nv*30 + (thumb ? 28 : 0);
+  let s = `<svg class="fing valves" viewBox="0 0 ${w} 44" role="img" aria-label="${esc(label(cfg, f))}">`, x = 22;
+  if(thumb){
+    const on = f.side==='B', mv = moving && moving.has('T'), cls = 'k ' + (mv ? 't' : on ? 'p' : 'o');
+    s += `<rect class="${cls}" x="${x-9}" y="14" width="18" height="12" rx="6"/><text class="lbl" x="${x}" y="38">thumb</text>`;
+    x += 28;
+  }
+  for(let i=1; i<=nv; i++){
+    const on = f.v.includes(String(i)), mv = moving && moving.has(String(i)), cls = 'k ' + (mv ? 't' : on ? 'p' : 'o'), cx = x + (i-1)*30;
+    s += `<circle class="${cls}" cx="${cx}" cy="20" r="10"/><text class="lbl" x="${cx}" y="40">${i}</text>`;
+  }
+  return s + '</svg>';
+}
+function slideSVG(cfg, f, other){
+  const X = p => 26 + (p-1)*34;
+  let s = `<svg class="fing slide" viewBox="0 0 ${cfg.trigger ? 290 : 262} 46" role="img" aria-label="${esc(label(cfg, f))}">`;
+  s += `<rect class="bodyline" x="14" y="17" width="236" height="6" rx="3"/>`;
+  for(let p=1; p<=7; p++) s += `<text class="lbl" x="${X(p)}" y="42">${p}</text>`;
+  if(other && other.pos !== f.pos) s += `<circle class="k t" cx="${X(other.pos)}" cy="20" r="8"/>`;
+  s += `<circle class="k p" cx="${X(f.pos)}" cy="20" r="8"/>`;
+  if(cfg.trigger){
+    const on = f.trig, mv = other && !!other.trig !== !!f.trig, cls = 'k ' + (mv ? 't' : on ? 'p' : 'o');
+    s += `<rect class="${cls}" x="262" y="13" width="20" height="14" rx="7"/><text class="lbl" x="272" y="42">trig</text>`;
+  }
+  return s + '</svg>';
+}
+const draw = (cfg, f, moving, other) => cfg.kind==='slide' ? slideSVG(cfg, f, other) : valveSVG(cfg, f, moving);
+
+/* trills and tremolos: the pair of fingerings that moves least */
+function bestPair(cfg, A, B){
+  let best = null;
+  const list = xs => xs.length < 2 ? xs.join('') : xs.slice(0,-1).join(', ') + ' and ' + xs[xs.length-1];
+  for(const a of A) for(const b of B){
+    let cost, how, moving = new Set();
+    if(cfg.kind==='slide'){
+      if(a.pos===b.pos && !!a.trig===!!b.trig && a.n!==b.n){ cost = 1; how = `Lip trill: stay in ${a.trig ? 'trigger ' : ''}position ${a.pos} and move between partials.`; }
+      else { cost = 3 + Math.abs(a.pos-b.pos) + (!!a.trig!==!!b.trig ? 2 : 0); how = `Slide between ${a.trig?'trigger ':''}position ${a.pos} and ${b.trig?'trigger ':''}${b.pos}: only practical at slower speeds.`; }
+    } else {
+      for(const d of '1234') if(a.v.includes(d) !== b.v.includes(d)) moving.add(d);
+      if((a.side==='B') !== (b.side==='B')) moving.add('T');
+      if(!moving.size && a.n!==b.n){ cost = 2.5; how = 'Lip trill: keep these valves down and move between partials with the lips.'; }
+      else if(a.n===b.n){ cost = moving.size; const vs = [...moving].filter(d => d!=='T'), parts = [];
+        if(moving.has('T')) parts.push('the thumb'); if(vs.length) parts.push((vs.length>1 ? 'valves ' : 'valve ') + list(vs));
+        how = 'Valve trill: move <b>' + parts.join(' and ') + '</b>.'; }
+      else { cost = 5 + moving.size; how = 'Valves and partial both change, so this is hard to do quickly. Practise it slowly, or use a lip trill if the passage allows.'; }
+    }
+    cost += (a.dev < -20 ? 2 : 0) + (b.dev < -20 ? 2 : 0) + A.indexOf(a)*.05 + B.indexOf(b)*.05;
+    if(!best || cost < best.cost) best = {a, b, cost, how, moving};
+  }
+  return best;
+}
+
+/* cards */
+function noteCard(cfg, m){
+  const fs = options(cfg, m); if(!fs.length) return '';
+  const [main, ...alts] = fs, n = nm(m), e = enh(m);
+  const clef = cfg.clef==='treble' && m < 53 ? 'bass' : cfg.clef;   // low horn notes read in bass clef
+  let h = `<article class="card"><div class="nhead"><h3>${pretty(n)}${e?`<span class="enh">${pretty(e)}</span>`:''}</h3>${staffSVG(n, clef)}</div>`;
+  h += `<div class="fing">${draw(cfg, main)}</div><p class="tip">${esc(tip(cfg, main))}</p>`;
+  const shown = alts.slice(0, 4);
+  if(shown.length){
+    h += `<details><summary>${shown.length} alternate${shown.length>1?'s':''}</summary>`;
+    for(const f of shown) h += `<div class="alt">${draw(cfg, f)}<p class="tip">${esc(tip(cfg, f))}</p></div>`;
+    h += '</details>';
+  }
+  return h + '</article>';
+}
+function pairCard(cfg, lo, hi){
+  const A = options(cfg, lo), B = options(cfg, hi);
+  let h = `<article class="card"><h3>${pretty(nm(lo))} \u21c4 ${pretty(nm(hi))}</h3>`;
+  if(!A.length || !B.length) return h + '<p class="none">Out of range.</p></article>';
+  const p = bestPair(cfg, A, B);
+  h += `<div class="fing" style="margin-top:.4rem">${draw(cfg, p.a, p.moving, cfg.kind==='slide' ? p.b : null)}</div><p class="move">${p.how}</p>`;
+  if(cfg.kind!=='slide' && p.a.n!==p.b.n && p.moving.size) h += `<p class="tip">${esc(label(cfg,p.a))} (${ord(p.a.n)} partial) \u21c4 ${esc(label(cfg,p.b))} (${ord(p.b.n)} partial)</p>`;
+  else if(cfg.kind==='slide' && p.a.pos!==p.b.pos) h += `<p class="tip">Filled: ${pretty(nm(lo))} \u00b7 blinking: ${pretty(nm(hi))}</p>`;
+  return h + '</article>';
+}
+function byOctave(cfg, lo, hi, card){
+  let out = '';
+  for(let o = Math.floor(lo/12); o <= Math.floor(hi/12); o++){
+    const a = Math.max(lo, o*12), b = Math.min(hi, o*12 + 11); if(a > b) continue;
+    const cards = []; for(let m=a; m<=b; m++){ const c = card(m); if(c) cards.push(c); }
+    if(cards.length) out += `<h2>${pretty(nm(a))} to ${pretty(nm(b))}</h2><div class="grid">${cards.join('')}</div>`;
+  }
+  return out;
+}
+return {
+  notes: cfg => byOctave(cfg, cfg.range[0], cfg.range[1], m => noteCard(cfg, m)),
+  trills: cfg => byOctave(cfg, cfg.range[0], cfg.range[1]-1, m => pairCard(cfg, m, m+1) + (m+2 <= cfg.range[1] ? pairCard(cfg, m, m+2) : '')),
+  trems: cfg => byOctave(cfg, cfg.range[0], cfg.range[1]-3, m => [3,4,5].filter(i => m+i <= cfg.range[1]).map(i => pairCard(cfg, m, m+i)).join('')),
+  keymap: cfg => cfg.kind==='slide' ? slideSVG(cfg, {pos:1, n:2}, null).replace(/class="k p"/, 'class="k o"') : valveSVG(cfg, {v:'', side:''}, null)
+};
+})();
+/* ---------- string charts: worked out from tuning and hand frames ---------- */
+const STRING_CHART = (function(){
+const PRI = ['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'], ALT = ['','Db','','D#','','','Gb','','G#','','A#',''];
+const nm = m => PRI[m%12] + (Math.floor(m/12)-1), enh = m => ALT[m%12] ? ALT[m%12] + (Math.floor(m/12)-1) : '';
+const pretty = n => n.replace(/^([A-G])#/,'$1\u266f').replace(/^([A-G])b(?=\d)/,'$1\u266d');
+const pn = m => pretty(nm(m));
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const LET = 'CDEFGAB';
+const ORD = ['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th'];
+
+function staffSVG(n, clef){
+  const m = n.match(/^([A-G])(#|b)?(\d)$/), L = m[1], acc = m[2], o = +m[3];
+  let d = clef==='bass' ? (o-2)*7 + LET.indexOf(L) - 4 : clef==='alto' ? (o-3)*7 + LET.indexOf(L) - 3 : (o-4)*7 + LET.indexOf(L) - 2;
+  let mark = '';
+  if(d >= 17){ d -= 7; mark = '8va'; } else if(d <= -9){ d += 7; mark = '8vb'; }
+  const Y = v => 66 - v*3, x = 36;
+  let s = `<svg class="staff" viewBox="0 0 52 84" aria-hidden="true">`;
+  for(let v=0; v<=8; v+=2) s += `<line class="st-line" x1="4" x2="50" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d <= -2) for(let v=-2; v>=d; v-=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d >= 10) for(let v=10; v<=d; v+=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  s += `<ellipse class="st-head" cx="${x}" cy="${Y(d)}" rx="4.4" ry="3.1" transform="rotate(-20 ${x} ${Y(d)})"/>`;
+  if(acc) s += `<text class="st-txt" x="${x-12}" y="${Y(d)+4}" font-size="11" text-anchor="middle">${acc==='#'?'\u266f':'\u266d'}</text>`;
+  const tag = (clef==='treble' ? '' : clef) + (mark ? (clef==='treble' ? '' : ' ') + mark : '');
+  if(tag) s += `<text class="st-txt" x="5" y="8" font-size="7" font-style="italic">${tag}</text>`;
+  return s + '</svg>';
+}
+
+/* hand frames: semitones above the open string for each finger, relative to where finger 1 sits */
+const VV_OFF = {'1':{'-1':'low 1','0':''}, '2':{'1':'low 2','2':'high 2'}, '3':{'3':'','4':'high 3'}, '4':{'5':'','4':'low 4','6':'extended 4'}};
+const VC_OFF = {'1':{'0':'','-1':'back extension'}, '2':{'1':'','2':'forward extension'}, '3':{'2':'','3':'forward extension'}, '4':{'3':'','4':'forward extension'}};
+const DB_OFF = {'1':{'0':''}, '2':{'1':''}, '4':{'2':''}};
+const VC_THUMB = {'T':{'0':''}, '1':{'2':'','1':''}, '2':{'3':'','4':''}, '3':{'5':'','4':''}};
+const DB_THUMB = {'T':{'0':''}, '1':{'1':''}, '2':{'2':''}, '3':{'3':''}};
+const PEN = {'':0, 'low 1':1, 'low 2':0, 'high 2':0, 'high 3':0, 'low 4':2, 'extended 4':3, 'back extension':9, 'forward extension':12};
+// low/high finger names only mean something in 1st position; extensions always matter
+const showQ = (P, q) => q && (/extension|extended/.test(q) || (P && P.name==='1st')) ? q : '';
+const vvPos = [[1,'1st',2],[12,'half',1],[20,'2nd',4],[30,'3rd',5],[40,'4th',7],[50,'5th',9],[60,'6th',11],[70,'7th',12],[80,'8th',14],[90,'9th',16],[100,'10th',17]]
+  .map(([cost,name,b]) => ({cost, name, b, off:VV_OFF}));
+const vcPos = [[10,'1st',2],[12,'half',1],[20,'2nd',3],[33,'',4],[30,'3rd',5],[43,'',6],[40,'4th',7]].map(([cost,name,b]) => ({cost, name, b, off:VC_OFF}))
+  .concat(Array.from({length:16}, (_,i) => ({cost:60+Math.abs(9+i-12), name:'thumb', b:9+i, off:VC_THUMB, thumb:true})));
+const dbPos = [[10,'1st',2],[12,'half',1]].map(([cost,name,b]) => ({cost, name, b, off:DB_OFF}))
+  .concat(Array.from({length:8}, (_,i) => ({cost:20+i*4, name:'', b:3+i, off:DB_OFF})))
+  .concat(Array.from({length:13}, (_,i) => ({cost:60+i*.5, name:'thumb', b:12+i, off:DB_THUMB, thumb:true})));
+
+const INST = {
+  vn: {names:['G','D','A','E'], open:[55,62,69,76], maxS:24, pos:vvPos, clef:m => 'treble', about:'Violin, standard tuning G D A E. Positions are counted the usual way: in 1st position the 1st finger sits a step above the open string.'},
+  va: {names:['C','G','D','A'], open:[48,55,62,69], maxS:24, pos:vvPos, clef:m => m >= 74 ? 'treble' : 'alto', about:'Viola, standard tuning C G D A. Shown in alto clef, with treble clef for the top register.'},
+  vc: {names:['C','G','D','A'], open:[36,43,50,57], maxS:24, pos:vcPos, clef:m => m >= 64 ? 'treble' : 'bass', about:'Cello, standard tuning C G D A. Neck positions half to 4th use one finger per semitone, with extensions; thumb position takes over from the upper register.'},
+  db: {names:['E','A','D','G'], open:[40,45,50,55], maxS:24, pos:dbPos, clef:m => m >= 64 ? 'treble' : 'bass', about:'Double bass, orchestral tuning E A D G, written pitch (sounds an octave lower). Lower positions use fingers 1, 2 and 4 (3 and 4 together); thumb position from the octave up.'}
+};
+
+function candidates(I, m){
+  const out = [];
+  I.open.forEach((o, si) => {
+    const s = m - o; if(s < 0 || s > I.maxS) return;
+    if(s===0){ out.push({si, s, f:'0', score:0}); return; }
+    for(const P of I.pos){
+      let best = null;
+      for(const f in P.off){ const q = P.off[f][s - P.b]; if(q===undefined) continue; if(s - P.b < 0 && P.b <= 1) continue;
+        const sc = P.cost + PEN[q] + (f==='4' ? .5 : 0); if(!best || sc < best.score) best = {si, s, f, q, P, score: sc}; }
+      if(best) out.push(best);
+    }
+  });
+  return out.sort((a,b) => a.score - b.score || b.si - a.si);
+}
+function options(I, m){
+  const all = candidates(I, m); if(!all.length) return [];
+  const main = all[0], pick = [main], used = new Set([main.si + ':' + (main.P ? main.P.name + main.P.b : 'open')]);
+  for(const c of all){                                       // one per other string, then other positions
+    if(pick.length >= 5) break;
+    if(c.si===main.si) continue;
+    if(pick.some(p => p.si===c.si)) continue;
+    pick.push(c); used.add(c.si + ':' + (c.P ? c.P.name + c.P.b : 'open'));
+  }
+  for(const c of all){
+    if(pick.length >= 5) break;
+    const k = c.si + ':' + (c.P ? c.P.name + c.P.b : 'open');
+    if(used.has(k) || !c.P) continue;
+    if(pick.some(p => p.si===c.si && p.P && Math.abs(p.P.b - c.P.b) < 2)) continue;
+    pick.push(c); used.add(k);
+  }
+  return pick;
+}
+
+/* words */
+function posName(I, c){
+  if(!c.P) return '';
+  const at = pn(I.open[c.si] + c.P.b);
+  if(c.P.thumb) return `thumb position (thumb on ${at})`;
+  return c.P.name ? `${c.P.name} position` : `position with 1st finger on ${at}`;
+}
+function fingerName(c){ return c.f==='T' ? 'thumb' : c.f==='0' ? 'open' : `${ORD[+c.f]} finger`; }
+function label(I, c){
+  if(c.f==='0') return `Open ${I.names[c.si]} string`;
+  const q = showQ(c.P, c.q);
+  return `${I.names[c.si]} string \u00b7 ${fingerName(c)}${q ? ' (' + q + ')' : ''} \u00b7 ${posName(I, c)}`;
+}
+
+/* fingerboard picture: strings left to right from the nut, real spacing */
+const X = s => 22 + 300*(1 - Math.pow(2, -s/12));
+function board(I, marks, opts){
+  const n = I.open.length, gap = 11, top = 9, w = 252;
+  const y = si => top + (n-1-si)*gap;                       // highest string at the top
+  let s = `<svg class="fing board" viewBox="0 0 ${w} ${top + (n-1)*gap + 16}" role="img" aria-label="${esc(opts && opts.aria || '')}">`;
+  s += `<rect class="bodyline" x="16" y="${top-4}" width="${w-20}" height="${(n-1)*gap+8}" rx="3"/>`;
+  s += `<line class="nut" x1="18" x2="18" y1="${top-4}" y2="${top+(n-1)*gap+4}"/>`;
+  for(const st of [5,7,12,17,19,24]) if(X(st) < w-6) s += `<line class="fret" x1="${X(st)}" x2="${X(st)}" y1="${top-4}" y2="${top+(n-1)*gap+4}"/>`;
+  for(let si=0; si<n; si++) s += `<line class="str" x1="18" x2="${w-4}" y1="${y(si)}" y2="${y(si)}"/><text class="lbl" x="9" y="${y(si)+2}">${I.names[si]}</text>`;
+  s += `<text class="lbl" x="${X(12)}" y="${top+(n-1)*gap+13}">octave</text>`;
+  for(const mk of marks){
+    const cx = mk.f==='0' ? 13 : Math.min(w-8, X(mk.s)), cy = y(mk.si), cls = 'k ' + (mk.cls || 'p');
+    if(mk.harm) s += `<rect class="${cls} harm" x="${cx-4.5}" y="${cy-4.5}" width="9" height="9" transform="rotate(45 ${cx} ${cy})"/>`;
+    else if(mk.f==='0') s += `<circle class="k o" cx="${cx}" cy="${cy}" r="4.5"/>`;
+    else s += `<circle class="${cls}" cx="${cx}" cy="${cy}" r="5.2"/><text class="fnum${mk.cls==='t'?' tnum':''}" x="${cx}" y="${cy+2.2}">${mk.f}</text>`;
+  }
+  return s + '</svg>';
+}
+
+/* trills and tremolos: hold the lower finger, move the upper one, same string where possible */
+function framePair(I, lo, hi){
+  const res = [];
+  I.open.forEach((o, si) => {
+    const a = lo - o, b = hi - o; if(a < 0 || b > I.maxS) return;
+    for(const P of I.pos){
+      let fa = null, fb = null;
+      if(a===0) fa = {f:'0', q:'', pen:0};
+      for(const f in P.off){
+        const qa = P.off[f][a - P.b], qb = P.off[f][b - P.b];
+        if(qa!==undefined && a > 0 && (!fa || PEN[qa] < fa.pen)) fa = {f, q:qa, pen:PEN[qa]};
+        if(qb!==undefined && (!fb || PEN[qb] < fb.pen)) fb = {f, q:qb, pen:PEN[qb]};
+      }
+      if(!fa || !fb) continue;
+      const order = f => f==='0' ? -1 : f==='T' ? 0 : +f;
+      if(order(fb.f) <= order(fa.f)) continue;
+      const score = (a===0 ? 0 : P.cost) + fa.pen + fb.pen + (fb.f==='4' ? 3 : 0) + (a===0 ? 0 : 0);
+      res.push({si, P: a===0 ? P : P, a, b, fa, fb, score: a===0 ? P.cost + fb.pen + (fb.f==='4'?3:0) : score});
+    }
+  });
+  return res.sort((x,y) => x.score - y.score)[0] || null;
+}
+function crossPair(I, lo, hi){
+  let best = null;
+  for(let si=0; si<I.open.length-1; si++){
+    const a = lo - I.open[si], b = hi - I.open[si+1]; if(a < 0 || b < 0) continue;
+    for(const P of I.pos){
+      let fa = null, fb = null;
+      for(const f in P.off){ const qa = P.off[f][a - P.b], qb = P.off[f][b - P.b];
+        if(qa!==undefined && (!fa || PEN[qa] < fa.pen)) fa = {f, q:qa, pen:PEN[qa]};
+        if(qb!==undefined && (!fb || PEN[qb] < fb.pen)) fb = {f, q:qb, pen:PEN[qb]}; }
+      if(a===0) fa = {f:'0', q:'', pen:0};
+      if(b===0) fb = {f:'0', q:'', pen:0};
+      if(!fa || !fb || fa.f===fb.f) continue;
+      const sc = P.cost + fa.pen + fb.pen + 15;
+      if(!best || sc < best.score) best = {si, sj: si+1, P, a, b, fa, fb, score: sc};
+    }
+  }
+  return best;
+}
+const fword = f => f==='0' ? 'open string' : f==='T' ? 'thumb' : f;
+function pairCard(I, lo, hi){
+  let h = `<article class="card"><h3>${pn(lo)} \u21c4 ${pn(hi)}</h3>`;
+  const p = framePair(I, lo, hi);
+  if(p){
+    const at = {si:p.si, P:p.P, f:p.fa.f};
+    h += `<div class="fing" style="margin-top:.4rem">${board(I, [{si:p.si, s:p.a, f:p.fa.f}, {si:p.si, s:p.b, f:p.fb.f, cls:'t'}])}</div>`;
+    h += p.fa.f==='0' ? `<p class="move">Trill <b>finger ${p.fb.f}</b> against the open ${I.names[p.si]} string.</p>`
+                      : `<p class="move">Hold <b>${fword(p.fa.f)}</b>, trill <b>${fword(p.fb.f)}</b> on the ${I.names[p.si]} string.</p>`;
+    const where = posName(I, {si:p.si, P:p.P});
+    let t = where.charAt(0).toUpperCase() + where.slice(1);
+    const qs = [showQ(p.P, p.fa.q), showQ(p.P, p.fb.q)].filter(Boolean);
+    if(qs.length) t += ' \u00b7 ' + qs.join(', ');
+    if(p.fb.f==='4') t += ' \u00b7 the 4th finger is the weakest; shift so finger 3 moves if the passage allows';
+    return h + `<p class="tip">${esc(t)}</p></article>`;
+  }
+  const c = crossPair(I, lo, hi);
+  if(c){
+    h += `<div class="fing" style="margin-top:.4rem">${board(I, [{si:c.si, s:c.a, f:c.fa.f}, {si:c.sj, s:c.b, f:c.fb.f, cls:'t'}])}</div>`;
+    h += `<p class="move">Across strings: hold <b>${fword(c.fa.f)}</b> on ${I.names[c.si]}, alternate with <b>${fword(c.fb.f)}</b> on ${I.names[c.sj]}.</p>`;
+    return h + `<p class="tip">${esc(posName(I, {si:c.si, P:c.P}))}</p></article>`;
+  }
+  return h + '<p class="none">Too wide to finger under one hand. Play as a bowed or slurred alternation.</p></article>';
+}
+function noteCard(I, m){
+  const fs = options(I, m); if(!fs.length) return '';
+  const [main, ...alts] = fs, n = nm(m), e = enh(m);
+  let h = `<article class="card"><div class="nhead"><h3>${pretty(n)}${e?`<span class="enh">${pretty(e)}</span>`:''}</h3>${staffSVG(n, I.clef(m))}</div>`;
+  h += `<div class="fing">${board(I, [main], {aria: label(I, main)})}</div><p class="tip">${esc(label(I, main))}</p>`;
+  if(alts.length){
+    h += `<details><summary>${alts.length} other way${alts.length>1?'s':''} to play it</summary>`;
+    for(const c of alts) h += `<div class="alt">${board(I, [c], {aria: label(I, c)})}<p class="tip">${esc(label(I, c))}</p></div>`;
+    h += '</details>';
+  }
+  return h + '</article>';
+}
+function byOctave(lo, hi, card){
+  let out = '';
+  for(let o = Math.floor(lo/12); o <= Math.floor(hi/12); o++){
+    const a = Math.max(lo, o*12), b = Math.min(hi, o*12 + 11); if(a > b) continue;
+    const cards = []; for(let m=a; m<=b; m++){ const c = card(m); if(c) cards.push(c); }
+    if(cards.length) out += `<h2>${pn(a)} to ${pn(b)}</h2><div class="grid">${cards.join('')}</div>`;
+  }
+  return out;
+}
+/* natural harmonics: touch lightly at j/k of the string to sound the k-th partial */
+function harmonics(I){
+  const NAMES = {2:'octave', 3:'octave + 5th', 4:'two octaves', 5:'two octaves + major 3rd', 6:'two octaves + 5th'};
+  let out = '';
+  I.open.forEach((o, si) => {
+    const cards = [];
+    for(const k of [2,3,4,5,6]) for(let j=1; j<k; j++){
+      if(gcd(j,k)!==1) continue;
+      const s = -12*Math.log2(1 - j/k); if(s > I.maxS + .5) continue;
+      const sound = o + Math.round(12*Math.log2(k)), spot = o + Math.round(s);
+      const exact = Math.abs(s - Math.round(s)) < .1;
+      let h = `<article class="card"><div class="nhead"><h3>${pn(sound)}<span class="enh">${NAMES[k]}</span></h3>${staffSVG(nm(sound), I.clef(sound))}</div>`;
+      h += `<div class="fing">${board(I, [{si, s, harm:true, cls:'o'}])}</div>`;
+      h += `<p class="tip">Touch the ${I.names[si]} string lightly ${exact ? 'where you would stop ' + pn(spot) : 'just ' + (s > Math.round(s) ? 'above ' : 'below ') + 'the ' + pn(spot) + ' spot'} (${j}/${k} of the string).${k===2 ? ' The strongest harmonic.' : ''}</p></article>`;
+      cards.push([s, h]);
+    }
+    cards.sort((a,b) => a[0]-b[0]);
+    out += `<h2>${I.names[si]} string<small>open ${pn(o)}</small></h2><div class="grid">${cards.map(c=>c[1]).join('')}</div>`;
+  });
+  out += `<h2>Artificial harmonics</h2><div class="grid"><article class="card"><h3>Touch a 4th above</h3><p class="tip">Stop any note firmly with the 1st finger (or the thumb), then touch the string lightly a perfect 4th higher with the 4th finger (or 3rd finger in thumb position). It sounds two octaves above the stopped note. Touching a 5th above sounds an octave and a 5th higher.</p></article></div>`;
+  return out;
+}
+const gcd = (a,b) => b ? gcd(b, a%b) : a;
+const range = I => [I.open[0], I.open[I.open.length-1] + I.maxS];
+return {
+  inst: id => INST[id],
+  notes: id => { const I = INST[id], [lo,hi] = range(I); return byOctave(lo, hi, m => noteCard(I, m)); },
+  trills: id => { const I = INST[id], [lo,hi] = range(I); return byOctave(lo, hi-1, m => pairCard(I, m, m+1) + (m+2 <= hi ? pairCard(I, m, m+2) : '')); },
+  trems: id => { const I = INST[id], [lo,hi] = range(I); return byOctave(lo, hi-3, m => [3,4,5].filter(i => m+i <= hi).map(i => pairCard(I, m, m+i)).join('')); },
+  harm: id => harmonics(INST[id]),
+  keymap: id => board(INST[id], [], {aria:'Map of the fingerboard'})
+};
+})();
+
+/* ---------- saxophone chart: data from the Woodwind Fingering Guide (wfg.woodwind.org) ---------- */
+const SAX_CHART = (function(){
+const K = {
+  O:  {x:10, y:38, w:9, h:14, lbl:'8ve', ly:54},
+  lA: {x:10, y:18, w:8, h:8, lbl:'A', ly:11, opt:1},
+  pD: {x:30, y:12, w:11, h:7, lbl:'D', ly:5}, pEb:{x:44, y:12, w:11, h:7, lbl:'E\u266d', ly:5}, pF:{x:58, y:12, w:11, h:7, lbl:'F', ly:5},
+  fF: {x:44, y:26, w:8, h:6, lbl:'fF', ly:22},
+  L1: {x:44, y:40, r:9, lbl:'1', ly:58}, Bis:{x:57, y:51, w:7, h:5, lbl:'bis', ly:60}, L2:{x:70, y:40, r:9, lbl:'2', ly:58}, L3:{x:96, y:40, r:9, lbl:'3', ly:58},
+  'G#':{x:122, y:22, w:14, h:7, lbl:'G\u266f', ly:14}, 'lC#':{x:114, y:48, w:12, h:7, lbl:'C\u266f', ly:58}, lB:{x:130, y:48, w:12, h:7, lbl:'B', ly:58}, lBb:{x:122, y:62, w:12, h:7, lbl:'B\u266d', ly:72},
+  sE: {x:152, y:14, w:9, h:7, lbl:'E', ly:6}, sC:{x:164, y:14, w:9, h:7, lbl:'C', ly:6}, sBb:{x:176, y:14, w:9, h:7, lbl:'B\u266d', ly:6}, 'sF#':{x:188, y:14, w:9, h:7, lbl:'F\u266f', ly:6, opt:1},
+  R1: {x:156, y:40, r:9, lbl:'1', ly:58}, 'aF#':{x:169, y:51, w:7, h:5, lbl:'F\u266f', ly:60}, R2:{x:182, y:40, r:9, lbl:'2', ly:58}, R3:{x:208, y:40, r:9, lbl:'3', ly:58},
+  Eb: {x:234, y:30, w:14, h:8, lbl:'E\u266d', ly:22}, C:{x:234, y:52, w:14, h:8, lbl:'C', ly:64}
+};
+const NAMES = {O:'octave key', lA:'low A key', pD:'palm D', pEb:'palm E\u266d', pF:'palm F', fF:'front F', L1:'LH 1', Bis:'bis key', L2:'LH 2', L3:'LH 3',
+  'G#':'G\u266f key', 'lC#':'low C\u266f', lB:'low B', lBb:'low B\u266d', sE:'side E', sC:'side C', sBb:'side B\u266d', 'sF#':'high F\u266f key',
+  R1:'RH 1', 'aF#':'alternate F\u266f key', R2:'RH 2', R3:'RH 3', Eb:'low E\u266d', C:'low C'};
+const ORDER = Object.keys(K);
+function parse(s){ const st = {}; for(const t of s.split(/\s+/).filter(Boolean)){ const tr = t[0]==='*', id = tr ? t.slice(1) : t; if(!K[id]) throw new Error('Bad key ' + id); st[id] = tr ? 2 : 1; } return st; }
+function shape(k, cls){
+  if(k.r) return `<circle class="${cls}" cx="${k.x}" cy="${k.y}" r="${k.r}"/>`;
+  return `<rect class="${cls}" x="${k.x-k.w/2}" y="${k.y-k.h/2}" width="${k.w}" height="${k.h}" rx="${Math.min(k.w,k.h)/2}"/>`;
+}
+function describe(st){
+  const p = ORDER.filter(id => st[id]===1).map(id => NAMES[id]), t = ORDER.filter(id => st[id]===2).map(id => NAMES[id]);
+  let d = 'Press ' + (p.length ? p.join(', ') : 'nothing'); if(t.length) d += '; trill ' + t.join(', '); return d;
+}
+function fingSVG(st, labels){
+  let s = `<svg class="fing" viewBox="0 ${labels ? 0 : 4} 246 ${labels ? 76 : 68}" role="img" aria-label="${describe(st)}">`;
+  s += `<rect class="bodyline" x="30" y="37" width="190" height="6" rx="3"/>`;
+  for(const id of ORDER){
+    const k = K[id], v = st[id] || 0; let cls = 'k ' + (v===2 ? 't' : v===1 ? 'p' : 'o'); if(k.opt) cls += ' opt';
+    s += shape(k, cls); if(labels) s += `<text class="lbl" x="${k.x}" y="${k.ly}">${k.lbl}</text>`;
+  }
+  return s + '</svg>';
+}
+const LET = 'CDEFGAB';
+const pretty = n => n.replace(/^([A-G])#/,'$1\u266f').replace(/^([A-G])b(?=\d)/,'$1\u266d');
+function staffSVG(n){
+  const m = n.match(/^([A-G])(#|b)?(\d)$/), L = m[1], acc = m[2], o = +m[3];
+  let d = (o-4)*7 + LET.indexOf(L) - 2; const ott = d >= 17; if(ott) d -= 7;
+  const Y = v => 66 - v*3, x = 36;
+  let s = `<svg class="staff" viewBox="0 0 52 84" aria-hidden="true">`;
+  for(let v=0; v<=8; v+=2) s += `<line class="st-line" x1="4" x2="50" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d <= -2) for(let v=-2; v>=d; v-=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d >= 10) for(let v=10; v<=d; v+=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  s += `<ellipse class="st-head" cx="${x}" cy="${Y(d)}" rx="4.4" ry="3.1" transform="rotate(-20 ${x} ${Y(d)})"/>`;
+  if(acc) s += `<text class="st-txt" x="${x-12}" y="${Y(d)+4}" font-size="11" text-anchor="middle">${acc==='#'?'\u266f':'\u266d'}</text>`;
+  if(ott) s += `<text class="st-txt" x="6" y="8" font-size="8" font-style="italic">8va</text>`;
+  return s + '</svg>';
+}
+
+/* notes: first fingering is the standard one */
+const LOW = [
+  ['A3','', [['lA L1 L2 L3 R1 R2 R3 C','Baritone only: add the low A key (left thumb or right pinky, depending on the model)']]],
+  ['Bb3','A#3', [['L1 L2 L3 lBb R1 R2 R3 C','']]],
+  ['B3','', [['L1 L2 L3 lB R1 R2 R3 C','']]],
+  ['C4','', [['L1 L2 L3 R1 R2 R3 C','']]],
+  ['C#4','Db4', [['L1 L2 L3 lC# R1 R2 R3 C','']]],
+  ['D4','', [['L1 L2 L3 R1 R2 R3','']]],
+  ['Eb4','D#4', [['L1 L2 L3 R1 R2 R3 Eb','']]],
+  ['E4','', [['L1 L2 L3 R1 R2','']]],
+  ['F4','', [['L1 L2 L3 R1','']]],
+  ['F#4','Gb4', [['L1 L2 L3 R2',''],['L1 L2 L3 R1 aF#','Chromatic: use next to F']]],
+  ['G4','', [['L1 L2 L3','']]],
+  ['G#4','Ab4', [['L1 L2 L3 G#',''],['L1 L2 L3 lC#','Next to low C\u266f'],['L1 L2 L3 lB','Next to low B'],['L1 L2 L3 lBb','Next to low B\u266d']]],
+  ['A4','', [['L1 L2','']]],
+  ['Bb4','A#4', [['L1 L2 sBb','Side B\u266d: press the side key with RH 1'],['L1 Bis','Bis: in flat keys with no B\u266e nearby'],['L1 R1','Next to F'],['L1 R2','Next to F\u266f; a little sharp'],['L1 L3','Fast passages next to G; darker tone'],['O L1 L2 L3 lBb R1 R2 R3','Dark, closed sound for passages with high notes; harder to start']]],
+  ['B4','', [['L1',''],['O L1 L2 L3 lB R1 R2 R3','Dark, closed sound for passages with high notes; harder to start']]],
+  ['C5','', [['L2',''],['L1 sC','Side C: next to B'],['L2 L3 G#','Fast passages next to A\u266d'],['O L1 L2 L3 R1 R2 R3 C','Harmonic: easy when coming down from a higher note']]],
+  ['C#5','Db5', [['','All keys open'],['O L3 R1 R2 R3','In tune as a leading note to D'],['O L3','Sharper'],['R1 R2 R3','Steadier; next to D5'],['R1 R2 R3 Eb','Next to E\u266d5'],['R1 R2','Next to E5'],['R1','Next to F5'],['R2','Next to F\u266f5']]]
+];
+const add8 = f => ('O ' + f).trim();
+const MID = LOW.filter(([n]) => /^(D|Eb|E|F|F#|G|G#|A|Bb|B)4$|^(C|C#)5$/.test(n)).map(([n,e,fs]) => {
+  const up = s => s.replace(/(\d)$/, d => +d + 1);
+  const basic = [[add8(fs[0][0]), '']];
+  const extra = {
+    'F#4': [['O L1 L2 L3 R1 aF#','Chromatic: use next to F']],
+    'Bb4': [['O L1 Bis','Bis: in flat keys with no B\u266e nearby'],['O L1 R1','Next to F'],['O L1 R2','Next to F\u266f; a little sharp']],
+    'C5':  [['O L1 sC','Side C: next to B']]
+  }[n] || [];
+  return [up(n), e ? up(e) : '', basic.concat(extra)];
+});
+const HIGH = [
+  ['D6','', [['O pD','']]],
+  ['Eb6','D#6', [['O pEb pD','']]],
+  ['E6','', [['O pEb pD sE',''],['O fF L2 L3','Front F: less stable; next to C6 or C\u266f6']]],
+  ['F6','', [['O pEb pD pF sE',''],['O fF L2','Front F: less stable; next to C6']]],
+  ['F#6','Gb6', [['O pEb pD pF sE sF#','Needs a high F\u266f key']]]
+];
+const NOTES = [['Low register','B\u266d3 to C\u266f5 (A3 on baritone)', LOW], ['Middle register','D5 to C\u266f6', MID], ['Palm keys','D6 to F\u266f6', HIGH]];
+
+/* trills [low, high, fingering with *trilled keys, tip]; null fingering = no practical trill */
+const T1 = [
+  ['A3','Bb3','*lA L1 L2 L3 lBb R1 R2 R3 C','Baritone with low A key'],
+  ['A3','B3','*lA L1 L2 L3 lB R1 R2 R3 C','Baritone with low A key'],
+  ['Bb3','B3',null,'No practical trill'],
+  ['Bb3','C4','L1 L2 L3 *lBb R1 R2 R3 C',''],
+  ['B3','C4','L1 L2 L3 *lB R1 R2 R3 C',''],
+  ['B3','C#4',null,'No practical trill'],
+  ['C4','C#4','L1 L2 L3 *lC# R1 R2 R3 C',''],
+  ['C4','D4','L1 L2 L3 R1 R2 R3 *C',''],
+  ['C#4','D4','L1 L2 L3 lC# R1 R2 R3 *C',''],
+  ['C#4','Eb4',null,'No practical trill'],
+  ['D4','Eb4','L1 L2 L3 R1 R2 R3 *Eb',''],
+  ['D4','E4','L1 L2 L3 R1 R2 *R3',''],
+  ['Eb4','E4','L1 L2 L3 R1 R2 *R3 Eb',''],
+  ['Eb4','F4','L1 L2 L3 R1 *R2 *R3 Eb',''],
+  ['E4','F4','L1 L2 L3 R1 *R2',''],
+  ['E4','F#4','L1 L2 L3 *R1 R2',''],
+  ['F4','F#4','L1 L2 L3 R1 *aF#',''],
+  ['F4','G4','L1 L2 L3 *R1',''],
+  ['F#4','G4','L1 L2 L3 *R2',''],
+  ['F#4','G#4','L1 L2 L3 G# *R2',''],
+  ['G4','G#4','L1 L2 L3 *G#',''],
+  ['G4','A4','L1 L2 *L3',''],
+  ['G#4','A4','L1 L2 *L3 G#',''],
+  ['G#4','Bb4','L1 L2 L3 G# *sBb',''],
+  ['G#4','Bb4','L1 Bis *L2 *L3 G#','Using bis'],
+  ['A4','Bb4','L1 L2 *sBb',''],
+  ['A4','Bb4','L1 Bis *L2','Using bis'],
+  ['A4','B4','L1 *L2',''],
+  ['Bb4','B4','L1 *L2 sBb',''],
+  ['Bb4','B4','L1 *R1','One-and-one'],
+  ['Bb4','C5','*L1 L2 sBb',''],
+  ['Bb4','C5','L1 Bis *sC','Bis, trilling side C'],
+  ['B4','C5','L1 *sC',''],
+  ['B4','C#5','*L1',''],
+  ['C5','C#5','*L2',''],
+  ['C5','D5','*pEb L2','Trill the palm E\u266d key'],
+  ['C5','D5','O L1 L2 L3 R1 R2 R3 *C','Harmonic C5'],
+  ['C#5','D5','*pD','Trill the palm D key'],
+  ['C#5','Eb5','*sE','Trill the side E key']
+];
+const shiftUp = n => n.replace(/(\d)$/, d => +d + 1);
+// the middle octave uses the same trills with the octave key added
+const T2 = T1.filter(([a,b,f]) => f && /^(D|Eb|E|F|F#|G|G#|A|Bb|B)4$|^(C|C#)5$/.test(a) && !/pEb|O /.test(f) && !(a==='C5'))
+  .map(([a,b,f,t]) => [shiftUp(a), shiftUp(b), 'O ' + f, t])
+  .concat([['C6','C#6','O *L2','']])
+  .sort((x, y) => { const v = n => { const m = n.match(/^([A-G])(#|b)?(\d)$/); return [0,2,4,5,7,9,11]['CDEFGAB'.indexOf(m[1])] + (m[2]==='#'?1:m[2]==='b'?-1:0) + +m[3]*12; }; return v(x[0]) - v(y[0]) || v(x[1]) - v(y[1]); });
+const TRILLS = [['Low register', T1], ['Middle register', T2]];
+
+/* render */
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function noteCard([n, enh, fs]){
+  const [main, ...alts] = fs, st = parse(main[0]);
+  let h = `<article class="card"><div class="nhead"><h3>${pretty(n)}${enh?`<span class="enh">${pretty(enh)}</span>`:''}</h3>${staffSVG(n)}</div>`;
+  h += `<div class="fing">${fingSVG(st)}</div>`;
+  if(main[1]) h += `<p class="tip">${esc(main[1])}</p>`;
+  if(alts.length){
+    h += `<details><summary>${alts.length} alternate${alts.length>1?'s':''}</summary>`;
+    for(const [f,t] of alts) h += `<div class="alt">${fingSVG(parse(f))}${t?`<p class="tip">${esc(t)}</p>`:''}</div>`;
+    h += '</details>';
+  }
+  return h + '</article>';
+}
+const moving = st => ORDER.filter(id => st[id]===2).map(id => NAMES[id]).join(' + ');
+function pairCard([a, b, f, t]){
+  let h = `<article class="card"><h3>${pretty(a)} \u21c4 ${pretty(b)}</h3>`;
+  if(!f) return h + `<p class="none">${esc(t)}</p></article>`;
+  const st = parse(f);
+  h += `<div class="fing" style="margin-top:.4rem">${fingSVG(st)}</div><p class="move">Move <b>${moving(st)}</b></p>`;
+  if(t) h += `<p class="tip">${esc(t)}</p>`;
+  return h + '</article>';
+}
+/* tremolos: from the fingerings above, the pair that moves the fewest keys */
+const ALL = {}; for(const [,,list] of NOTES) for(const [n,,fs] of list) ALL[n] = fs.map(([f]) => parse(f));
+const SEMI = n => { const m = n.match(/^([A-G])(#|b)?(\d)$/); return [0,2,4,5,7,9,11][LET.indexOf(m[1])] + (m[2]==='#'?1:m[2]==='b'?-1:0) + (+m[3]+1)*12; };
+const BY_MIDI = {}; for(const n in ALL) BY_MIDI[SEMI(n)] = n;
+function tremCard(lo, hi){
+  const A = ALL[BY_MIDI[lo]], B = ALL[BY_MIDI[hi]];
+  let best = null;
+  for(const a of A) for(const b of B){
+    const st = {}; let moves = 0;
+    for(const id of ORDER){ const x = !!a[id], y = !!b[id]; if(x && y) st[id] = 1; else if(x || y){ st[id] = 2; moves++; } }
+    if(!best || moves < best.moves) best = {st, moves};
+  }
+  const name = BY_MIDI[lo], other = BY_MIDI[hi];
+  let h = `<article class="card"><h3>${pretty(name)} \u21c4 ${pretty(other)}</h3><div class="fing" style="margin-top:.4rem">${fingSVG(best.st)}</div><p class="move">Move <b>${moving(best.st)}</b></p>`;
+  if(best.moves > 3) h += `<p class="tip">Several keys change; practise slowly or rework the passage if you can.</p>`;
+  return h + '</article>';
+}
+function trems(){
+  const ms = Object.keys(BY_MIDI).map(Number).filter(m => BY_MIDI[m] !== 'A3').sort((a,b) => a-b);
+  const groups = [['Low register', 58, 73], ['Middle register', 74, 85], ['Into the palm keys', 86, 90]];
+  return groups.map(([title, a, b]) => {
+    const cards = [];
+    for(const m of ms) if(m >= a && m <= b) for(const i of [3,4]) if(BY_MIDI[m+i]) cards.push(tremCard(m, m+i));
+    return cards.length ? `<h2>${title}</h2><div class="grid">${cards.join('')}</div>` : '';
+  }).join('');
+}
+const range = list => `${pretty(list[0][0])} to ${pretty(list[list.length-1][1])}`;
+const sec = (title, sub, list, fn) => `<h2>${title}<small>${sub}</small></h2><div class="grid">${list.map(fn).join('')}</div>`;
+const ALTISSIMO = '<h2>Altissimo<small>G6 and up</small></h2><div class="grid"><article class="card"><h3>Above the palm keys</h3><p class="tip">Altissimo fingerings change a lot from one saxophone, mouthpiece and player to another, so they are best learned from a full chart. The Woodwind Fingering Guide lists many options for the lower, middle and upper altissimo, plus altissimo trills: see More charts below.</p></article></div>';
+return {
+  keymap: () => fingSVG({}, true).replace(/aria-label="[^"]*"/, 'aria-label="Map of the saxophone keys"'),
+  notes: () => NOTES.map(([t, sub, list]) => sec(t, sub, list, noteCard)).join('') + ALTISSIMO,
+  trills: () => TRILLS.map(([t, list]) => sec(t, range(list), list, pairCard)).join('') + '<p class="intro">Trills from D6 up use palm and altissimo fingerings that vary between saxophones; see the altissimo trill chart under More charts.</p>',
+  trems: () => trems()
+};
+})();
+
+/* ---------- clarinet chart (Boehm): data from the Woodwind Fingering Guide (wfg.woodwind.org) ---------- */
+const CL_CHART = (function(){
+const K = {
+  R:  {x:10, y:22, w:9, h:8, lbl:'reg', ly:13}, T:{x:10, y:40, r:6, lbl:'T', ly:54},
+  A:  {x:30, y:14, w:11, h:7, lbl:'A', ly:6}, Gt:{x:46, y:14, w:11, h:7, lbl:'G\u266f', ly:6},
+  L1: {x:40, y:40, r:9, lbl:'1', ly:58}, LEb:{x:53, y:52, w:7, h:5, lbl:'E\u266d', ly:61}, L2:{x:66, y:40, r:9, lbl:'2', ly:58}, L3:{x:92, y:40, r:9, lbl:'3', ly:58},
+  Cg: {x:110, y:24, w:9, h:7, lbl:'C\u266f/G\u266f', ly:16},
+  lE: {x:114, y:52, w:12, h:7, lbl:'E/B', ly:63}, lF:{x:130, y:52, w:12, h:7, lbl:'F/C', ly:63}, 'lF#':{x:122, y:64, w:12, h:7, lbl:'F\u266f', ly:74}, 'lG#':{x:138, y:64, w:10, h:7, lbl:'G\u266f', ly:74, opt:1},
+  s1: {x:150, y:10, w:9, h:6, lbl:'1', ly:5}, s2:{x:150, y:18, w:9, h:6, lbl:'2', ly:0}, s3:{x:150, y:26, w:9, h:6, lbl:'3', ly:0}, s4:{x:150, y:34, w:9, h:6, lbl:'4', ly:0},
+  R1: {x:166, y:40, r:9, lbl:'1', ly:58}, Bsl:{x:179, y:52, w:7, h:5, lbl:'B/F\u266f', ly:61}, R2:{x:192, y:40, r:9, lbl:'2', ly:58}, R3:{x:218, y:40, r:9, lbl:'3', ly:58},
+  'rF#':{x:236, y:26, w:12, h:7, lbl:'F\u266f', ly:18}, 'rG#':{x:236, y:38, w:12, h:7, lbl:'G\u266f', ly:0},
+  rE: {x:236, y:52, w:12, h:7, lbl:'E/B', ly:63}, rF:{x:236, y:64, w:12, h:7, lbl:'F/C', ly:74}
+};
+const NAMES = {R:'register key', T:'thumb hole', A:'A key', Gt:'G\u266f key', L1:'LH 1', LEb:'E\u266d/B\u266d sliver key', L2:'LH 2', L3:'LH 3', Cg:'C\u266f/G\u266f key',
+  lE:'left E/B key', lF:'left F/C key', 'lF#':'left F\u266f/C\u266f key', 'lG#':'left A\u266d/E\u266d key', s1:'side key 1', s2:'side key 2', s3:'side key 3', s4:'side key 4',
+  R1:'RH 1', Bsl:'B/F\u266f sliver key', R2:'RH 2', R3:'RH 3', 'rF#':'right F\u266f/C\u266f key', 'rG#':'right A\u266d/E\u266d key', rE:'right E/B key', rF:'right F/C key'};
+const ORDER = Object.keys(K);
+function parse(str){
+  const st = {}; let tr = false;
+  const tok = (part, list) => { const out = []; let i = 0; part = part.replace(/[\u2013\u2014]/g,'-');
+    while(i < part.length){ const ch = part[i]; if(ch===' '){ i++; continue; } if(ch==='['){ tr = true; i++; continue; } if(ch===']'){ tr = false; i++; continue; }
+      const t = list.find(t => part.startsWith(t, i)); if(!t) throw new Error('Bad token in ' + str); out.push({t, tr}); i += t.length; }
+    return out; };
+  const set = (id, tk) => { st[id] = tk.tr ? 2 : 1; };
+  const [L, Rr = ''] = str.split('|');
+  let pos = 0;
+  for(const tk of tok(L, ['R','T','A','G#','Eb','C#','F#','F','E','0','1','2','3','-'])){
+    if(tk.t==='R') set('R', tk); else if(tk.t==='T') set('T', tk); else if(tk.t==='A') set('A', tk);
+    else if(tk.t==='G#') set(pos < 3 ? 'Gt' : 'lG#', tk);
+    else if(/^[0123-]$/.test(tk.t)){ const id = ['L1','L2','L3'][pos++]; if(tk.t!=='-') set(id, tk); else if(tk.tr) st[id] = 2; }
+    else if(tk.t==='Eb') set('LEb', tk); else if(tk.t==='C#') set('Cg', tk);
+    else set({F:'lF','F#':'lF#',E:'lE'}[tk.t], tk);
+  }
+  const rt = tok(Rr, ['F#','G#','B','E','F','1','2','3','4','-']);
+  const pink = []; while(rt.length && ['F#','G#','E','F'].includes(rt[rt.length-1].t)) pink.unshift(rt.pop());
+  const posIdx = rt.map((x,i) => /^[123-]$/.test(x.t) ? i : -1).filter(i => i >= 0).slice(-3);
+  rt.forEach((x, i) => {
+    const k = posIdx.indexOf(i);
+    if(k >= 0){ const id = ['R1','R2','R3'][k]; if(x.t!=='-') set(id, x); else if(x.tr) st[id] = 2; }
+    else if(x.t==='B') set('Bsl', x);
+    else if(/^[1-4]$/.test(x.t)) set('s' + x.t, x);
+  });
+  for(const x of pink) set({'F#':'rF#','G#':'rG#',E:'rE',F:'rF'}[x.t], x);
+  return st;
+}
+function shape(k, cls){
+  if(k.r) return `<circle class="${cls}" cx="${k.x}" cy="${k.y}" r="${k.r}"/>`;
+  return `<rect class="${cls}" x="${k.x-k.w/2}" y="${k.y-k.h/2}" width="${k.w}" height="${k.h}" rx="${Math.min(k.w,k.h)/2}"/>`;
+}
+function describe(st){
+  const p = ORDER.filter(id => st[id]===1).map(id => NAMES[id]), t = ORDER.filter(id => st[id]===2).map(id => NAMES[id]);
+  let d = 'Press ' + (p.length ? p.join(', ') : 'nothing'); if(t.length) d += '; trill ' + t.join(', '); return d;
+}
+function fingSVG(st, labels){
+  let s = `<svg class="fing" viewBox="0 ${labels ? 0 : 4} 246 ${labels ? 76 : 68}" role="img" aria-label="${describe(st)}">`;
+  s += `<rect class="bodyline" x="20" y="37" width="206" height="6" rx="3"/>`;
+  for(const id of ORDER){
+    const k = K[id], v = st[id] || 0; let cls = 'k ' + (v===2 ? 't' : v===1 ? 'p' : 'o'); if(k.opt) cls += ' opt';
+    s += shape(k, cls); if(labels) s += `<text class="lbl" x="${k.x}" y="${k.ly}">${k.lbl}</text>`;
+  }
+  return s + '</svg>';
+}
+const LET = 'CDEFGAB';
+const pretty = n => n.replace(/^([A-G])#/,'$1\u266f').replace(/^([A-G])b(?=\d)/,'$1\u266d');
+function staffSVG(n){
+  const m = n.match(/^([A-G])(#|b)?(\d)$/), L = m[1], acc = m[2], o = +m[3];
+  let d = (o-4)*7 + LET.indexOf(L) - 2; const ott = d >= 17; if(ott) d -= 7;
+  const Y = v => 66 - v*3, x = 36;
+  let s = `<svg class="staff" viewBox="0 0 52 84" aria-hidden="true">`;
+  for(let v=0; v<=8; v+=2) s += `<line class="st-line" x1="4" x2="50" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d <= -2) for(let v=-2; v>=d; v-=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d >= 10) for(let v=10; v<=d; v+=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  s += `<ellipse class="st-head" cx="${x}" cy="${Y(d)}" rx="4.4" ry="3.1" transform="rotate(-20 ${x} ${Y(d)})"/>`;
+  if(acc) s += `<text class="st-txt" x="${x-12}" y="${Y(d)+4}" font-size="11" text-anchor="middle">${acc==='#'?'\u266f':'\u266d'}</text>`;
+  if(ott) s += `<text class="st-txt" x="6" y="8" font-size="8" font-style="italic">8va</text>`;
+  return s + '</svg>';
+}
+
+/* notes: first fingering is the standard one (guide notation) */
+const CHAL = [
+  ['E3','', [['T 123E|123','Left pinky E'],['T 123|123E','Right pinky E: next to notes using the left pinky'],['T 123E|123F','Next to F3 or C5']]],
+  ['F3','', [['T 123|123F',''],['T 123F|123','Left pinky F: next to notes using the right pinky']]],
+  ['F#3','Gb3', [['T 123F#|123',''],['T 123|123F#','Right pinky F\u266f'],['T 123F#|123F','Next to F3 or C5']]],
+  ['G3','', [['T 123|123','']]],
+  ['G#3','Ab3', [['T 123|123G#',''],['T 123G#|123','Left pinky A\u266d (on models that have it): next to right-pinky notes']]],
+  ['A3','', [['T 123|12-','']]],
+  ['Bb3','A#3', [['T 123|1--','']]],
+  ['B3','', [['T 123|-2-','']]],
+  ['C4','', [['T 123|---','']]],
+  ['C#4','Db4', [['T 123C#|---','']]],
+  ['D4','', [['T 12-|---','']]],
+  ['Eb4','D#4', [['T 12-|4---',''],['T 12Eb-|---','Sliver key: chromatic and trill fingering, next to D4 and A5'],['T 1--|1--','Sharp; easy next to notes using RH 1']]],
+  ['E4','', [['T 1--|---','']]],
+  ['F4','', [['T ---|---','']]],
+  ['F#4','Gb4', [['1--|---',''],['T ---|34---','Side keys 3 + 4: chromatic, next to F4']]],
+  ['G4','', [['---|---','Open G']]],
+  ['G#4','Ab4', [['G#---|---','']]],
+  ['A4','', [['A---|---',''],['AG#---|---','Keep the G\u266f key down: A still sounds, which makes G\u266f\u2013A trills easy']]],
+  ['Bb4','A#4', [['R A---|---',''],['A---|2---','Side key 2: trill fingering with A4']]]
+];
+const CLAR = [
+  ['B4','', [['RT 123E|123',''],['RT 123|123E','Right pinky E/B'],['RT 123E|123F','Next to C5'],['A---|1---','Side key 1: trill fingering with A4'],['R A---|2---','Side key 2: trill fingering with B\u266d4'],['RT A123E|123','More open sound for sustained notes']]],
+  ['C5','', [['RT 123|123F',''],['RT 123F|123','Left pinky F/C: next to right-pinky notes'],['R A---|1---','Trill fingering with B\u266d4'],['R A---|12---','Trill fingering with B\u266d4, more in tune']]],
+  ['C#5','Db5', [['RT 123F#|123',''],['RT 123|123F#','Right pinky F\u266f/C\u266f']]],
+  ['D5','', [['RT 123|123','']]],
+  ['Eb5','D#5', [['RT 123|123G#',''],['RT 123G#|123','Left pinky A\u266d/E\u266d (on models that have it)']]],
+  ['E5','', [['RT 123|12-','']]],
+  ['F5','', [['RT 123|1--','']]],
+  ['F#5','Gb5', [['RT 123|-2-',''],['RT 123|1-B-','Sliver key: chromatic, next to B\u266d4 or F5']]],
+  ['G5','', [['RT 123|---','']]],
+  ['G#5','Ab5', [['RT 123C#|---',''],['RT 12-|12-','Next to notes using the right-hand fingers']]],
+  ['A5','', [['RT 12-|---','']]],
+  ['Bb5','A#5', [['RT 12-|4---',''],['RT 12Eb-|---','Sliver key: chromatic and trill fingering'],['RT 1--|1--','Next to notes using RH 1'],['RT 1--|-2-','Sharp; for speed next to notes using RH 2']]],
+  ['B5','', [['RT 1--|---',''],['RT -23F#|123','Next to lower altissimo notes']]],
+  ['C6','', [['RT ---|---',''],['RT --3|4123','Soft attacks and upward skips from D5'],['RT -23|123G#','Good intonation; strong when loud']]]
+];
+const ALT = [
+  ['C#6','Db6', [['RT -23|12-',''],['RT ---|34---','Trill fingering with C6'],['RT 1--|4---','Trill fingering with B5'],['R 123|123G#','Full sound, good response when soft']]],
+  ['D6','', [['RT -23|1--G#',''],['RT G#---|4---','Less flat; trill fingering'],['RT G#---|---','Trill fingering']]],
+  ['Eb6','D#6', [['RT -23|1-B-G#',''],['RT -23|--3G#','Next to lower clarion notes'],['RT -23|-2-G#','Flat; for speed']]],
+  ['E6','', [['RT -23|---G#','']]],
+  ['F6','', [['RT -23C#|---G#',''],['RT 123C#|123','Slurs to and from the lower registers; soft playing']]],
+  ['F#6','Gb6', [['RT -2-|---G#',''],['RT 12-|4---G#','Accurate pitch, speaks easily, good for wide skips'],['RT 12-|123G#','Slurs with lower registers; stable, good when soft or loud']]],
+  ['G6','', [['RT -2-|12-G#',''],['RT 1--|12-G#','Slurs from clarion notes'],['RT -2-|4---G#','Trill fingering with F\u266f6']]]
+];
+const NOTES = [['Chalumeau','E3 to B\u266d4 (throat tones from F\u266f4)', CHAL], ['Clarion','B4 to C6', CLAR], ['Lower altissimo','C\u266f6 to G6', ALT]];
+/* render */
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function noteCard([n, enh, fs]){
+  const [main, ...alts] = fs, st = parse(main[0]);
+  let h = `<article class="card"><div class="nhead"><h3>${pretty(n)}${enh?`<span class="enh">${pretty(enh)}</span>`:''}</h3>${staffSVG(n)}</div>`;
+  h += `<div class="fing">${fingSVG(st)}</div>`;
+  if(main[1]) h += `<p class="tip">${esc(main[1])}</p>`;
+  if(alts.length){
+    h += `<details><summary>${alts.length} alternate${alts.length>1?'s':''}</summary>`;
+    for(const [f,t] of alts) h += `<div class="alt">${fingSVG(parse(f))}${t?`<p class="tip">${esc(t)}</p>`:''}</div>`;
+    h += '</details>';
+  }
+  return h + '</article>';
+}
+const moving = st => ORDER.filter(id => st[id]===2).map(id => NAMES[id]).join(' + ');
+function pairCard([a, b, f, t]){
+  let h = `<article class="card"><h3>${pretty(a)} \u21c4 ${pretty(b)}</h3>`;
+  if(!f) return h + `<p class="none">${esc(t)}</p></article>`;
+  const st = parse(f);
+  h += `<div class="fing" style="margin-top:.4rem">${fingSVG(st)}</div><p class="move">Move <b>${moving(st)}</b></p>`;
+  if(t) h += `<p class="tip">${esc(t)}</p>`;
+  return h + '</article>';
+}
+/* tremolos: from the fingerings above, the pair that moves the fewest keys */
+const ALL = {}; for(const [,,list] of NOTES) for(const [n,,fs] of list) ALL[n] = fs.map(([f]) => parse(f));
+const SEMI = n => { const m = n.match(/^([A-G])(#|b)?(\d)$/); return [0,2,4,5,7,9,11][LET.indexOf(m[1])] + (m[2]==='#'?1:m[2]==='b'?-1:0) + (+m[3]+1)*12; };
+const BY_MIDI = {}; for(const n in ALL) BY_MIDI[SEMI(n)] = n;
+function tremCard(lo, hi){
+  const A = ALL[BY_MIDI[lo]], B = ALL[BY_MIDI[hi]];
+  let best = null;
+  for(const a of A) for(const b of B){
+    const st = {}; let moves = 0;
+    for(const id of ORDER){ const x = !!a[id], y = !!b[id]; if(x && y) st[id] = 1; else if(x || y){ st[id] = 2; moves++; } }
+    if(!best || moves < best.moves) best = {st, moves};
+  }
+  const name = BY_MIDI[lo], other = BY_MIDI[hi];
+  let h = `<article class="card"><h3>${pretty(name)} \u21c4 ${pretty(other)}</h3><div class="fing" style="margin-top:.4rem">${fingSVG(best.st)}</div><p class="move">Move <b>${moving(best.st)}</b></p>`;
+  if(best.moves > 3) h += `<p class="tip">Several keys change; practise slowly or rework the passage if you can.</p>`;
+  return h + '</article>';
+}
+function pairs(intervals, groups){
+  const ms = Object.keys(BY_MIDI).map(Number).sort((a,b) => a-b);
+  return groups.map(([title, a, b]) => {
+    const cards = [];
+    for(const m of ms) if(m >= a && m <= b) for(const i of intervals) if(BY_MIDI[m+i]) cards.push(tremCard(m, m+i));
+    return cards.length ? `<h2>${title}</h2><div class="grid">${cards.join('')}</div>` : '';
+  }).join('');
+}
+const range = list => `${pretty(list[0][0])} to ${pretty(list[list.length-1][1])}`;
+const sec = (title, sub, list, fn) => `<h2>${title}<small>${sub}</small></h2><div class="grid">${list.map(fn).join('')}</div>`;
+const GROUPS = [['Chalumeau', 52, 70], ['Clarion', 71, 84], ['Altissimo', 85, 91]];
+const ALTISSIMO = '<h2>Upper altissimo<small>G\u266f6 and up</small></h2><div class="grid"><article class="card"><h3>Above G6</h3><p class="tip">Upper altissimo fingerings vary between clarinets, reeds and players. The Woodwind Fingering Guide lists many options up to A7: see More charts below.</p></article></div>';
+return {
+  keymap: () => fingSVG({}, true).replace(/aria-label="[^"]*"/, 'aria-label="Map of the clarinet keys"'),
+  notes: () => NOTES.map(([t, sub, list]) => sec(t, sub, list, noteCard)).join('') + ALTISSIMO,
+  trills: () => pairs([1,2], GROUPS),
+  trems: () => pairs([3,4], GROUPS)
+};
+})();
+
+/* ---------- oboe and bassoon: shared double-reed chart engine ---------- */
+const REED_CHART = (function(){
+const LET = 'CDEFGAB';
+const pretty = n => n.replace(/^([A-G])#/,'$1\u266f').replace(/^([A-G])b(?=\d)/,'$1\u266d');
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function tokens(str, part, list){
+  const out = []; let i = 0, tr = false; part = part.replace(/[\u2013\u2014]/g,'-');
+  while(i < part.length){
+    const ch = part[i];
+    if(ch===' '){ i++; continue; } if(ch==='['){ tr = true; i++; continue; } if(ch===']'){ tr = false; i++; continue; }
+    const t = list.find(t => part.startsWith(t, i)); if(!t) throw new Error('Bad token in ' + str + ' at ' + i);
+    out.push({t, tr}); i += t.length;
+  }
+  return out;
+}
+function shape(k, cls){
+  if(k.r) return `<circle class="${cls}" cx="${k.x}" cy="${k.y}" r="${k.r}"/>`;
+  return `<rect class="${cls}" x="${k.x-k.w/2}" y="${k.y-k.h/2}" width="${k.w}" height="${k.h}" rx="${Math.min(k.w,k.h)/2}"/>`;
+}
+/* a hole covered by fraction v, from the bottom edge up */
+function partly(k, v, opt){
+  const yc = k.y + k.r - 2*k.r*v, dy = yc - k.y, w = Math.sqrt(k.r*k.r - dy*dy), o = opt ? ' opt' : '';
+  return `<circle class="k o${o}" cx="${k.x}" cy="${k.y}" r="${k.r}"/><path class="k p${o}" d="M${(k.x-w).toFixed(2)} ${yc.toFixed(2)} A${k.r} ${k.r} 0 ${v>0.5?1:0} 0 ${(k.x+w).toFixed(2)} ${yc.toFixed(2)} Z"/>`;
+}
+const name = (I, st, id) => id===I.vent && st._v ? I.ventName(st._v) : I.NAMES[id];
+function describe(I, st){
+  const p = I.ORDER.filter(id => st[id]===1).map(id => name(I, st, id)), t = I.ORDER.filter(id => st[id]===2).map(id => I.NAMES[id]);
+  let d = 'Press ' + (p.length ? p.join(', ') : 'nothing'); if(t.length) d += '; trill ' + t.join(', '); return d;
+}
+function fingSVG(I, st, labels){
+  let s = `<svg class="fing" viewBox="${labels ? I.vbL : I.vb}" role="img" aria-label="${describe(I, st)}">${I.body}`;
+  for(const id of I.ORDER){
+    const k = I.K[id], v = st[id] || 0;
+    if(id===I.vent && v===1 && st._v) s += partly(k, st._v, k.opt);
+    else { let cls = 'k ' + (v===2 ? 't' : v===1 ? 'p' : 'o'); if(k.opt) cls += ' opt'; s += shape(k, cls); }
+    if(labels && k.lbl) s += `<text class="lbl" x="${k.lx ?? k.x}" y="${k.ly}">${k.lbl}</text>`;
+  }
+  return s + '</svg>';
+}
+function staffSVG(n, clef){
+  const m = n.match(/^([A-G])(#|b)?(\d)$/), L = m[1], acc = m[2], o = +m[3];
+  let d = clef==='bass' ? (o-2)*7 + LET.indexOf(L) - 4 : (o-4)*7 + LET.indexOf(L) - 2;
+  let mark = ''; if(d >= 17){ d -= 7; mark = '8va'; }
+  const Y = v => 66 - v*3, x = 36;
+  let s = `<svg class="staff" viewBox="0 0 52 84" aria-hidden="true">`;
+  for(let v=0; v<=8; v+=2) s += `<line class="st-line" x1="4" x2="50" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d <= -2) for(let v=-2; v>=d; v-=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  if(d >= 10) for(let v=10; v<=d; v+=2) s += `<line class="st-line" x1="${x-7}" x2="${x+7}" y1="${Y(v)}" y2="${Y(v)}"/>`;
+  s += `<ellipse class="st-head" cx="${x}" cy="${Y(d)}" rx="4.4" ry="3.1" transform="rotate(-20 ${x} ${Y(d)})"/>`;
+  if(acc) s += `<text class="st-txt" x="${x-12}" y="${Y(d)+4}" font-size="11" text-anchor="middle">${acc==='#'?'\u266f':'\u266d'}</text>`;
+  const lab = [clef==='bass' ? 'bass' : '', mark].filter(Boolean).join(' ');
+  if(lab) s += `<text class="st-txt" x="5" y="8" font-size="7" font-style="italic">${lab}</text>`;
+  return s + '</svg>';
+}
+const SEMI = n => { const m = n.match(/^([A-G])(#|b)?(\d)$/); return [0,2,4,5,7,9,11][LET.indexOf(m[1])] + (m[2]==='#'?1:m[2]==='b'?-1:0) + (+m[3]+1)*12; };
+function make(I){
+  I.ORDER = Object.keys(I.K);
+  const P = f => I.parse(f);
+  const ALL = {}, BY_MIDI = {};
+  for(const [,,list] of I.NOTES) for(const [n,,fs] of list){ ALL[n] = fs.filter(x => !x[2]).map(([f]) => P(f)); BY_MIDI[SEMI(n)] = n; }
+  const moving = st => I.ORDER.filter(id => st[id]===2).map(id => I.NAMES[id]).join(' + ');
+  function noteCard([n, enh, fs]){
+    const [main, ...alts] = fs;
+    let h = `<article class="card"><div class="nhead"><h3>${pretty(n)}${enh?`<span class="enh">${pretty(enh)}</span>`:''}</h3>${staffSVG(n, I.clef)}</div>`;
+    h += `<div class="fing">${fingSVG(I, P(main[0]))}</div>`;
+    if(main[1]) h += `<p class="tip">${esc(main[1])}</p>`;
+    if(alts.length){
+      h += `<details><summary>${alts.length} alternate${alts.length>1?'s':''}</summary>`;
+      for(const [f,t] of alts) h += `<div class="alt">${fingSVG(I, P(f))}${t?`<p class="tip">${esc(t)}</p>`:''}</div>`;
+      h += '</details>';
+    }
+    return h + '</article>';
+  }
+  /* trills and tremolos: from the fingerings above, the pair that moves the fewest keys */
+  const val = (st, id) => st[id] ? (id===I.vent && st._v ? st._v : 1) : 0;
+  function pairCard(lo, hi){
+    let best = null;
+    for(const a of ALL[BY_MIDI[lo]]) for(const b of ALL[BY_MIDI[hi]]){
+      const st = {}; let moves = 0;
+      let roll = false;
+      for(const id of I.ORDER){
+        const x = val(a, id), y = val(b, id);
+        if(x && x===y){ st[id] = 1; if(id===I.vent && a._v) st._v = a._v; }
+        else if(x || y){ st[id] = 2; moves++; if(id===I.vent && x && y) roll = true; }
+      }
+      if(moves && (!best || moves < best.moves)) best = {st, moves, roll};
+    }
+    const ventMove = best.roll;
+    let h = `<article class="card"><h3>${pretty(BY_MIDI[lo])} \u21c4 ${pretty(BY_MIDI[hi])}</h3><div class="fing" style="margin-top:.4rem">${fingSVG(I, best.st)}</div><p class="move">Move <b>${moving(best.st)}</b></p>`;
+    if(ventMove && I.ventTip) h += `<p class="tip">${I.ventTip}</p>`;
+    if(best.moves > 3) h += `<p class="tip">Several keys change; practise slowly or rework the passage if you can.</p>`;
+    return h + '</article>';
+  }
+  function pairs(intervals){
+    const ms = Object.keys(BY_MIDI).map(Number).sort((a,b) => a-b);
+    return I.GROUPS.map(([title, a, b]) => {
+      const cards = [];
+      for(const m of ms) if(m >= a && m <= b) for(const i of intervals) if(BY_MIDI[m+i]) cards.push(pairCard(m, m+i));
+      return cards.length ? `<h2>${title}</h2><div class="grid">${cards.join('')}</div>` : '';
+    }).join('');
+  }
+  const sec = (title, sub, list) => `<h2>${title}<small>${sub}</small></h2><div class="grid">${list.map(noteCard).join('')}</div>`;
+  return {
+    keymap: () => fingSVG(I, {}, true).replace(/aria-label="[^"]*"/, `aria-label="Map of the ${I.label} keys"`),
+    notes: () => I.NOTES.map(([t, sub, list]) => sec(t, sub, list)).join('') + (I.above || ''),
+    trills: () => pairs([1,2]),
+    trems: () => pairs([3,4])
+  };
+}
+return {make, tokens};
+})();
+
+/* ---------- oboe (WFG notation: I/II/III octave keys, 0 = half-hole) ---------- */
+const OBOE_CHART = REED_CHART.make({
+  label: 'oboe', clef: 'treble', vent: 'L1',
+  ventName: () => 'LH 1 half-hole', ventTip: 'Roll LH 1 to open or close the half-hole.',
+  vb: '0 4 266 70', vbL: '0 0 266 78',
+  body: '<rect class="bodyline" x="18" y="37" width="216" height="6" rx="3"/>',
+  K: {
+    I:   {x:10, y:40, w:9, h:14, lbl:'I', ly:56}, III:{x:10, y:20, w:8, h:7, lbl:'III', ly:13, opt:1},
+    II:  {x:27, y:22, w:10, h:6, lbl:'II', ly:15},
+    L1:  {x:42, y:40, r:9, lbl:'1', ly:58}, Btr:{x:55, y:24, w:8, h:6, lbl:'B', ly:17}, Dtr:{x:55, y:56, w:8, h:6, lbl:'D', ly:66},
+    L2:  {x:68, y:40, r:9, lbl:'2', ly:58}, Ctr:{x:81, y:24, w:8, h:6, lbl:'C\u266f', ly:17}, L3:{x:94, y:40, r:9, lbl:'3', ly:58},
+    lGs: {x:116, y:22, w:14, h:7, lbl:'G\u266f', ly:14},
+    lEb: {x:110, y:54, w:10, h:7, lbl:'E\u266d', ly:64}, lB:{x:122, y:54, w:10, h:7, lbl:'B', ly:64}, lBb:{x:134, y:54, w:10, h:7, lbl:'B\u266d', ly:64},
+    lF:  {x:122, y:68, w:12, h:6, lbl:'F', ly:77, lx:132, opt:1},
+    sA:  {x:150, y:15, w:9, h:6, lbl:'A', ly:8}, sGs:{x:150, y:25, w:9, h:6, lbl:'G\u266f', ly:27, lx:141},
+    R1:  {x:166, y:40, r:9, lbl:'1', ly:58}, rDtr:{x:179, y:24, w:8, h:6, lbl:'D', ly:17},
+    R2:  {x:192, y:40, r:9, lbl:'2', ly:58}, Fk:{x:205, y:56, w:8, h:6, lbl:'F', ly:66},
+    R3:  {x:218, y:40, r:9, lbl:'3', ly:58}, ban:{x:232, y:24, w:8, h:7, lbl:'C', ly:17},
+    pC:  {x:246, y:44, w:12, h:7, lbl:'C', ly:46.2, lx:259}, pCs:{x:246, y:55, w:12, h:7, lbl:'C\u266f', ly:57.2, lx:259}, pEb:{x:246, y:66, w:12, h:7, lbl:'E\u266d', ly:68.2, lx:259}
+  },
+  NAMES: {I:'1st octave key (thumb)', II:'2nd octave key (side)', III:'3rd octave key', L1:'LH 1', Btr:'B trill key', Dtr:'left D trill key', L2:'LH 2', Ctr:'C\u266f trill key', L3:'LH 3',
+    lGs:'left G\u266f key', lEb:'left E\u266d key', lB:'low B key', lBb:'low B\u266d key', lF:'left F key', sA:'right side A key', sGs:'right side G\u266f key',
+    R1:'RH 1', rDtr:'right D trill key', R2:'RH 2', Fk:'F key', R3:'RH 3', ban:'alternate C (banana) key', pC:'low C key', pCs:'low C\u266f key', pEb:'right E\u266d key'},
+  parse(str){
+    const st = {}, set = (id, tk) => { st[id] = tk.tr ? 2 : 1; };
+    const [L, R = ''] = str.split('|');
+    let pos = 0;
+    for(const tk of REED_CHART.tokens(str, L, ['III','II','I','C#','G#','Eb','Bb','B','D','F','0','1','2','3','-'])){
+      const t = tk.t;
+      if(/^I+$/.test(t)) set(t, tk);
+      else if(/^[0123-]$/.test(t)){ const id = ['L1','L2','L3'][pos++]; if(!id) throw new Error('LH long ' + str); if(t==='0'){ set(id, tk); st._v = 0.5; } else if(t!=='-') set(id, tk); else if(tk.tr) st[id] = 2; }
+      else if(pos < 3) set({B:'Btr', D:'Dtr', 'C#':'Ctr'}[t] || (()=>{ throw new Error('LH bad ' + str); })(), tk);
+      else set({'G#':'lGs', Eb:'lEb', B:'lB', Bb:'lBb', F:'lF'}[t] || (()=>{ throw new Error('LH pinky bad ' + str); })(), tk);
+    }
+    if(pos!==3) throw new Error('LH short ' + str);
+    pos = 0;
+    for(const tk of REED_CHART.tokens(str, R, ['G#','C#','Eb','A','C','D','F','c','1','2','3','-'])){
+      const t = tk.t;
+      if(/^[123-]$/.test(t)){ const id = ['R1','R2','R3'][pos++]; if(!id) throw new Error('RH long ' + str); if(t!=='-') set(id, tk); else if(tk.tr) st[id] = 2; }
+      else if(pos===0 && (t==='G#' || t==='A')) set(t==='A' ? 'sA' : 'sGs', tk);
+      else if(pos===1 && t==='D') set('rDtr', tk);
+      else if(pos===2 && t==='F') set('Fk', tk);
+      else if(pos===3 && ['c','C','C#','Eb'].includes(t)) set({c:'ban', C:'pC', 'C#':'pCs', Eb:'pEb'}[t], tk);
+      else throw new Error('RH bad ' + str);
+    }
+    if(pos!==3) throw new Error('RH short ' + str);
+    return st;
+  },
+  NOTES: [
+    ['First octave', 'B\u266d3 to C5', [
+      ['Bb3','A#3', [['123Bb|123C',''],['123|123C','No low B\u266d key: close the bell against your knee',1],['123Bb|123c','Banana key: next to the alternate C4']]],
+      ['B3','', [['123B|123C',''],['123B|123c','Banana key: next to the alternate C4']]],
+      ['C4','', [['123|123C',''],['123|123c','Banana key: next to C\u266f4']]],
+      ['C#4','Db4', [['123|123C#',''],['123|123cC#','Keep the banana key down: next to C4']]],
+      ['D4','', [['123|123','']]],
+      ['Eb4','D#4', [['123|123Eb',''],['123Eb|123','Left E\u266d: next to C4 and C\u266f4']]],
+      ['E4','', [['123|12-','']]],
+      ['F4','', [['123|12F-',''],['123F|12-','Left F (on models that have it): next to notes that use RH 3'],['123|1-3','Forked F: next to notes that use RH 3'],['123|1-3Eb','Forked F with the E\u266d key: next to E\u266d4'],['123Eb|1-3','Forked F with the left E\u266d key']]],
+      ['F#4','Gb4', [['123|1--','']]],
+      ['G4','', [['123|---',''],['123B|---','Slightly flatter, less bright and more focused']]],
+      ['G#4','Ab4', [['123G#|---',''],['123|G#---','Side G\u266f key: trill fingering on open-hole oboes'],['123|A---','Side A key: trill fingering on closed-hole oboes']]],
+      ['A4','', [['12-|---','']]],
+      ['Bb4','A#4', [['12-|1--',''],['1B2-|1--','B trill key: trill fingering with B4'],['1-3G#|---','Closed-hole oboes'],['1-3|G#---','Closed-hole oboes'],['1-3|A---','Open-hole oboes']]],
+      ['B4','', [['1--|---',''],['1B--|1--','B trill key: trill fingering with B\u266d4']]],
+      ['C5','', [['1--|1--',''],['1-3|123C','Harmonic'],['023|123C','Half-hole: next to C\u266f5']]]
+    ]],
+    ['Second octave', 'C\u266f5 to C6', [
+      ['C#5','Db5', [['023|123C#','']]],
+      ['D5','', [['023|123',''],['1D--|1--','Left D trill key: trill fingering with C5'],['1--|1D--','Right D trill key: trill fingering with C5']]],
+      ['Eb5','D#5', [['023|123Eb',''],['023Eb|123','Left E\u266d: next to C\u266f5']]],
+      ['E5','', [['I 123|12-','']]],
+      ['F5','', [['I 123|12F-',''],['I 123F|12-','Left F: next to notes that use RH 3'],['I 123|1-3','Forked F: next to notes that use RH 3'],['I 123|1-3Eb','Forked F with the E\u266d key: next to E\u266d5'],['I 123Eb|1-3','Forked F with the left E\u266d key']]],
+      ['F#5','Gb5', [['I 123|1--','']]],
+      ['G5','', [['I 123|---','']]],
+      ['G#5','Ab5', [['I 123G#|---',''],['I 123|G#---','Side G\u266f key: trill fingering on open-hole oboes'],['I 123|A---','Side A key: trill fingering on closed-hole oboes']]],
+      ['A5','', [['II 12-|---','']]],
+      ['Bb5','A#5', [['II 12-|1--','']]],
+      ['B5','', [['II 1--|---',''],['II 1B--|1--','B trill key: trill fingering with B\u266d5']]],
+      ['C6','', [['II 1--|1--','']]]
+    ]],
+    ['Third octave', 'C\u266f6 to F6', [
+      ['C#6','Db6', [['-23|1--C',''],['-23|12-C','Good on English horn']]],
+      ['D6','', [['023|-2-C','Good intonation'],['023|---C','']]],
+      ['Eb6','D#6', [['023B|-23',''],['023|-23Eb','Next to E\u266d5 or D6']]],
+      ['E6','', [['I 023G#Eb|-23',''],['I 023|G#-23Eb','Side G\u266f and right E\u266d'],['I 023B|G#-23Eb','Low B key with side G\u266f'],['I 023G#|-23Eb','Left G\u266f with right E\u266d'],['I 02-|---','']]],
+      ['F6','', [['I 02-G#Eb|-23',''],['I 02-|G#-23Eb','Side G\u266f and right E\u266d'],['I 02-G#|-23Eb','Left G\u266f with right E\u266d']]]
+    ]]
+  ],
+  GROUPS: [['First octave', 58, 72], ['Second octave', 73, 84], ['Third octave', 85, 89]],
+  above: '<h2>Above F6<small>F\u266f6 and up</small></h2><div class="grid"><article class="card"><h3>Top notes</h3><p class="tip">Fingerings above F6 depend on the oboe, the reed and the player, and conservatory and thumb-plate oboes differ. The Woodwind Fingering Guide lists many options up to C\u266f7: see More charts below.</p></article></div>'
+});
+
+/* ---------- bassoon (Heckel system; WFG notation: left thumb, LH|right thumb RH) ---------- */
+const BSN_CHART = REED_CHART.make({
+  label: 'bassoon', clef: 'bass', vent: 'L1',
+  ventName: v => `LH 1, about ${({0.25:'a quarter', 0.5:'half', 0.75:'three quarters'})[v]} covered`,
+  ventTip: 'Roll LH 1 to change how much of the hole it covers.',
+  vb: '0 2 268 72', vbL: '0 0 268 76',
+  body: '<rect class="bodyline" x="40" y="37" width="186" height="6" rx="3"/>',
+  K: {
+    tBb: {x:9, y:10, w:12, h:8, lbl:'B\u266d', ly:12.2}, tB:{x:9, y:20, w:12, h:8, lbl:'B', ly:22.2}, tC:{x:9, y:30, w:12, h:8, lbl:'C', ly:32.2}, tD:{x:9, y:40, w:12, h:8, lbl:'D', ly:42.2},
+    fd:  {x:25, y:8, w:11, h:7, lbl:'d', ly:10.2}, fb:{x:25, y:17, w:11, h:7, lbl:'b', ly:19.2}, fa:{x:25, y:26, w:11, h:7, lbl:'a', ly:28.2},
+    tCs: {x:25, y:37, w:12, h:8, lbl:'C\u266f', ly:39.2}, W:{x:25, y:51, w:12, h:12, lbl:'W', ly:53.2},
+    L1:  {x:52, y:40, r:9, lbl:'1', ly:58}, L2:{x:76, y:40, r:9, lbl:'2', ly:58}, L3:{x:100, y:40, r:9, lbl:'3', ly:58},
+    pEb: {x:118, y:56, w:13, h:8, lbl:'E\u266d', ly:58.2}, pCs:{x:118, y:67, w:13, h:8, lbl:'C\u266f', ly:69.2},
+    rBb: {x:139, y:12, w:13, h:8, lbl:'B\u266d', ly:14.2}, rE:{x:154, y:12, w:13, h:8, lbl:'E', ly:14.2}, rFs:{x:139, y:23, w:13, h:8, lbl:'F\u266f', ly:25.2}, rGs:{x:154, y:23, w:13, h:8, lbl:'G\u266f', ly:25.2},
+    R1:  {x:170, y:40, r:9, lbl:'1', ly:58}, R2:{x:194, y:40, r:9, lbl:'2', ly:58}, sBb:{x:206, y:54, w:7, h:5, lbl:'B\u266d', ly:63}, R3:{x:218, y:40, r:9, lbl:'3', ly:58},
+    qFs: {x:231, y:52, w:13, h:8, lbl:'F\u266f', ly:54.2}, qF:{x:245, y:52, w:13, h:8, lbl:'F', ly:54.2}, qGs:{x:259, y:52, w:12, h:8, lbl:'G\u266f', ly:54.2}
+  },
+  NAMES: {tBb:'low B\u266d key (left thumb)', tB:'low B key (left thumb)', tC:'low C key (left thumb)', tD:'low D key (left thumb)', fd:'D flick key', fb:'B flick key', fa:'A flick key', tCs:'C\u266f thumb key', W:'whisper key',
+    L1:'LH 1', L2:'LH 2', L3:'LH 3', pEb:'left E\u266d key', pCs:'left C\u266f key', rBb:'B\u266d thumb key', rE:'E thumb key', rFs:'F\u266f thumb key', rGs:'G\u266f thumb key',
+    R1:'RH 1', R2:'RH 2', sBb:'B\u266d sliver key', R3:'RH 3', qFs:'right F\u266f key', qF:'low F key', qGs:'right G\u266f key'},
+  parse(str){
+    const st = {}, set = (id, tk) => { st[id] = tk.tr ? 2 : 1; };
+    const [L, R = ''] = str.split('|');
+    let pos = 0;
+    for(const tk of REED_CHART.tokens(str, L, ['Bb','B','C#','C','D','Eb','W','d','b','a','\u00bc','\u00bd','\u00be','1','2','3','-'])){
+      const t = tk.t, frac = {'\u00bc':0.25, '\u00bd':0.5, '\u00be':0.75}[t];
+      if(frac){ if(pos!==0) throw new Error('Vent not on LH 1 ' + str); pos++; set('L1', tk); st._v = frac; }
+      else if(/^[123-]$/.test(t)){ const id = ['L1','L2','L3'][pos++]; if(!id) throw new Error('LH long ' + str); if(t!=='-') set(id, tk); else if(tk.tr) st[id] = 2; }
+      else if(pos===0) set({Bb:'tBb', B:'tB', C:'tC', D:'tD', d:'fd', b:'fb', a:'fa', 'C#':'tCs', W:'W'}[t] || (()=>{ throw new Error('Thumb bad ' + str); })(), tk);
+      else if(pos===3 && (t==='Eb' || t==='C#')) set(t==='Eb' ? 'pEb' : 'pCs', tk);
+      else throw new Error('LH bad ' + str);
+    }
+    if(pos!==3) throw new Error('LH short ' + str);
+    pos = 0;
+    for(const tk of REED_CHART.tokens(str, R, ['Bb','F#','G#','E','F','1','2','3','-'])){
+      const t = tk.t;
+      if(/^[123-]$/.test(t)){ const id = ['R1','R2','R3'][pos++]; if(!id) throw new Error('RH long ' + str); if(t!=='-') set(id, tk); else if(tk.tr) st[id] = 2; }
+      else if(pos===0 && ['Bb','E','F#','G#'].includes(t)) set({Bb:'rBb', E:'rE', 'F#':'rFs', 'G#':'rGs'}[t], tk);
+      else if(pos===2 && t==='Bb') set('sBb', tk);
+      else if(pos===3 && ['F','F#','G#'].includes(t)) set({F:'qF', 'F#':'qFs', 'G#':'qGs'}[t], tk);
+      else throw new Error('RH bad ' + str);
+    }
+    if(pos!==3) throw new Error('RH short ' + str);
+    return st;
+  },
+  NOTES: [
+    ['Low register', 'B\u266d1 to E2', [
+      ['Bb1','A#1', [['Bb 123|E 123F','']]],
+      ['B1','', [['B 123|E 123F','']]],
+      ['C2','', [['C 123|E 123F','']]],
+      ['C#2','Db2', [['C 123C#|E 123F','']]],
+      ['D2','', [['D 123|E 123F','']]],
+      ['Eb2','D#2', [['D 123Eb|E 123F','']]],
+      ['E2','', [['W 123|E 123F','']]]
+    ]],
+    ['Lower middle register', 'F2 to F3', [
+      ['F2','', [['W 123|123F','']]],
+      ['F#2','Gb2', [['W 123|F# 123',''],['W 123|123F#','Pinky F\u266f: next to notes that use the right thumb']]],
+      ['G2','', [['W 123|123','']]],
+      ['G#2','Ab2', [['W 123|123G#',''],['W 123|G# 123','Thumb G\u266f: next to notes that use the right pinky']]],
+      ['A2','', [['W 123|12-','']]],
+      ['Bb2','A#2', [['W 123|Bb 12-',''],['W 123|12Bb-','Sliver key: next to notes that leave RH 3 up']]],
+      ['B2','', [['W 123|1--','']]],
+      ['C3','', [['W 123|---','']]],
+      ['C#3','Db3', [['D C# W 123|---','']]],
+      ['D3','', [['W 12-|---','']]],
+      ['Eb3','D#3', [['W 1-3Eb|Bb -2-',''],['C# W 12-|---','Trill fingering with D3'],['W 1-3|---','Next to E3'],['W 1-3|Bb -2-','Good for very soft playing']]],
+      ['E3','', [['W 1--|---','']]],
+      ['F3','', [['W ---|---','']]]
+    ]],
+    ['Upper middle register', 'F\u266f3 to D4', [
+      ['F#3','Gb3', [['W \u00bc23|F# 123','Leave more than half of the LH 1 hole open'],['W \u00bc23|123F#','Pinky F\u266f: next to notes that use the right thumb']]],
+      ['G3','', [['W \u00bd23|123','Cover about half of the LH 1 hole']]],
+      ['G#3','Ab3', [['W \u00be23|123G#','Cover more than half of the LH 1 hole'],['W \u00be23|G# 123','Thumb G\u266f: next to notes that use the right pinky']]],
+      ['A3','', [['123|12-',''],['a 123|12-','Flick: tap the A key as the note starts, for clean slurs']]],
+      ['Bb3','A#3', [['123|Bb 12-',''],['a 123|Bb 12-','Flick the A key for slurs'],['b 123|Bb 12-','Flick the B key for slurs'],['123|12Bb-','Sliver key: next to notes that leave RH 3 up']]],
+      ['B3','', [['123|1--',''],['b 123|1--','Flick the B key for slurs']]],
+      ['C4','', [['123|---',''],['b 123|---','Flick the B key for slurs']]],
+      ['C#4','Db4', [['D C# 123|---',''],['C# 123|-23F','For slurs']]],
+      ['D4','', [['12-|---',''],['d 12-|---','Flick the D key for slurs'],['b 12-|---','Flick the B key for slurs']]]
+    ]],
+    ['Upper register', 'E\u266d4 to B\u266d4', [
+      ['Eb4','D#4', [['12-|123','']]],
+      ['E4','', [['1-3Eb|123',''],['1-3Eb|-23',''],['1--Eb|---',''],['1--|---','']]],
+      ['F4','', [['1-3Eb|12-',''],['1-3|12-',''],['-23Eb|12-',''],['-23|12-',''],['1--|12-','']]],
+      ['F#4','Gb4', [['-23Eb|Bb 12-',''],['-23Eb|12-F','']]],
+      ['G4','', [['W \u00bd23Eb|1--F','Cover about half of the LH 1 hole']]],
+      ['G#4','Ab4', [['W \u00be23Eb|--3','Cover more than half of the LH 1 hole']]],
+      ['A4','', [['a C# 123Eb|--3','Hold the A flick key down']]],
+      ['Bb4','A#4', [['a C# 123Eb|12-F','Hold the A flick key down']]]
+    ]]
+  ],
+  GROUPS: [['Low register', 34, 40], ['Lower middle register', 41, 53], ['Upper middle register', 54, 62], ['Upper register', 63, 70]],
+  above: '<h2>Tenor register<small>B4 and up</small></h2><div class="grid"><article class="card"><h3>Above B\u266d4</h3><p class="tip">High bassoon fingerings vary between instruments, reeds and players. The Woodwind Fingering Guide lists many options: see More charts below.</p></article></div>'
+});
+
+/* ---------- fingering tab: built-in charts plus links ---------- */
+const BRASS_PREF = [2,3,4,5,6,8,9,10,12];
+const FCFG = {
+  tpt:   {kind:'valve', fund:48, valves:3, range:[54,91], clef:'treble', pref:BRASS_PREF, slides:true, about:'Written pitch for B\u266d trumpet, cornet and flugelhorn (sounds a whole step lower).'},
+  hornF: {kind:'valve', fund:36, valves:3, range:[42,84], clef:'treble', pref:[2,3,4,5,6,8,10,12,16], about:'Written pitch for horn in F (sounds a 5th lower).'},
+  hornD: {kind:'double', fund:36, fundB:41, valves:3, range:[42,89], clef:'treble', pref:[2,3,4,5,6,8,9,10,12,16], switchAt:68, about:'Written pitch for horn in F. The first fingering uses the side most players choose (B\u266d side from about written G\u266f4); the other side is always under alternates.'},
+  tbn:   {kind:'slide', fund:34, range:[28,82], clef:'bass', pedal:true, about:'Concert pitch, bass clef. Pedal notes below B\u266d1 are included.'},
+  tbnF:  {kind:'slide', fund:34, range:[28,82], clef:'bass', pedal:true, trigger:true, about:'Concert pitch, bass clef, with an F attachment (trigger).'},
+  euph4: {kind:'valve', fund:34, valves:4, range:[35,77], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, bass clef, 4-valve compensating euphonium.'},
+  euph3: {kind:'valve', fund:34, valves:3, range:[40,77], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, bass clef, 3-valve euphonium or baritone.'},
+  barTC: {kind:'valve', fund:48, valves:3, range:[54,91], clef:'treble', pref:BRASS_PREF, about:'Treble-clef (B\u266d) parts for euphonium and baritone: same fingerings as trumpet, sounding a 9th lower.'},
+  tubaBb:{kind:'valve', fund:22, valves:4, range:[28,65], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, BB\u266d tuba with 4 valves.'},
+  tubaC: {kind:'valve', fund:24, valves:4, range:[30,67], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, CC tuba with 4 valves.'},
+  tubaEb:{kind:'valve', fund:27, valves:4, range:[28,70], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, E\u266d tuba with 4 valves.'},
+  tubaF: {kind:'valve', fund:29, valves:4, range:[30,72], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, F tuba with 4 valves (a 5th valve adds more alternates).'}
+};
+const FING_LIST = [
+  {id:'flute', fam:'Woodwind', name:'Flute', chart:'flute', links:'flute'},
+  {id:'picc', fam:'Woodwind', name:'Piccolo', chart:'picc', links:'picc'},
+  {id:'oboe', fam:'Woodwind', name:'Oboe / English horn', chart:'oboe', links:'oboe'},
+  {id:'cl', fam:'Woodwind', name:'Clarinet (B\u266d / A / E\u266d)', chart:'cl', links:'cl'},
+  {id:'bcl', fam:'Woodwind', name:'Alto / bass clarinet', links:'bcl'},
+  {id:'sax', fam:'Woodwind', name:'Saxophone (all sizes)', chart:'sax', links:'sax'},
+  {id:'bsn', fam:'Woodwind', name:'Bassoon', chart:'bsn', links:'bsn'},
+  {id:'cbsn', fam:'Woodwind', name:'Contrabassoon', links:'cbsn'},
+  {id:'tpt', fam:'Brass', name:'Trumpet / cornet / flugelhorn (B\u266d)', chart:'brass', links:'tpt'},
+  {id:'hornF', fam:'Brass', name:'Horn in F (single)', chart:'brass', links:'hn'},
+  {id:'hornD', fam:'Brass', name:'Double horn (F / B\u266d)', chart:'brass', links:'hn'},
+  {id:'tbn', fam:'Brass', name:'Tenor trombone', chart:'brass', links:'tbn'},
+  {id:'tbnF', fam:'Brass', name:'Trombone with F attachment', chart:'brass', links:'tbn'},
+  {id:'euph4', fam:'Brass', name:'Euphonium, 4 valves (bass clef)', chart:'brass', links:'euph'},
+  {id:'euph3', fam:'Brass', name:'Euphonium / baritone, 3 valves (bass clef)', chart:'brass', links:'euph'},
+  {id:'barTC', fam:'Brass', name:'Euphonium / baritone (treble clef)', chart:'brass', links:'euph'},
+  {id:'tubaBb', fam:'Brass', name:'Tuba in BB\u266d', chart:'brass', links:'tuba'},
+  {id:'tubaC', fam:'Brass', name:'Tuba in CC', chart:'brass', links:'tuba'},
+  {id:'tubaEb', fam:'Brass', name:'Tuba in E\u266d', chart:'brass', links:'tuba'},
+  {id:'tubaF', fam:'Brass', name:'Tuba in F', chart:'brass', links:'tuba'},
+  {id:'vn', fam:'Strings', name:'Violin', chart:'strings', links:'vn'},
+  {id:'va', fam:'Strings', name:'Viola', chart:'strings', links:'va'},
+  {id:'vc', fam:'Strings', name:'Cello', chart:'strings', links:'vc'},
+  {id:'db', fam:'Strings', name:'Double bass', chart:'strings', links:'db'}
+];
+let fFam = '', fOg = null, fView = 'notes';
+for(const i of FING_LIST){ if(i.fam!==fFam){ fOg = document.createElement('optgroup'); fOg.label = i.fam; $('fInst').appendChild(fOg); fFam = i.fam; } fOg.appendChild(new Option(i.name + (i.chart ? '' : ' (links)'), i.id)); }
+try{ const s = localStorage.getItem('fingerInst'); if(s && FING_LIST.some(i=>i.id===s)) $('fInst').value = s; const v = localStorage.getItem('fingerView'); if(v) fView = v; }catch(e){}
+const fCache = {};
+function chartHTML(inst, view){
+  const key = inst.id + ':' + view;
+  if(fCache[key]) return fCache[key];
+  let h = '';
+  if(inst.chart==='flute') h = FLUTE_CHART[view]();
+  else if(inst.chart==='picc') h = FLUTE_CHART[view]('picc');
+  else if(inst.chart==='oboe') h = OBOE_CHART[view]();
+  else if(inst.chart==='bsn') h = BSN_CHART[view]();
+  else if(inst.chart==='sax') h = SAX_CHART[view]();
+  else if(inst.chart==='cl') h = CL_CHART[view]();
+  else if(inst.chart==='brass') h = BRASS_CHART[view](FCFG[inst.id]);
+  else if(inst.chart==='strings') h = STRING_CHART[view](inst.id);
+  return fCache[key] = h;
+}
+const VIEW_INTRO = {
+  flute: {notes:'The first picture on each card is the standard fingering. Open \u201calternates\u201d for options that change tuning, tone or ease in fast passages.',
+          trills:'Hold the black keys and move only the blinking ones. Trills not shown between E and C\u266f in the middle octave use the same fingering as the low octave.',
+          trems:'Tremolos are fast alternations wider than a whole step. These shortcuts move as few fingers as possible. For any pair not listed, alternate the two regular fingerings.'},
+  cl:    {notes:'The first picture on each card is the standard (Boehm) fingering. Open \u201calternates\u201d for options that help in fast passages, across the break, or with tuning and tone.',
+          trills:'Half- and whole-step trills, worked out from the verified fingerings to move as few keys as possible. Across the break (A4 to C5) they use the side trill keys.',
+          trems:'Minor and major 3rds, worked out the same way to move as few keys as possible.'},
+  picc:  {notes:'Written pitch (sounds an octave higher). The first picture on each card is the standard fingering; piccolo uses flute fingerings, with its own choices in the high register. Open \u201calternates\u201d for tuning and response.',
+          trills:'Hold the black keys and move only the blinking ones. These are the flute trills that work on a piccolo (no low C or C\u266f).',
+          trems:'Tremolos wider than a whole step. These shortcuts move as few fingers as possible. For any pair not listed, alternate the two regular fingerings.'},
+  oboe:  {notes:'The first picture on each card is the standard fingering. Open \u201calternates\u201d for options that help in fast passages or with tuning and tone. A half-filled LH 1 means the half-hole.',
+          trills:'Half- and whole-step trills, worked out from the verified fingerings (including the trill-key fingerings) to move as few keys as possible.',
+          trems:'Minor and major 3rds, worked out the same way to move as few keys as possible.'},
+  bsn:   {notes:'Concert pitch, bass clef. The first picture on each card is the standard fingering. A partly filled LH 1 shows how much of the hole to cover. Open \u201calternates\u201d for flicks and other options.',
+          trills:'Half- and whole-step trills, worked out from the verified fingerings to move as few keys as possible.',
+          trems:'Minor and major 3rds, worked out the same way to move as few keys as possible.'},
+  sax:   {notes:'The first picture on each card is the standard fingering. Open \u201calternates\u201d for options that help in fast passages or change tone and tuning. The same fingerings work on soprano, alto, tenor and baritone.',
+          trills:'Hold the black keys and move only the blinking ones.',
+          trems:'Minor and major 3rds, worked out from the fingerings in the Notes view to move as few keys as possible.'},
+  brass: {notes:'The first picture on each card is the standard fingering; alternates use other partials. Use them for tuning, smoother slurs or easier trills.',
+          trills:'Half- and whole-step trills. Hold the filled valves and move the blinking ones, or keep the valves still for a lip trill.',
+          trems:'Minor 3rds, major 3rds and 4ths. Each card shows the pair of fingerings that moves least.'},
+  strings:{notes:'The first picture is the usual fingering; open \u201cother ways\u201d for the same note on other strings and in higher positions. Finger numbers are shown in the dots.',
+          trills:'Half- and whole-step trills: hold the filled finger and trill the blinking one, on one string and in one position.',
+          trems:'Fingered tremolos of a 3rd and a 4th. Where the hand can\u2019t span it on one string, the card shows it across two strings.',
+          harm:'Natural harmonics on every open string. Touch the string lightly at the diamond, without pressing it down.'}
+};
 function renderFinger(){
-  const inst = FINGER.find(i => i.id===$('fInst').value) || FINGER[0];
-  try{ localStorage.setItem('fingerInst', inst.id); }catch(e){}
+  const inst = FING_LIST.find(i => i.id===$('fInst').value) || FING_LIST[0];
+  try{ localStorage.setItem('fingerInst', inst.id); localStorage.setItem('fingerView', fView); }catch(e){}
   const box = $('fLinks'); box.innerHTML = '';
   const add = (tag, cls, text) => { const el = document.createElement(tag); if(cls) el.className = cls; if(text) el.textContent = text; return el; };
-  if(inst.note) box.appendChild(add('p', 'legend', inst.note));
-  for(const [title, links] of inst.groups){
-    const card = add('div', 'fcard'); card.appendChild(add('h3', '', title));
-    const row = add('div', 'link-row');
-    for(const [label, url] of links){ const a = add('a', 'link-chip', label); a.href = url; a.target = '_blank'; a.rel = 'noopener'; row.appendChild(a); }
-    card.appendChild(row); box.appendChild(card);
+  const linkSet = FINGER.find(i => i.id===inst.links);
+  $('fViews').hidden = !inst.chart; $('fPause').hidden = !inst.chart;
+  $('fViews').querySelector('[data-v="harm"]').hidden = inst.chart!=='strings';
+  if(fView==='harm' && inst.chart!=='strings') fView = 'notes';
+  if(inst.chart){
+    for(const b of $('fViews').children) b.setAttribute('aria-pressed', b.dataset.v===fView);
+    const cfg = FCFG[inst.id], map = inst.chart==='flute' ? FLUTE_CHART.keymap() : inst.chart==='picc' ? FLUTE_CHART.keymap('picc') : inst.chart==='oboe' ? OBOE_CHART.keymap() : inst.chart==='bsn' ? BSN_CHART.keymap() : inst.chart==='sax' ? SAX_CHART.keymap() : inst.chart==='cl' ? CL_CHART.keymap() : inst.chart==='strings' ? STRING_CHART.keymap(inst.id) : BRASS_CHART.keymap(cfg);
+    const groups = inst.chart==='picc' ? '<ul class="groups"><li>Left thumb: B key (bottom), B\u266d lever (top)</li><li>Left hand: fingers 1 2 3, pinky on G\u266f</li><li>Right hand: fingers 1 2 3, side B\u266d lever, trill keys T1 (D) and T2 (D\u266f), pinky on E\u266d</li></ul>'
+      : inst.chart==='oboe' ? '<ul class="groups"><li>Octave keys: I (left thumb), II (side key by LH 1), III on some models</li><li>Left hand: fingers 1 2 3 (1 has the half-hole) with the B, D and C\u266f trill keys; pinky G\u266f, E\u266d, B, B\u266d (and F on some models)</li><li>Right hand: side keys A and G\u266f; fingers 1 2 3 with the D trill key, F key and banana C key; pinky C, C\u266f, E\u266d</li></ul>'
+      : inst.chart==='bsn' ? '<ul class="groups"><li>Left thumb: low B\u266d, B, C, D; flick keys d, b, a; C\u266f key; whisper key (W)</li><li>Left hand: holes 1 2 3; pinky E\u266d and C\u266f</li><li>Right thumb: B\u266d, E, F\u266f, G\u266f</li><li>Right hand: holes 1 2 3 with the B\u266d sliver key; pinky F\u266f, F, G\u266f</li></ul>'
+      : inst.chart==='cl' ? '<ul class="groups"><li>Left thumb: thumb hole and register key</li><li>Left hand: A and G\u266f keys; fingers 1 2 3 with the E\u266d/B\u266d sliver and C\u266f/G\u266f key; pinky E/B, F/C, F\u266f/C\u266f (A\u266d/E\u266d on some models)</li><li>Right hand: side trill keys 1\u20134; fingers 1 2 3 with the B/F\u266f sliver; pinky F\u266f/C\u266f, A\u266d/E\u266d, E/B, F/C</li></ul>' : inst.chart==='sax' ? '<ul class="groups"><li>Left thumb: octave key (and low A on some baritones)</li><li>Left hand: palm keys D, E\u266d, F; front F; fingers 1 2 3 with the bis key; pinky G\u266f, C\u266f, B, B\u266d</li><li>Right hand: side keys E, C, B\u266d, high F\u266f; fingers 1 2 3 with the alternate F\u266f; pinky E\u266d and C</li></ul>' : inst.chart==='strings' ? `<p class="groups">${STRING_CHART.inst(inst.id).about}</p>` : inst.chart==='flute'
+      ? '<ul class="groups"><li>Left thumb: B key (bottom), B\u266d lever (top)</li><li>Left hand: fingers 1 2 3, pinky on G\u266f</li><li>Right hand: fingers 1 2 3, side B\u266d lever, trill keys T1 (D) and T2 (D\u266f)</li><li>Right pinky: E\u266d, C\u266f, C, B, gizmo (Gz)</li></ul>'
+      : `<p class="groups">${cfg.about}</p>`;
+    const opt = inst.chart==='flute' ? '<span><svg width="22" height="16" aria-hidden="true"><rect x="2" y="2" width="18" height="12" rx="6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2"/></svg>Only on a B footjoint</span>' : (inst.chart==='sax' || inst.chart==='cl' || inst.chart==='oboe') ? '<span><svg width="22" height="16" aria-hidden="true"><rect x="2" y="2" width="18" height="12" rx="6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2"/></svg>Not on every model</span>' : '';
+    $('fChart').innerHTML = `<div class="map">${map}${groups}<div class="keylegend"><span><i class="fdot p"></i>${inst.chart==='strings' ? 'Finger down' : inst.chart==='brass' && cfg.kind==='slide' ? 'Position' : 'Press'}</span><span><i class="fdot o"></i>${inst.chart==='strings' ? 'Open string' : 'Leave open'}</span><span><i class="fdot t"></i>Move this (it blinks)</span>${inst.chart==='strings' ? '<span><svg width="16" height="16" aria-hidden="true"><rect x="4" y="4" width="8" height="8" transform="rotate(45 8 8)" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Harmonic: touch lightly</span>' : ''}${opt}</div></div>`
+      + `<p class="intro">${VIEW_INTRO[inst.chart][fView]}</p>` + chartHTML(inst, fView)
+      + (inst.chart==='flute' ? '<p class="intro">For a standard closed G\u266f Boehm flute; open-hole and plateau flutes use the same fingerings. Fingerings checked against the Woodwind Fingering Guide. Above C7 every flute responds differently, so try the alternates.</p>'
+                              : inst.chart==='picc' ? '<p class="intro">Written pitch for a Boehm piccolo with a closed G\u266f and no low C keys. Fingerings checked against the Woodwind Fingering Guide; piccolos vary in the top octave, so try the alternates.</p>'
+                              : inst.chart==='oboe' ? '<p class="intro">For conservatory and thumb-plate oboes; English horn uses the same fingerings. Fingerings checked against the Woodwind Fingering Guide.</p>'
+                              : inst.chart==='bsn' ? '<p class="intro">For Heckel-system (German) bassoons; contrabassoon uses the same basic fingerings. Fingerings checked against the Woodwind Fingering Guide.</p>'
+                              : inst.chart==='cl' ? '<p class="intro">Written pitch for B\u266d, A and E\u266d Boehm clarinets; alto and bass clarinets use the same fingerings from the throat tones up. Fingerings checked against the Woodwind Fingering Guide.</p>'
+                              : inst.chart==='sax' ? '<p class="intro">Written pitch; the same fingerings work on every size of saxophone. Fingerings checked against the Woodwind Fingering Guide.</p>'
+                              : inst.chart==='strings' ? '<p class="intro">Fingerings follow the standard hand frame for the instrument. In real music the best choice depends on the passage, bowing and phrasing, so treat these as a map and let your teacher and the edition guide you.</p>'
+                              : '<p class="intro">Fingerings follow the harmonic series of the instrument. Every horn is a little different, so trust your ear and your teacher for the final word on tuning.</p>');
+    if(linkSet) box.appendChild(add('h2', 'sec', 'More charts'));
+  } else {
+    $('fChart').innerHTML = '<p class="intro">A built-in chart for this instrument is on the way. Until then, these trusted charts open in a new tab.</p>';
   }
-  if(inst.fam==='Brass') box.appendChild(add('p', 'legend', BRASS_NOTE));
-  if(inst.fam==='Strings') box.appendChild(add('p', 'legend', STRINGS_NOTE));
+  if(linkSet){
+    if(linkSet.note) box.appendChild(add('p', 'legend', linkSet.note));
+    for(const [title, links] of linkSet.groups){
+      const card = add('div', 'fcard'); card.appendChild(add('h3', '', title));
+      const row = add('div', 'link-row');
+      for(const [lab, url] of links){ const a = add('a', 'link-chip', lab); a.href = url; a.target = '_blank'; a.rel = 'noopener'; row.appendChild(a); }
+      card.appendChild(row); box.appendChild(card);
+    }
+  }
 }
 $('fInst').addEventListener('change', renderFinger);
+for(const b of $('fViews').children) b.addEventListener('click', () => { fView = b.dataset.v; renderFinger(); });
+$('fPause').addEventListener('click', () => { const on = $('fChart').classList.toggle('paused'); $('fPause').setAttribute('aria-pressed', on); $('fPause').textContent = on ? 'Resume blinking' : 'Pause blinking'; });
 window.fingerReady = true;
 $('copyPay').addEventListener('click', async () => {
   const email = $('payEmail').textContent;
