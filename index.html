@@ -186,6 +186,12 @@ button.primary{background:var(--brass);border-color:var(--brass);color:#fff;font
 /* Chinese meanings in Terms */
 .term-zh{font-size:1.05rem;margin:.35rem 0 0;color:var(--ink)}
 .sugg .zh{display:block;font-size:.85em;opacity:.85;margin-top:.1rem}
+/* scale description */
+.sdesc{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:10px;padding:.6rem .8rem;margin:.7rem 0 .2rem}
+.sdesc p{margin:0}
+.sdesc .sd-name{font:600 1.1rem Spectral,Georgia,serif;margin-bottom:.15rem}
+.sdesc .sd-text{font-size:.93rem;line-height:1.45}
+.sdesc .sd-steps{font-size:.82rem;color:var(--muted);margin-top:.35rem}
 /* drone */
 .drone{margin-top:1.4rem;border-top:1px solid var(--line);padding-top:.6rem}
 .drone h2{font:600 1.25rem Spectral,Georgia,serif;margin:.4rem 0 .3rem}
@@ -570,12 +576,13 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <div><label for="sClef">Clef</label><select id="sClef" style="font:500 1rem Figtree,sans-serif"><option value="treble">Treble</option><option value="alto">Alto</option><option value="tenor">Tenor</option><option value="bass">Bass</option></select></div>
     </div>
     <div class="interval" id="sMap" style="margin:.7rem 0 0"></div>
+    <div class="sdesc" id="sDesc"><p class="sd-name"></p><p class="sd-text"></p><p class="sd-steps"></p></div>
     <div class="listen"><button id="sPlay" aria-pressed="false"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg><span class="t">Play scale</span></button></div>
     <div class="notation" id="notation"></div>
     <p class="legend" style="margin-top:-.2rem">Tap a note to hear it. Playback is at concert pitch.</p>
     <p class="status" id="sStatus" style="margin:.2rem 0"></p>
     <div class="formula" id="formula"></div>
-    <p class="legend" id="sTip"></p>
+    <p class="legend" id="sTip" hidden></p>
   </section>
 
   <section id="viewTerms" hidden>
@@ -1258,6 +1265,26 @@ updatePick();
 /* ---------- scales ---------- */
 SCALES.hmin = {name:'Harmonic minor', s:[[0,1],[2,2],[3,3],[5,4],[7,5],[8,6],[11,7]], tip:'Minor with a raised 7th. The classic sound of minor-key music.'};
 SCALES.phr = {name:'Phrygian', s:[[0,1],[1,2],[3,3],[5,4],[7,5],[8,6],[10,7]], tip:'Dark minor with a ♭2. Spanish flavour.'};
+// A short description of each scale for the Scales tab.
+const SCALE_DESC = {
+  ion:'The most familiar scale in Western music: bright, stable and “happy”. Its pattern of tones and semitones is the basis of major key signatures, and it is usually the first scale players learn.',
+  aeo:'The basic minor scale, darker and more serious than major. It uses the same notes as its relative major (A minor and C major share all their notes) and is common in folk, pop and rock.',
+  hmin:'Natural minor with a raised 7th, giving a strong pull back to the home note and a distinctive, slightly exotic leap (an augmented 2nd) between the 6th and 7th. It is the minor scale behind classical harmony.',
+  mel:'Minor with a raised 6th and 7th on the way up, which smooths out the harmonic minor’s big leap. In classical music it comes down as natural minor; jazz players use the rising form both ways.',
+  mpent:'Five notes of the major scale, leaving out the 4th and 7th, so there are no semitones to clash. Heard in folk music all over the world, from Scottish to Chinese tunes, and an easy scale to improvise with.',
+  mipent:'Five notes of the natural minor, leaving out the 2nd and 6th. The backbone of blues and rock solos, and a safe choice for improvising over minor chords.',
+  blues:'Minor pentatonic with an added flattened 5th, the “blue note”. It gives the gritty, expressive sound of blues, jazz and rock.',
+  dor:'Natural minor with a raised 6th: still minor, but brighter and less sad. One of the old church modes, it is common in folk songs, jazz and funk.',
+  phr:'Natural minor with a lowered 2nd. The semitone just above the home note gives it a dark, Spanish or flamenco flavour.',
+  lyd:'Major with a raised 4th, which makes it sound bright, dreamy and floating. A favourite in film music and jazz.',
+  mix:'Major with a lowered 7th, giving a relaxed, bluesy major sound. Common in rock, folk and Celtic music, and over dominant 7th chords in jazz.',
+  loc:'The darkest mode: its lowered 2nd and 5th make the home chord diminished, so it never quite settles. Used mostly in jazz over half-diminished (m7♭5) chords, and in metal.',
+  wt:'Six notes, each a whole tone apart, with no semitones and no clear home note. Its blurred, dreamlike sound is linked with Debussy and with dream scenes in films.',
+  hw:'An eight-note symmetrical scale that alternates semitone and tone. Jazz players use it over dominant 7th chords with ♭9 and ♯9 for a tense, colourful sound.',
+  wh:'An eight-note symmetrical scale that alternates tone and semitone, so the pattern repeats every minor 3rd. It fits diminished 7th chords and is heard in jazz and in Russian composers such as Rimsky-Korsakov.'
+};
+// Step pattern from the scale's semitones: W = tone, H = semitone, W+H = minor 3rd.
+const stepPattern = sc => { const st = sc.s.map(x => x[0]).concat(12); return st.slice(1).map((v, i) => ({1:'H', 2:'W', 3:'W+H'})[v - st[i]] || (v - st[i]) + ' semitones').join(' \u2013 '); };
 const SCALE_ORDER = ['ion','aeo','hmin','mel','mpent','mipent','blues','dor','phr','lyd','mix','loc','wt','hw','wh'];
 const ROOTS = ['C','C#','Db','D','Eb','E','F','F#','Gb','G','Ab','A','Bb','B'];
 for(const r of ROOTS) $('sRoot').add(new Option(pretty(r), r));
@@ -1311,6 +1338,10 @@ async function renderScale(){
     : `Concert ${fmt(concert)} ${sc.name} → play ${fmt(root)} ${sc.name} on your ${pretty(inst)} instrument.`;
   $('formula').innerHTML = sc.s.map(x=>`<span>${degLabel(stepFor(root,x))}</span>`).join('');
   $('sTip').textContent = sc.tip + (sc===SCALES.mel ? ' In classical music it usually comes down as natural minor.' : '');
+  const id = $('sType').value;
+  $('sDesc').querySelector('.sd-name').textContent = sc.name;
+  $('sDesc').querySelector('.sd-text').textContent = SCALE_DESC[id] || sc.tip;
+  $('sDesc').querySelector('.sd-steps').textContent = `${sc.s.length} notes \u00b7 steps: ${stepPattern(sc)} (W = tone, H = semitone)`;
   const notes = scaleNotes(root, sc, clef);
   // Sounding pitch: written pitch moved back down by the instrument's transposition.
   const semis = shiftOf('C', inst).semis, up = notes.map(n => midiOf(n) - semis);
