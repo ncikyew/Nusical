@@ -394,6 +394,19 @@ body.about-open{background:color-mix(in srgb, var(--bg) 65%, var(--brass-soft))}
 .link-chip::after{content:"↗";color:var(--brass);font-size:.8rem}
 .link-chip:hover{border-color:var(--brass);background:var(--brass-soft)}
 /* fingering charts */
+.tpc-cats{display:flex;flex-wrap:wrap;gap:.35rem;margin:.8rem 0 .5rem}
+.tpc-cats button{font-size:.82rem;padding:.25rem .75rem;border-radius:999px}
+.tpc-cats button[aria-pressed="true"]{border-color:var(--brass);background:var(--brass-soft)}
+.tpc-jump{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .4rem;font-size:.78rem;color:var(--muted);margin:0 0 .3rem}
+.tpc-jump button{font-size:.78rem;padding:.15rem .6rem;border-radius:999px;background:none}
+.tpc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.5rem}
+.tpc{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:10px;padding:.55rem .75rem}
+.tpc p{margin:0}
+.tpc-cat{font-size:.72rem;font-weight:600;color:var(--brass);text-transform:uppercase;letter-spacing:.04em}
+.tpc-t{font-weight:600;margin:.15rem 0 .2rem!important;line-height:1.4}
+.tpc-w{font-size:.87rem;color:var(--muted);line-height:1.45}
+.tpc-w a{white-space:nowrap;color:var(--brass)}
+.tpc-t{font-size:.97rem}
 .fchart .map{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.7rem .8rem .6rem;margin-top:.8rem}
 .fchart .map > svg{display:block;width:100%;max-width:640px;height:auto;margin:0 auto}
 .fchart .groups{display:flex;flex-wrap:wrap;gap:.2rem 1.2rem;font-size:.82rem;color:var(--muted);margin:.4rem 0 0;padding:0;list-style:none}
@@ -490,7 +503,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <a href="#terms" id="tabTerms"><svg viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 8h6"/></svg><span>Terms</span></a>
       <a href="#metronome" id="tabMetro"><svg viewBox="0 0 24 24"><path d="M10 3h4l4 18H6zM12 16l6-9M8.5 16h7"/></svg><span>Metronome</span></a>
       <a href="#tuner" id="tabTuner"><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><span>Tuner</span></a>
-      <a href="#fingering" id="tabFinger"><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><span>Fingering</span></a>
+      <a href="#fingering" id="tabFinger"><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><span>Instrument</span></a>
       <a href="#quiz" id="tabQuiz"><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><span>Quiz</span></a>
     </nav>
   </header>
@@ -529,7 +542,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
     <select id="fInst" style="font:500 1rem Figtree,sans-serif"></select>
     <div class="row" style="margin-top:.7rem;justify-content:space-between">
       <div class="seg" id="fViews" style="margin:0">
-        <button data-v="notes" aria-pressed="true">Notes</button><button data-v="trills" aria-pressed="false">Trills</button><button data-v="trems" aria-pressed="false">Tremolos</button><button data-v="harm" aria-pressed="false" hidden>Harmonics</button>
+        <button data-v="tips" aria-pressed="false">Tips</button><button data-v="notes" aria-pressed="true">Notes</button><button data-v="trills" aria-pressed="false">Trills</button><button data-v="trems" aria-pressed="false">Tremolos</button><button data-v="harm" aria-pressed="false" hidden>Harmonics</button>
       </div>
       <button id="fPause" aria-pressed="false" style="font-size:.85rem;border-radius:999px;padding:.3rem .8rem">Pause blinking</button>
     </div>
@@ -558,7 +571,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <li><svg viewBox="0 0 24 24"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 8h6"/></svg><p><b>Terms</b>Over 500 Italian, German, French and Latin markings with Chinese meanings, plus a guide to notation signs.</p></li>
       <li><svg viewBox="0 0 24 24"><path d="M10 3h4l4 18H6zM12 16l6-9M8.5 16h7"/></svg><p><b>Metronome</b>Steady clicks with accents, subdivisions and tap tempo.</p></li>
       <li><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><p><b>Tuner</b>Tune with your microphone, or play along with a drone, in your instrument’s key.</p></li>
-      <li><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><p><b>Fingering</b>Fingering, trill and tremolo charts for woodwind, brass and strings.</p></li>
+      <li><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><p><b>Instrument</b>Practice tips plus fingering, trill and tremolo charts for woodwind, brass and strings.</p></li>
       <li><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><p><b>Quiz</b>Theory quizzes by grade or topic, plus ear training.</p></li>
     </ul>
     <p class="legend">Fingerings, terms and tunings are checked carefully, but your teacher and your ears always have the final say. Music notation is drawn with the open-source Verovio engraver.</p>
@@ -989,7 +1002,7 @@ function route(){
   document.querySelector('.keys').hidden = solo;
   $('interval').hidden = solo;
   if(v==='scales') renderScale();
-  $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Fingering', quiz:'Quiz', about:'About'}[v];
+  $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Instrument', quiz:'Quiz', about:'About'}[v];
   if(window.lastTracked !== v){ window.lastTracked = v; track('page_view', {page_title: 'Nusical – ' + $('title').textContent, page_location: location.href, page_path: '/' + v}); }
   $('tagline').textContent = {
     notes:'Convert notes between instruments in different keys.',
@@ -997,7 +1010,7 @@ function route(){
     scales:'See any scale written out so you can learn to play it.',
     terms:'Look up what a music term or marking on your part means.',
     metronome:'Keep steady time while you practise.',
-    fingering:'Trusted fingering charts for woodwind, brass and strings, including alternates and trills.',
+    fingering:'Pick your instrument once for its practice tips and fingering charts.',
     about:'What this app does, and how to support it.',
     tuner:'Check your tuning with the microphone, or play along with a drone.',
     quiz:'Test your theory and your ear, by grade or by topic.'
@@ -2791,7 +2804,11 @@ const slurAbove = (x1, x2, y, rise=8) => NS.path(`M${x1} ${y} Q${(x1+x2)/2} ${y-
 const clefD = (c, p, name) => NS.svg(96, NS.at(QCLEF[c].g, 8, posY(QCLEF[c].pos)) + NS.ledger(58, p, 19) + NS.at('whole', 58, posY(p) + 134*SC) + NS.text(64, 90, name, 'nst nsc'), {h:86});
 const valueD = (n, r, ry) => NS.svg(96, NS.note(24, 4, n) + NS.ctr(r, 66, ry));
 const accD = (g, p=4) => NS.svg(96, NS.at(g, 34, posY(p) + QSTEP[g]*SC) + NS.at('whole', 50, posY(p) + 134*SC));
-const artD = (g, dy=8) => NS.svg(96, NS.note(26, 5) + NS.ctr(g, hc(26), posY(5)+dy) + NS.note(56, 7) + NS.ctr(g, hc(56), posY(7)+dy));
+// Notes above the middle line have their stems down, so the articulation goes above the notehead.
+const noteDown = (x, p) => NS.head(x, p) + `<line class="nsl" x1="${x+2}" x2="${x+2}" y1="${posY(p)+1}" y2="${posY(p)+27}" stroke-width="1.1"/>`;
+// The font draws these signs for use below a note; above it, wedges and the marcato roof are flipped.
+const above = (g, cx, cy) => ['staccmo','marcato'].includes(g) ? `<g transform="translate(0 ${2*cy}) scale(1 -1)">${NS.ctr(g, cx, cy)}</g>` : NS.ctr(g, cx, cy);
+const artD = (g, dy=8) => NS.svg(96, noteDown(26, 5) + above(g, hc(26), posY(5)-dy) + noteDown(56, 7) + above(g, hc(56), posY(7)-dy), {top:2, h:78});
 const mordD = lower => NS.svg(96, NS.note(40, 4) + NS.path('M38 15 l4 -5 l4 7 l4 -7 l4 7 l4 -5', 1.7) + (lower ? NS.line(48, 6, 48, 20, 1.3) : ''), {top:2, h:78});
 const ornD = (g, s=SC) => NS.svg(96, NS.note(40, 4) + NS.ctr(g, hc(40)+1, 14, s), {top:2, h:78});
 const dynD = str => NS.svg(96, NS.dyn(str, 48 - str.length*6, 52), {staff:false, top:16, h:48});
@@ -2843,7 +2860,7 @@ const NOTN = [
   {n:'Tenuto', al:'line;dash', zh:'保持音', c:'art', s:'A short line: hold the note for its full value.', l:'Give the note its whole length, often with slight weight.', d:()=>artD('tenuto', 8), snd:{steps:[[72],[74],[76],[77]], gap:.45, dur:.45}, term:'Tenuto'},
   {n:'Accent', al:'>;accent mark', zh:'重音记号', c:'art', s:'A wedge (>): start the note with extra weight.', l:'Lean on the start of the note, then let it settle.', d:()=>artD('accent', 10), snd:{steps:[[72],[72],[72],[72]], gap:.45, dur:.4, vels:[1.6,.5,.5,.5]}, term:'Accent'},
   {n:'Marcato', al:'^;strong accent;housetop', zh:'强重音', c:'art', s:'A roof-shaped accent (^): strongly marked.', l:'Heavier and more forceful than an ordinary accent.', d:()=>artD('marcato', 11), snd:{steps:[[72],[72],[72],[72]], gap:.45, dur:.3, vels:[1.9,.5,.5,.5]}, term:'Marcato'},
-  {n:'Portato', al:'mezzo staccato;louré;slurred staccato', zh:'次断奏', c:'art', s:'Dots (or lines) under a slur: gently separated.', l:'Somewhere between legato and staccato: each note is slightly separated but kept in one breath or bow.', d:()=>NS.svg(96, NS.note(22, 5) + NS.ctr('stacc', hc(22), posY(5)+8) + NS.note(48, 6) + NS.ctr('stacc', hc(48), posY(6)+8) + NS.note(74, 7) + NS.ctr('stacc', hc(74), posY(7)+8) + slurBelow(hc(22), hc(74), posY(5)+13, 8), {h:80}), snd:{steps:[[72],[74],[76]], gap:.45, dur:.32}, term:'Portato'},
+  {n:'Portato', al:'mezzo staccato;louré;slurred staccato', zh:'次断奏', c:'art', s:'Dots (or lines) with a slur: gently separated.', l:'Somewhere between legato and staccato: each note is slightly separated but kept in one breath or bow.', d:()=>NS.svg(96, noteDown(22, 5) + NS.ctr('stacc', hc(22), posY(5)-8) + noteDown(48, 6) + NS.ctr('stacc', hc(48), posY(6)-8) + noteDown(74, 7) + NS.ctr('stacc', hc(74), posY(7)-8) + slurAbove(hc(22), hc(74), posY(7)-14, 8), {top:0, h:80}), snd:{steps:[[72],[74],[76]], gap:.45, dur:.32}, term:'Portato'},
   // phrasing and pauses
   {n:'Slur', al:'legato;phrase mark;phrasing', zh:'圆滑线', c:'phr', s:'A curve over different notes: play them smoothly.', l:'Join the notes without gaps. Wind players tongue only the first note; string players play them in one bow. A long slur is also a phrase mark.', d:()=>NS.svg(96, NS.note(20, 3) + NS.note(44, 5) + NS.note(68, 4) + slurBelow(hc(20), hc(68), posY(3)+9, 9), {h:80}), snd:{steps:[[71],[74],[72]], gap:.45, dur:.48}, term:'Legato'},
   {n:'Fermata', al:'pause;bird’s eye;birds eye', zh:'延长记号', c:'phr', s:'Hold the note (or rest) longer than written.', l:'How long is up to you or the conductor, usually about half as long again.', d:()=>ornD('fermata', SC*1.1), snd:{steps:[[69],[71],[72]], gap:.45, durs:[.4,.4,2]}, term:'Fermata'},
@@ -4056,6 +4073,8 @@ window.tunerReady = true;
 // Add every change at the TOP: the newest is featured on About and every release is listed in the history.
 // Versions: a new feature bumps the middle number, a fix bumps the last.
 const RELEASES = [
+  {v:'1.11', date:'2026-11-16', title:'Tips for your instrument', text:'The Fingering tab is now Instrument: pick your instrument once to see its practice tips and fingering charts.', notes:['Over 120 tips from teachers and method books for every woodwind, brass and string instrument','Filter by tone, air, technique, intonation, practice or care','Tips for your instrument first, then its family, then every instrument'], go:'fingering', then:() => { fView = 'tips'; renderFinger(); }},
+  {v:'1.10.1', date:'2026-11-06', title:'Articulation diagrams', text:'Articulation signs in Terms now show stems pointing down, with the sign above the note, as printed music does for higher notes.', notes:['Staccato, accent, tenuto and other articulation diagrams now use stems down with the sign above'], go:'terms', then:() => setTermsMode('signs')},
   {v:'1.10', date:'2026-11-06', title:'Note map in Transpose', text:'See every note side by side: your part, concert pitch and the other part, with your notes highlighted.', notes:['Note map from C to C for any pair of instruments','Note pad with 12 keys and a sharp/flat switch','Simpler page: the key signature box is gone'], go:'notes'},
   {v:'1.9.1', date:'2026-11-06', title:'Drone fix', text:'The drone now runs from C4 to C5 with a smoother tone.', go:'tuner', notes:['Notes now run from C4 to C5 and always go up in order (some notes jumped an octave)','Smoother, organ-like tone; the register setting is gone']},
   {v:'1.9', date:'2026-11-05', title:'Notation signs in Terms', text:'Terms now has a Signs view: 76 music signs drawn on a staff, from clefs to ornaments.', notes:['Explanations, Chinese names and sound examples for each sign','Search by name, symbol (8va, sfz, >) or Chinese','Links between signs and the matching terms'], go:'terms', then:() => setTermsMode('signs')},
@@ -5651,6 +5670,217 @@ const FCFG = {
   tubaEb:{kind:'valve', fund:27, valves:4, range:[28,70], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, E\u266d tuba with 4 valves.'},
   tubaF: {kind:'valve', fund:29, valves:4, range:[30,72], clef:'bass', pref:BRASS_PREF, about:'Concert pitch, F tuba with 4 valves (a 5th valve adds more alternates).'}
 };
+/* ---------- practice tips for each instrument (Instrument tab > Tips) ---------- */
+const TIP_SRC = {
+  yp:['Yamaha Music Educators','https://hub.yamaha.com/music-educators/prof-dev/teaching-tips/types-of-practice'],
+  yf:['Yamaha Music Educators','https://hub.yamaha.com/music-educators/instruments/winds-instruments/first-year-flutes-success'],
+  aw:['ArtistWorks','https://blog.artistworks.com/essential-daily-flute-lessons-whistle-tones-and-long-tones/'],
+  ie:['The Instrumentalist','https://theinstrumentalist.com/february-2019-flute-talk/embouchure-tips/'],
+  osu:['Ohio State University','https://music.osu.edu/sites/default/files/2021-06/essential_exercises_for_beginning_oboe.pdf'],
+  icl:['The Instrumentalist','https://theinstrumentalist.com/october-2019/tips-for-the-clarinet-break/'],
+  ibn:['The Instrumentalist','https://theinstrumentalist.com/february-march-2024/a-strong-start-for-bassoonists/'],
+  vcu:['Bassoon Home, VCU','https://www.people.vcu.edu/~bhammel/main/bassoon/fingers/flicking.htm'],
+  dansr:['DANSR','https://www.dansr.com/resources/saxophone-intonation-tendencies-voicing-embouchure-and-alternate-fingerings'],
+  btp:['Brass Techniques and Pedagogy','https://pressbooks.palni.org/brasstechniquesandpedagogy/?p=59'],
+  itg:['International Trumpet Guild','https://www.trumpetguild.org/images/pdf/careandfeeding.pdf'],
+  tpt:['Brass Techniques and Pedagogy','https://pressbooks.palni.org/brasstechniquesandpedagogy/?p=218'],
+  hn:['Brass Techniques and Pedagogy','https://pressbooks.palni.org/brasstechniquesandpedagogy/?p=220'],
+  eu:['Brass Techniques and Pedagogy','https://pressbooks.palni.org/brasstechniquesandpedagogy/?p=224'],
+  tu:['Brass Techniques and Pedagogy','https://pressbooks.palni.org/brasstechniquesandpedagogy/?p=226'],
+  wcu:['Dan Cherry, WCU','https://paws.wcu.edu/dcherry/files/Slide%20Technique.pdf'],
+  bow:['The Instrumentalist','https://theinstrumentalist.com/march-2012/develop-better-bowing-with-beginning-and-intermediate-students/'],
+  sol:['The Strad','https://www.thestrad.com/playing-hub/how-to-shift-smoothly-and-cleanly-by-cellist-jeffrey-solow/2940.article'],
+  sty:['The Strad','https://www.thestrad.com/masterclass/double-bass-technique-back-muscles-weight-and-flexibility-in-the-right-hand/7455.article'],
+  ddb:['Discover Double Bass','https://discoverdoublebass.com/lesson/top-tips-for-shifting']
+};
+const TIP_CATS = {tone:'Tone', air:'Air and breathing', tech:'Technique', int:'Intonation', prac:'Practice', care:'Care'};
+// Each tip: [category, tip, why it helps, source key or '', only these instrument ids (optional)]
+const TIPS = {
+  all: ['Every instrument', [
+    ['prac','Practise hard passages slowly, then raise the metronome a few clicks at a time','Slow, accurate repetition builds reliable finger patterns; speed comes from accuracy, not from rushing.','yp'],
+    ['prac','Mix up what you practise instead of repeating one thing for an hour','It feels less satisfying, but skills stick better when practice is interleaved.','yp'],
+    ['prac','Change the rhythm of a fast run (long–short, then short–long)','A recognised way to even out uneven fingers.',''],
+    ['prac','Record yourself and listen back','You hear tuning, rhythm and tone problems you can’t notice while playing.',''],
+    ['prac','Do a full run-through without stopping before a performance','Builds stamina and confidence for the real thing.','yp'],
+    ['prac','Short daily sessions beat one long weekly one','Spreading practice out gives rest and better memory.',''],
+    ['int','Tune long notes against a drone, not just a tuner needle','Trains your ear to hear the beats and fix them yourself. Try the drone in the Tuner tab.',''],
+    ['air','Breathe low and relaxed before you play, not in the shoulders','Shoulder breaths are shallow and create tension in the throat and arms.',''],
+    ['prac','Study and sing the music away from the instrument','Mental practice and score study speed up learning and memory.','yp']
+  ]],
+  flute: ['Flute and piccolo', [
+    ['tone','Play daily long tones, matching the tone from note to note (Moyse’s De la sonorité is the classic)','Builds an even sound across the range; a staple of professional routines.','aw'],
+    ['tone','Slur harmonics up from low C or E using lip movement, not more air','Trains the lips to change register without overblowing.','ie'],
+    ['tone','Practise whistle tones softly, then descend chromatically','Builds fine control of a small, focused air stream.','aw'],
+    ['tone','Check your embouchure in a mirror: corners relaxed, about one-third of the hole covered','Smiling corners and a rolled-in lip plate are the most common causes of an airy tone.','ie'],
+    ['tone','Sing or hum while playing a middle note','Opens and relaxes the throat.',''],
+    ['int','Aim the air down for high and loud notes, up for low and soft ones','The low register goes flat when soft and the high register goes sharp when loud.','yf'],
+    ['int','Bend notes up and down during long tones to find the centre of the pitch','Strengthens the embouchure and shows where the note sounds best.','yf'],
+    ['tech','Keep fingers close to the keys and the right thumb under the first finger','Less movement makes fast passages cleaner and the flute steadier.',''],
+    ['tech','Learn the trill and alternate fingerings for awkward slurs','Professionals use them to smooth fast or soft passages. See the Trills view.',''],
+    ['air','Use more air than feels natural','Much of the flute’s air is lost across the embouchure hole.','yf'],
+    ['care','Swab the inside after every session and wipe fingerprints off the keys','Prevents sticky pads and tarnish.',''],
+    ['care','Never twist the joints together by the keys','Bends the key work out of line, a common cause of leaks.',''],
+    ['care','Piccolo: wear an earplug on the right side in long rehearsals','The piccolo is loud right next to your ear; widely recommended by orchestral piccoloists.','',['picc']]
+  ]],
+  oboe: ['Oboe and English horn', [
+    ['care','Check the reed crows with both high and low pitches before blaming yourself','A dead or closed reed causes most tone and pitch problems.','osu'],
+    ['care','Keep three or more playable reeds and rotate them','A single reed always dies at the worst time; rotating also helps reeds last.',''],
+    ['tone','Use an open, round embouchure: think “ooo” for low notes','Pinching thins the sound and sends the pitch sharp.','osu'],
+    ['air','Keep the airstream constant even as fingers go down','Air that drops as fingers move cracks low notes.','osu'],
+    ['air','Breathe out stale air before breathing in on long phrases','Oboists run out of oxygen before air; exhaling first is a standard oboe habit.',''],
+    ['tech','Roll the first finger for the half-hole, keeping the wrist still','Hopping or sliding the finger makes the change from C to D unreliable.','osu'],
+    ['tech','Choose the left or forked F according to the notes around it','Avoids sliding the little finger, the main cause of messy F passages.',''],
+    ['int','Fix pitch with the reed, not the jaw: adjust a reed that plays sharp or flat','Biting to correct pitch ruins the tone.',''],
+    ['care','Dry the tone holes with a feather or blotting paper when water collects','Water under the octave keys causes gurgles mid-performance.',''],
+    ['tone','English horn: use a more relaxed embouchure and slower air than on oboe','The larger reed and bore need less pressure; the fingerings are the same.','']
+  ]],
+  cl: ['Clarinet', [
+    ['tech','Keep the right hand down on throat-tone notes before crossing the break','Less finger movement, and better tone and tuning on the throat notes.','icl'],
+    ['tech','Keep fingers relaxed and close to the keys; test with a sheet of paper held just above them','“Fly-away fingers” slow passages and cause squeaks.','icl'],
+    ['tech','Rest little fingers on, not under, the pinky keys','Stops the extra movement that causes squeaks.','icl'],
+    ['tone','Keep the embouchure still across the break; check in a mirror','Even a small jaw shift squeaks.','icl'],
+    ['tone','Firm, flat chin pointing down, corners in, top teeth on the mouthpiece','The standard embouchure; a bunched chin and puffed cheeks dull the sound.',''],
+    ['air','Use fast, focused air, like blowing out candles','The upper register needs faster air, not more lip pressure.','icl'],
+    ['int','Throat B♭ and A are sharp and thin: add right-hand fingers or the resonance keys','A widely taught fix that also improves their tone.',''],
+    ['care','Check for leaky pads if the break won’t speak at all','Leaks, often in the lower joint, make the break nearly impossible.','icl'],
+    ['care','Swab after playing and rotate four or more reeds','Prevents cracking from moisture and keeps a working reed ready.',''],
+    ['prac','Use a neck strap if your right thumb aches','Takes the weight off and keeps the hand position correct.','icl']
+  ]],
+  bsn: ['Bassoon', [
+    ['tone','Use a “drawstring bag” embouchure: corners in, flat chin, lips over the teeth, big warm mouth space','Gives a full, dark tone without biting.','ibn'],
+    ['tech','Keep the left thumb sealed on the whisper key for low and middle notes','A loose whisper key makes notes crack into the wrong octave.','ibn'],
+    ['tech','Flick the left-thumb flick keys when slurring up from open F or below into the tenor register (around A to D)','Stops cracks on slurs; a standard bassoon technique.','vcu'],
+    ['care','Soak a dry reed for 8–10 minutes and check the tip opens about 1 mm','A reed that’s too closed or too dry won’t respond.','ibn'],
+    ['care','Keep at least three playable reeds in a proper reed case','Protects against loss, breakage and mould.','ibn'],
+    ['care','Rinse the bocal with a bocal brush and clear its vent hole regularly','A blocked vent ruins response in the tenor register.','ibn'],
+    ['int','Adjust pitch with the reed, bocal and half-holing, not by biting','Biting thins the tone and sends notes sharp.',''],
+    ['air','Sit upright with the seat strap set so the reed comes to your mouth','Bending to reach the reed restricts breathing.','']
+  ]],
+  sax: ['Saxophone', [
+    ['tone','Play the mouthpiece and reed alone and check the pitch (about A5 concert on alto)','Shows at once whether you’re biting or too loose.','dansr'],
+    ['tone','Practise overtones on low B♭, B or C for a couple of minutes a day','Builds stable voicing and makes the altissimo register possible.','dansr'],
+    ['tone','Think “ee” to raise the pitch and “oh” or “aw” to lower it','Voicing, not lip pressure, controls pitch and colour.','dansr'],
+    ['int','Expect a flat C♯ (third space) and sharp D to F at the top of the staff and on the palm keys','The most common saxophone tendencies; use alternate fingerings on long notes.','dansr'],
+    ['int','Make your own pitch map with a tuner, and redo it when you change mouthpiece, neck or reed','Every setup is different; fix the worst notes first.','dansr'],
+    ['int','Relax for loud playing, which goes flat, and firm slightly for soft playing, which goes sharp','Keeps the pitch steady through dynamics.','dansr'],
+    ['tech','Keep the little finger relaxed on the low B♭–C♯ keys and roll between them','Lifting the little finger makes low passages uneven.',''],
+    ['prac','With a drone, lower major 3rds slightly (about 14 cents) and raise minor 3rds (about 16 cents)','Makes chords ring in ensembles.','dansr'],
+    ['care','Swab the body and neck after playing and store reeds flat in a reed case','Moisture damages pads; warped reeds squeak.','']
+  ]],
+  brass: ['All brass', [
+    ['tone','Rest the mouthpiece lightly; control the embouchure from the corners and keep the centre soft','Pressure stops the lips buzzing freely and causes fatigue.','btp'],
+    ['tone','Buzz on the mouthpiece alone: long tones, sirens and simple tunes','Builds a centred buzz and checks that air, not pinching, changes the pitch.','btp'],
+    ['air','Take a full breath and blow steady air (“pffff”)','Shallow breaths give a weak, unsteady sound.','btp'],
+    ['tech','Do a few light lip slurs in the warm-up, not dozens','Builds flexibility; too many tire the lips for the rest of the day.','itg'],
+    ['prac','Rest as much as you play: 5–10 minutes on, a few minutes off','The most repeated endurance tip for brass.','itg'],
+    ['prac','Don’t play hard the day before a big performance; take a day off after several hard days','Lips need time to recover.','itg'],
+    ['prac','Check your embouchure in a mirror if pitch or tone wobbles','Jaw movement and uneven air are the usual causes.','btp'],
+    ['care','Oil valves or slides regularly and bathe the instrument in warm water every month or two','Keeps valves fast and stops build-up inside the tubing.',''],
+    ['care','Empty water keys often and brush the mouthpiece weekly','Gurgles and a dirty mouthpiece affect response and hygiene.','']
+  ]],
+  tpt: ['Trumpet, cornet and flugelhorn', [
+    ['int','Kick out the 3rd valve slide for low D (1-3) and C♯ (1-2-3)','Both are very sharp; leaving the slide in is the most common tuning error.','tpt'],
+    ['int','Push out the 1st valve slide for top-of-staff A (1-2), and for E and F when needed','Corrects the 1st valve’s sharp combinations.','tpt'],
+    ['int','Retune when you use a mute; straight mutes go sharp','Saves you playing sharp all night.','tpt'],
+    ['tech','Press valves with curved fingertips, not flat finger joints','Faster valves and less tension, which avoids strain injuries.','tpt'],
+    ['tech','Don’t pull on the little-finger hook to press the horn into your face','Pinky pulling is a hidden source of mouthpiece pressure on high notes.','tpt'],
+    ['tone','Build high range with long tones and interval studies, not by forcing high notes','Pushing range causes throat tension and pinching.','tpt'],
+    ['tone','Stick to one standard mouthpiece (such as a 7C or 5C) while learning','Frequent mouthpiece changes stop the embouchure settling.','tpt'],
+    ['prac','Use Clarke’s Technical Studies and Arban’s method for daily fundamentals','The two most recognised trumpet study books.',''],
+    ['tone','Cornet and flugelhorn: use a deeper mouthpiece and warmer air than on trumpet','Brings out the darker, mellower sound they’re chosen for.','']
+  ]],
+  hn: ['French horn', [
+    ['tone','Cup the right hand, fingers together, at about 2 o’clock in the bell','Darkens and centres the tone; the horn is designed to play sharp without it.','hn'],
+    ['int','Fine-tune with the right hand: open it to go sharper, close it to go flatter','The main pitch control on the horn.','hn'],
+    ['int','Always tune with your hand in the bell; tune the B♭ side first, then the F side','Hand position changes the pitch.','hn',['hornD']],
+    ['int','Always tune with your hand in the bell','Hand position changes the pitch.','hn',['hornF']],
+    ['tech','On a double horn, use B♭ fingerings above written G4 and F fingerings at or below it','A simple starting rule that improves upper-register accuracy.','hn',['hornD']],
+    ['tech','Sing or hum a note before you play it','Partials are close together; hearing the note first is the best cure for split notes.','hn'],
+    ['tone','Set the mouthpiece about two-thirds on the upper lip and one-third on the lower','Standard horn placement, different from trumpet.','hn'],
+    ['tech','Keep the bell clear of your leg','Resting the bell on the leg muffles the sound and blocks the hand.','hn'],
+    ['care','Empty water by pulling slides and rotating the horn toward the mouthpiece','Most horns have no water key.','hn']
+  ]],
+  tbn: ['Trombone', [
+    ['tech','Hold the slide lightly with thumb and two fingers; the left arm carries all the weight','A tight grip stiffens the wrist and slows the slide.','wcu'],
+    ['tech','Move the slide from the elbow and shoulder, with the wrist only as a small hinge','Quick, accurate positions without tension.','wcu'],
+    ['tech','Move the slide quickly and in rhythm, then keep it still in each position','Late, sloppy slides cause smears and wrong pitches.','wcu'],
+    ['tech','Learn alternate positions (such as 4th for D and 5th for F) to avoid long jumps','Professionals use them to smooth slurs and fast passages.','wcu'],
+    ['tech','Use a soft “da” or “la” tongue for legato between notes','Stops the glissando between notes, the key trombone legato skill.',''],
+    ['int','Check 4th, 5th and 6th positions with a tuner','The least-used positions drift out of tune.','wcu'],
+    ['care','Clean the slide and use slide cream or spray regularly','A dirty, dry slide is slow and uneven.','']
+  ]],
+  low: ['Euphonium, baritone and tuba', [
+    ['air','Build air capacity with breathing exercises and long tones in the middle register','A weak, airy tone from too little air is the most common low brass problem.','tu'],
+    ['int','Use 4 instead of 1-3, and 2-4 instead of 1-2-3','Both standard combinations are sharp.','tu',['euph4','tubaBb','tubaC','tubaEb','tubaF']],
+    ['int','Use the compensating system if your euphonium has one','Corrects low-register pitch as valves are added.','eu',['euph4','euph3','barTC']],
+    ['tone','Bring the instrument to you; don’t bend your back or neck to reach the mouthpiece','Poor posture limits breathing and tone.','tu'],
+    ['tone','Keep the corners firm enough that the cheeks don’t puff','Puffed cheeks are a sign of fatigue and weaken control.','tu'],
+    ['tone','Fix a thin, buzzy “double buzz” by practising on the mouthpiece with full air','Usually caused by anchoring the mouthpiece on one lip.','tu'],
+    ['prac','Tuba: practise pedal B♭ once the basics are secure','Improves tone, tuning and range.','tu',['tubaBb','tubaC','tubaEb','tubaF']],
+    ['care','Lay the tuba on its back with the slides up, never on its bell','Prevents dents and bent bells.','tu',['tubaBb','tubaC','tubaEb','tubaF']],
+    ['tech','Treble-clef parts are written a major 9th above bass-clef parts','Same sound, different notation; a common source of confusion.','eu',['euph4','euph3','barTC']]
+  ]],
+  str: ['All strings', [
+    ['tone','Balance bow speed, weight and contact point: closer to the bridge needs a slower bow and more weight','The core of string tone; a wispy sound usually means you’re too far from the bridge.','bow'],
+    ['tone','Practise whole bows in a mirror to check the bow stays parallel to the bridge','A crooked bow skids over the fingerboard.','bow'],
+    ['tech','Keep the bow-hand fingers and thumb curved and relaxed','A stiff, straight thumb is the most persistent bow-hold fault.','bow'],
+    ['tech','Mark the bow into thirds with tape and practise short strokes at the frog and tip with a metronome','Builds control in every part of the bow.','bow'],
+    ['air','Breathe with the phrase and keep the bow shoulder low','Holding your breath and raising the shoulder tense the whole bow arm.',''],
+    ['int','Tune against open strings and a drone; listen for the open string ringing in sympathy','Sympathetic ringing confirms a note is exactly in tune.',''],
+    ['int','Use finger tapes or dots only as a beginner’s guide, then remove them','Teaches where notes are without making you watch your fingers.',''],
+    ['care','Loosen the bow hair after playing and wipe rosin off the strings and body','Keeps the bow’s curve and protects the varnish.',''],
+    ['care','Check that the bridge stays upright as you tune','Tuning pulls the bridge toward the fingerboard; a leaning bridge can fall or warp.','']
+  ]],
+  vn: ['Violin and viola', [
+    ['tech','Keep the left wrist straight and the thumb relaxed; don’t squeeze the neck','Squeezing blocks shifting and vibrato.',''],
+    ['tech','Set the shoulder rest and chinrest so the instrument stays up without clamping your head','A poor set-up causes neck and shoulder pain.',''],
+    ['int','Practise scales slowly against a drone, checking that each note rings','Builds the ear–hand link teachers rate as the fastest route to good intonation.',''],
+    ['tech','Shift with a light finger and a released arm, then add weight when you land','Pressing during the shift makes it slow and noisy.','sol'],
+    ['tone','When practising, play down bows lighter and up bows stronger','Down bows naturally sound stronger; this evens them out.','bow'],
+    ['prac','Use Ševčík and Kreutzer studies for bowing and left-hand technique','Long-standing, widely used study books.',''],
+    ['tone','Viola: use more bow weight and a slightly slower bow than on violin','The larger body and thicker strings need more weight to speak.','',['va']],
+    ['prac','Viola: read alto clef fluently, and learn treble clef for high passages','Viola parts switch clefs. The Scales tab can show alto clef.','',['va']]
+  ]],
+  vc: ['Cello and double bass', [
+    ['tone','Let arm weight sink into the string instead of pressing with the fingers','Gives a big, free sound without forcing.','sty'],
+    ['tech','Release weight during a shift and restore it when you arrive','Light in the middle of the shift, heavy at the start and end.','sol'],
+    ['tech','Lead long shifts with the torso and arm, moving in an arc','Mass already in motion is easier to control.','sol'],
+    ['tech','Hear the target note in your head before you shift','Recommended by orchestral bassists such as Phoebe Russell.','ddb'],
+    ['tech','Keep the left-hand frame (finger spacing) and move it as a whole','The hand frame sets intonation: cello uses 1-2-3-4 across a minor 3rd, bass usually 1-2-4.',''],
+    ['tech','Set the endpin so the instrument rests without being held','Lets the arms move freely.',''],
+    ['prac','Cello: use Feuillard and Popper studies','Long-standing, widely used method books.','',['vc']],
+    ['prac','Double bass: use the Simandl method','The most widely used double bass method.','',['db']],
+    ['care','Use a rockstop or endpin holder on smooth floors','Stops the instrument sliding mid-performance.','']
+  ]]
+};
+// Which tip groups apply to each instrument in the Instrument tab, most specific first.
+const TIP_MAP = {flute:['flute'], picc:['flute'], oboe:['oboe'], cl:['cl'], bcl:['cl'], sax:['sax'], bsn:['bsn'], cbsn:['bsn'],
+  tpt:['tpt','brass'], hornF:['hn','brass'], hornD:['hn','brass'], tbn:['tbn','brass'], tbnF:['tbn','brass'],
+  euph4:['low','brass'], euph3:['low','brass'], barTC:['low','brass'], tubaBb:['low','brass'], tubaC:['low','brass'], tubaEb:['low','brass'], tubaF:['low','brass'],
+  vn:['vn','str'], va:['vn','str'], vc:['vc','str'], db:['vc','str']};
+let tipCat = 'all';
+try{ tipCat = localStorage.getItem('tipCat') || 'all'; }catch(e){}
+function tipsHTML(inst){
+  const groups = (TIP_MAP[inst.id] || []).concat('all').map(k => {
+    const [title, list] = TIPS[k];
+    return [title, list.filter(t => (!t[4] || t[4].includes(inst.id)) && (tipCat==='all' || t[0]===tipCat))];
+  }).filter(([, l]) => l.length);
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  let h = '<div class="tpc-cats" role="group" aria-label="Tip categories">' + Object.entries({all:'All', ...TIP_CATS}).map(([k, v]) => `<button data-c="${k}" aria-pressed="${k===tipCat}">${v}</button>`).join('') + '</div>';
+  // Jump links are buttons, not #anchors, because the hash drives the app's tabs.
+  if(groups.length > 1) h += '<div class="tpc-jump"><span>Jump to</span>' + groups.map(([t], i) => `<button data-j="tipg${i}">${esc(t)}</button>`).join('') + '</div>';
+  if(!groups.length) h += '<p class="intro">No tips in this category for this instrument yet. Try another category.</p>';
+  groups.forEach(([title, list], i) => {
+    h += `<h2 class="sec" id="tipg${i}">${esc(title)}<small>${list.length} tip${list.length>1?'s':''}</small></h2><div class="tpc-list">`;
+    for(const [c, tip, why, src] of list){
+      const s = src && TIP_SRC[src];
+      h += `<article class="tpc"><p class="tpc-cat">${TIP_CATS[c]}</p><p class="tpc-t">${esc(tip)}</p><p class="tpc-w">${esc(why)}${s ? ` <a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a>` : ''}</p></article>`;
+    }
+    h += '</div>';
+  });
+  return h + '<p class="intro" style="margin-top:1rem">Tips are drawn from teachers, method books and published teaching articles. Tips without a link are standard advice found across many teachers. Your own teacher knows your playing best.</p>';
+}
+
 const FING_LIST = [
   {id:'flute', fam:'Woodwind', name:'Flute', chart:'flute', links:'flute'},
   {id:'picc', fam:'Woodwind', name:'Piccolo', chart:'picc', links:'picc'},
@@ -5728,11 +5958,19 @@ function renderFinger(){
   const box = $('fLinks'); box.innerHTML = '';
   const add = (tag, cls, text) => { const el = document.createElement(tag); if(cls) el.className = cls; if(text) el.textContent = text; return el; };
   const linkSet = FINGER.find(i => i.id===inst.links);
-  $('fViews').hidden = !inst.chart; $('fPause').hidden = !inst.chart;
-  $('fViews').querySelector('[data-v="harm"]').hidden = inst.chart!=='strings';
+  // Tips work for every instrument; chart views only where a built-in chart exists.
+  for(const b of $('fViews').children) b.hidden = b.dataset.v==='harm' ? inst.chart!=='strings' : (b.dataset.v!=='tips' && !inst.chart);
   if(fView==='harm' && inst.chart!=='strings') fView = 'notes';
-  if(inst.chart){
-    for(const b of $('fViews').children) b.setAttribute('aria-pressed', b.dataset.v===fView);
+  const view = !inst.chart ? 'tips' : fView;
+  for(const b of $('fViews').children) b.setAttribute('aria-pressed', b.dataset.v===view);
+  $('fPause').hidden = !inst.chart || view==='tips';
+  if(view==='tips'){
+    $('fChart').innerHTML = tipsHTML(inst);
+    for(const b of $('fChart').querySelectorAll('.tpc-cats button')) b.addEventListener('click', () => { tipCat = b.dataset.c; try{ localStorage.setItem('tipCat', tipCat); }catch(e){} renderFinger(); });
+    for(const b of $('fChart').querySelectorAll('.tpc-jump button')) b.addEventListener('click', () => { const t = document.getElementById(b.dataset.j); if(t) t.scrollIntoView({behavior:'smooth', block:'start'}); });
+    if(!inst.chart && linkSet) box.appendChild(add('h2', 'sec', 'Fingering charts'));
+    else return;
+  } else if(inst.chart){
     const cfg = FCFG[inst.id], map = inst.chart==='flute' ? FLUTE_CHART.keymap() : inst.chart==='picc' ? FLUTE_CHART.keymap('picc') : inst.chart==='oboe' ? OBOE_CHART.keymap() : inst.chart==='bsn' ? BSN_CHART.keymap() : inst.chart==='sax' ? SAX_CHART.keymap() : inst.chart==='cl' ? CL_CHART.keymap() : inst.chart==='strings' ? STRING_CHART.keymap(inst.id) : BRASS_CHART.keymap(cfg);
     const groups = inst.chart==='picc' ? '<ul class="groups"><li>Left thumb: B key (bottom), B\u266d lever (top)</li><li>Left hand: fingers 1 2 3, pinky on G\u266f</li><li>Right hand: fingers 1 2 3, side B\u266d lever, trill keys T1 (D) and T2 (D\u266f), pinky on E\u266d</li></ul>'
       : inst.chart==='oboe' ? '<ul class="groups"><li>Octave keys: I (left thumb), II (side key by LH 1), III on some models</li><li>Left hand: fingers 1 2 3 (1 has the half-hole) with the B, D and C\u266f trill keys; pinky G\u266f, E\u266d, B, B\u266d (and F on some models)</li><li>Right hand: side keys A and G\u266f; fingers 1 2 3 with the D trill key, F key and banana C key; pinky C, C\u266f, E\u266d</li></ul>'
