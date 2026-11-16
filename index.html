@@ -578,7 +578,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <li><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><p><b>Quiz</b>Theory quizzes by grade or topic, plus ear training.</p></li>
     </ul>
     <p class="legend">Fingerings, terms and tunings are checked carefully, but your teacher and your ears always have the final say. Music notation is drawn with the open-source Verovio engraver.</p>
-    <p class="legend">Thank you for playing. 🎶</p>
+    <p class="legend">Thank you for playing. 🎶 · <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
     <div class="vhist">
       <h2>Version history</h2>
       <div id="relList"></div>
@@ -4076,6 +4076,7 @@ window.tunerReady = true;
 // Add every change at the TOP: the newest is featured on About and every release is listed in the history.
 // Versions: a new feature bumps the middle number, a fix bumps the last.
 const RELEASES = [
+  {v:'1.11.1', date:'2026-11-16', title:'Privacy policy', notes:['Added a privacy policy, linked at the bottom of About']},
   {v:'1.11', date:'2026-11-16', title:'Tips for your instrument', text:'The Fingering tab is now Instrument: pick your instrument once to see its practice tips and fingering charts.', notes:['Over 120 tips from teachers and method books for every woodwind, brass and string instrument','Filter by tone, air, technique, intonation, practice or care','Tips for your instrument first, then its family, then every instrument'], go:'fingering', then:() => { fView = 'tips'; renderFinger(); }},
   {v:'1.10.1', date:'2026-11-06', title:'Articulation diagrams', text:'Articulation signs in Terms now show stems pointing down, with the sign above the note, as printed music does for higher notes.', notes:['Staccato, accent, tenuto and other articulation diagrams now use stems down with the sign above'], go:'terms', then:() => setTermsMode('signs')},
   {v:'1.10', date:'2026-11-06', title:'Note map in Transpose', text:'See every note side by side: your part, concert pitch and the other part, with your notes highlighted.', notes:['Note map from C to C for any pair of instruments','Note pad with 12 keys and a sharp/flat switch','Simpler page: the key signature box is gone'], go:'notes'},
