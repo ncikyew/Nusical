@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8.3' fill='%23E8B75C'/%3E%3Cg fill='%2312182B'%3E%3Crect x='6.4' y='16.6' width='3.84' height='9.6' rx='1.92'/%3E%3Crect x='12.8' y='10.9' width='3.84' height='15.3' rx='1.92'/%3E%3Crect x='19.2' y='5.1' width='3.84' height='21.1' rx='1.92'/%3E%3Ccircle cx='25.3' cy='6.1' r='2.9'/%3E%3C/g%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nusical</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,8 +35,9 @@ header{display:flex;flex-direction:column;gap:.9rem;margin-bottom:.3rem}
 .appbar{order:-2;display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding-bottom:.7rem;border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--ink)}
 .logo{width:30px;height:30px;flex:none}
-.logo .tile{fill:#E8B75C}
-.logo .mk{fill:#12182B}
+.logo rect{fill:var(--brass)}
+.logo path{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.logo ellipse{fill:#fff}
 .wordmark{font:600 1.3rem/1 Spectral,Georgia,serif;letter-spacing:.01em}
 .appbar .about-link{padding:.3rem .75rem .3rem .55rem;font-size:.82rem}
 .appbar .about-link svg{width:18px;height:18px}
@@ -482,13 +482,25 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
   .sig-out{grid-column:1 / -1}
 }
 </style>
+<!-- Google tag (gtag.js) for Google Analytics (Netlify copy only; leave out of the claude.ai artifact).
+     Page views are sent per tab from the app code, so the automatic one is off. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2BGMDTN6J7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2BGMDTN6J7', {send_page_view: false});
+</script>
+<!-- Google AdSense (Netlify copy only; leave out of the claude.ai artifact) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4954033461429781"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 <main>
   <header>
     <div class="appbar">
       <a href="#notes" class="brand" aria-label="Nusical home">
-        <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect class="tile" width="32" height="32" rx="8.3"/><rect class="mk" x="6.4" y="16.6" width="3.84" height="9.6" rx="1.92"/><rect class="mk" x="12.8" y="10.9" width="3.84" height="15.3" rx="1.92"/><rect class="mk" x="19.2" y="5.1" width="3.84" height="21.1" rx="1.92"/><circle class="mk" cx="25.3" cy="6.1" r="2.9"/></svg>
+        <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M11 22.5V9.5l10 13V9.5"/><ellipse cx="8.6" cy="22.6" rx="3" ry="2.2" transform="rotate(-20 8.6 22.6)"/><ellipse cx="18.6" cy="22.6" rx="3" ry="2.2" transform="rotate(-20 18.6 22.6)"/></svg>
         <span class="wordmark">Nusical</span>
       </a>
       <a href="#about" id="tabAbout" class="about-link" title="About this app"><svg viewBox="0 0 24 24" id="aboutIcon"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span id="aboutTxt">About</span></a>
@@ -575,7 +587,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <li><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><p><b>Quiz</b>Theory quizzes by grade or topic, plus ear training.</p></li>
     </ul>
     <p class="legend">Fingerings, terms and tunings are checked carefully, but your teacher and your ears always have the final say. Music notation is drawn with the open-source Verovio engraver.</p>
-    <p class="legend">Thank you for playing. 🎶</p>
+    <p class="legend">Thank you for playing. 🎶 · <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
     <div class="vhist">
       <h2>Version history</h2>
       <div id="relList"></div>
@@ -739,9 +751,10 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
 <script>
 /* ---------- config ---------- */
 // Google Analytics 4 measurement ID, e.g. 'G-ABC123XYZ'. Leave empty to turn analytics off.
-const GA_ID = '';
+const GA_ID = 'G-2BGMDTN6J7';
 function track(name, params){ try{ if(window.gtag) window.gtag('event', name, params || {}); }catch(e){} }
-if(GA_ID){
+// The Google tag in <head> normally loads first; this only adds it if that tag is missing.
+if(GA_ID && !window.gtag){
   try{
     window.dataLayer = window.dataLayer || [];
     window.gtag = function(){ window.dataLayer.push(arguments); };
@@ -752,8 +765,8 @@ if(GA_ID){
   }catch(e){}
 }
 // Address of your PDF recognition server (see omr-server/README.md). Leave empty to disable PDF upload.
-const OMR_URL = '';
-const OMR_TOKEN = '';
+const OMR_URL = 'https://transpose-1.onrender.com';
+const OMR_TOKEN = 'nusical-halabobo';
 
 /* ---------- music logic ---------- */
 const LETTERS = ['C','D','E','F','G','A','B'];
@@ -4073,6 +4086,8 @@ window.tunerReady = true;
 // Add every change at the TOP: the newest is featured on About and every release is listed in the history.
 // Versions: a new feature bumps the middle number, a fix bumps the last.
 const RELEASES = [
+  {v:'1.11.2', date:'2026-11-18', title:'Analytics tag fix', notes:['Google Analytics tag now sits in the page header, so Google can detect it']},
+  {v:'1.11.1', date:'2026-11-16', title:'Privacy policy', notes:['Added a privacy policy, linked at the bottom of About']},
   {v:'1.11', date:'2026-11-16', title:'Tips for your instrument', text:'The Fingering tab is now Instrument: pick your instrument once to see its practice tips and fingering charts.', notes:['Over 120 tips from teachers and method books for every woodwind, brass and string instrument','Filter by tone, air, technique, intonation, practice or care','Tips for your instrument first, then its family, then every instrument'], go:'fingering', then:() => { fView = 'tips'; renderFinger(); }},
   {v:'1.10.1', date:'2026-11-06', title:'Articulation diagrams', text:'Articulation signs in Terms now show stems pointing down, with the sign above the note, as printed music does for higher notes.', notes:['Staccato, accent, tenuto and other articulation diagrams now use stems down with the sign above'], go:'terms', then:() => setTermsMode('signs')},
   {v:'1.10', date:'2026-11-06', title:'Note map in Transpose', text:'See every note side by side: your part, concert pitch and the other part, with your notes highlighted.', notes:['Note map from C to C for any pair of instruments','Note pad with 12 keys and a sharp/flat switch','Simpler page: the key signature box is gone'], go:'notes'},
