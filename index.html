@@ -625,7 +625,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
   <section id="viewVideos" hidden>
     <div class="vbar">
       <label class="vsearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" id="vSearch" placeholder="Search videos" aria-label="Search videos" autocomplete="off"></label>
-      <select id="vComposer" aria-label="Composer"><option value="">All composers</option></select>
+      <select id="vComposer" aria-label="Playlist"><option value="">All playlists</option></select>
     </div>
     <p class="vcount" id="vCount" aria-live="polite"></p>
     <div id="vMsg"></div>
@@ -4124,35 +4124,11 @@ $('tStart').addEventListener('click', ()=> tuner.stream ? stopTuner() : startTun
 window.tunerReady = true;
 
 /* ---------- videos: the Nusical YouTube channel, read with the YouTube Data API ---------- */
-// The key only works from the Nusical website (restricted in Google Cloud), so it is safe to ship in the page.
-const YT_KEY = 'AIzaSyDK-8qRg6VZPrM-Nu9f1Lc1ajcfqddeHtM';
-const YT_HANDLE = '@nusical-music';
-const YT_CACHE_HOURS = 6;   // re-read the channel at most every 6 hours per device, to stay well inside the free quota
+// The video list comes from Nusical's own Netlify function (/api/videos), which holds the YouTube key.
+const YT_CACHE_HOURS = 1;   // the function itself is cached for an hour, so this only saves a round trip
 const vid = {list:[], composers:[], cur:null, q:'', composer:'', shown:20, loading:false, loaded:false};
 try{ vid.composer = localStorage.getItem('vidComposer') || ''; }catch(e){}
 const vEsc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function ytGet(path, params){
-  const u = new URL('https://www.googleapis.com/youtube/v3/' + path);
-  for(const [k,v] of Object.entries(params)) u.searchParams.set(k, v);
-  u.searchParams.set('key', YT_KEY);
-  const r = await fetch(u);
-  if(!r.ok) throw new Error('YouTube ' + r.status);
-  return r.json();
-}
-async function ytPlaylistItems(id, max){
-  const out = []; let page = '';
-  do{
-    const j = await ytGet('playlistItems', {part:'snippet', playlistId:id, maxResults:50, ...(page ? {pageToken:page} : {})});
-    for(const it of j.items || []){
-      const s = it.snippet, vId = s.resourceId && s.resourceId.videoId;
-      if(!vId || /^(Private|Deleted) video$/.test(s.title)) continue;
-      const th = s.thumbnails || {};
-      out.push({id:vId, title:s.title, date:s.publishedAt, thumb:(th.medium || th.high || th.default || {}).url || ''});
-    }
-    page = j.nextPageToken || '';
-  } while(page && out.length < max);
-  return out;
-}
 // A video is a play-along if its title says so; everything else is the full solo-and-piano version.
 const vKind = t => /accompaniment|play[\s-]?along|minus[\s-]?one|backing|piano only/i.test(t) ? 'pa' : 'sp';
 const vBase = t => t.toLowerCase().replace(/\(.*?\)|\[.*?\]/g, ' ').replace(/accompaniment|play[\s-]?along|minus[\s-]?one|backing( track)?|piano only|solo (and|&) piano|with piano|\bfor\b|\bonly\b|\btrack\b/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
@@ -4173,17 +4149,9 @@ async function loadVideos(force){
   vid.loading = true;
   if(!vid.loaded) vMessage('Loading videos…');
   try{
-    const ch = await ytGet('channels', {part:'contentDetails', forHandle:YT_HANDLE});
-    const c = (ch.items || [])[0];
-    if(!c) throw new Error('channel not found');
-    const list = await ytPlaylistItems(c.contentDetails.relatedPlaylists.uploads, 500);
-    // The channel's playlists become the composer filter (e.g. "Mozart").
-    const pl = await ytGet('playlists', {part:'snippet', channelId:c.id, maxResults:50});
-    const composers = [];
-    for(const p of (pl.items || []).slice(0, 12)){
-      const ids = (await ytPlaylistItems(p.id, 200)).map(v => v.id);
-      if(ids.length) composers.push({name:p.snippet.title, ids});
-    }
+    const r = await fetch('/api/videos');
+    if(!r.ok) throw new Error('videos ' + r.status);
+    const {list, composers} = await r.json();
     const data = {at:Date.now(), list, composers};
     try{ localStorage.setItem('vidCache', JSON.stringify(data)); }catch(e){}
     useVideos(data);
@@ -4193,11 +4161,16 @@ async function loadVideos(force){
   }finally{ vid.loading = false; }
 }
 function useVideos(data){
-  vid.list = data.list.map(v => ({...v, kind:vKind(v.title), base:vBase(v.title), key:vKey(v.title)}));
   vid.composers = data.composers || [];
+  vid.list = data.list.map(v => {
+    const kind = vKind(v.title), key = vKey(v.title);
+    // Search covers the title, description, tags, playlist (composer), key and version.
+    const search = vNorm([v.title, v.desc, v.tags, ...vid.composers.filter(c => c.ids.includes(v.id)).map(c => c.name), key ? key.name : '', kind === 'pa' ? 'play along accompaniment' : 'solo piano'].join(' '));
+    return {...v, kind, key, base:vBase(v.title), search, tight:search.replace(/ /g, '')};
+  });
   vid.loaded = true;
   const sel = $('vComposer');
-  sel.innerHTML = '<option value="">All composers</option>' + vid.composers.map(c => `<option>${vEsc(c.name)}</option>`).join('');
+  sel.innerHTML = '<option value="">All playlists</option>' + vid.composers.map(c => `<option>${vEsc(c.name)}</option>`).join('');
   if(!vid.composers.some(c => c.name === vid.composer)) vid.composer = '';
   sel.value = vid.composer;
   sel.hidden = !vid.composers.length;
@@ -4212,8 +4185,7 @@ function vVisible(){
   const words = vNorm(vid.q).split(' ').filter(Boolean);
   return vid.list.filter(v => {
     if(comp && !comp.ids.includes(v.id)) return false;
-    const hay = vNorm(v.title + (v.kind === 'pa' ? ' play along accompaniment' : ' solo piano')), tight = hay.replace(/ /g, '');
-    return words.every(w => hay.includes(w) || tight.includes(w));
+    return words.every(w => v.search.includes(w) || v.tight.includes(w));
   });
 }
 function vCard(v){
@@ -4274,7 +4246,7 @@ $('vMore').addEventListener('click', () => { vid.shown += 20; renderVideos(); })
 // Add every change at the TOP: the newest is featured on About and every release is listed in the history.
 // Versions: a new feature bumps the middle number, a fix bumps the last.
 const RELEASES = [
-  {v:'1.12', date:'2026-11-20', title:'Videos', text:'Watch Nusical’s YouTube videos in the app, and play along with piano accompaniment.', notes:['New videos appear by themselves as they’re uploaded','Search by title, or filter by composer','Switch between the play-along and solo versions of a piece','Tune to the piece’s key with one tap'], go:'videos'},
+  {v:'1.12', date:'2026-11-20', title:'Videos', text:'Watch Nusical’s YouTube videos in the app, and play along with piano accompaniment.', notes:['New videos appear by themselves as they’re uploaded','Search, or pick one of the channel’s playlists','Switch between the play-along and solo versions of a piece','Tune to the piece’s key with one tap'], go:'videos'},
   {v:'1.11.1', date:'2026-11-16', title:'Privacy policy', notes:['Added a privacy policy, linked at the bottom of About']},
   {v:'1.11', date:'2026-11-16', title:'Tips for your instrument', text:'The Fingering tab is now Instrument: pick your instrument once to see its practice tips and fingering charts.', notes:['Over 120 tips from teachers and method books for every woodwind, brass and string instrument','Filter by tone, air, technique, intonation, practice or care','Tips for your instrument first, then its family, then every instrument'], go:'fingering', then:() => { fView = 'tips'; renderFinger(); }},
   {v:'1.10.1', date:'2026-11-06', title:'Articulation diagrams', text:'Articulation signs in Terms now show stems pointing down, with the sign above the note, as printed music does for higher notes.', notes:['Staccato, accent, tenuto and other articulation diagrams now use stems down with the sign above'], go:'terms', then:() => setTermsMode('signs')},
