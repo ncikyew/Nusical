@@ -43,12 +43,38 @@ header{display:flex;flex-direction:column;gap:.9rem;margin-bottom:.3rem}
 .appbar .about-link svg{width:18px;height:18px}
 .tagline{color:var(--muted);font-size:.88rem;margin:0 0 .8rem}
 h1{font:600 1.8rem/1.1 Spectral,Georgia,serif;margin:0;letter-spacing:-.01em}
-.tabs{order:-1;display:grid;grid-template-columns:repeat(8,1fr);gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:3px}
+.tabs{order:-1;display:grid;grid-template-columns:repeat(9,1fr);gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:3px}
 .tabs a{display:flex;flex-direction:column;align-items:center;gap:.15rem;color:var(--muted);text-decoration:none;font-weight:600;font-size:.74rem;padding:.4rem .1rem;border-radius:10px;-webkit-tap-highlight-color:transparent}
 .tabs a:hover{color:var(--ink)}
 .tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tabs a[aria-current="page"]{background:var(--brass-soft);color:var(--ink)}
 .tabs a[aria-current="page"] svg{stroke:var(--brass)}
+/* videos: search, then a list of cards that play in place */
+.vbar{display:flex;gap:.4rem;align-items:center;margin:.2rem 0 .7rem}
+.vsearch{flex:1;min-width:0;position:relative}
+.vsearch svg{position:absolute;z-index:1;pointer-events:none;left:.7rem;top:50%;transform:translateY(-50%);width:17px;height:17px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+#viewVideos .vsearch input{width:100%;font:inherit;font-size:.95rem;border:1px solid var(--line);border-radius:999px;padding:.5rem .9rem .5rem 2.3rem;background:var(--surface);color:var(--ink)}
+.vsearch input:focus{outline:2px solid var(--brass);outline-offset:1px}
+.vbar select{font:inherit;font-size:.88rem;border:1px solid var(--line);border-radius:999px;padding:.48rem .7rem;background:var(--surface);color:var(--ink);max-width:42%}
+.vcount{font-size:.8rem;color:var(--muted);margin:0 0 .5rem}
+.vlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.8rem}
+.vcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.vcard.on{border-color:var(--brass);box-shadow:0 0 0 1px var(--brass)}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;background:#1B2238;border:0;padding:0;cursor:pointer}
+.vthumb img,.vthumb iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.vthumb .vplay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:38px;border-radius:11px;background:rgba(225,37,27,.92);display:grid;place-items:center}
+.vthumb .vplay svg{width:18px;height:18px;fill:#fff}
+.vbody{padding:.55rem .75rem .7rem}
+.vrt{font-weight:600;line-height:1.3;font-size:.93rem;margin:0}
+.vrm{font-size:.78rem;color:var(--muted);margin-top:.25rem}
+.vbadge{display:inline-block;font-size:.68rem;font-weight:600;border-radius:999px;padding:0 .5rem;margin-right:.35rem;border:1px solid var(--line);color:var(--muted)}
+.vbadge.pa{background:var(--brass-soft);color:var(--brass);border-color:var(--brass)}
+.vacts{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.55rem}
+.vacts button,.vacts a{font-size:.8rem;border-radius:999px;padding:.28rem .8rem;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;gap:.35rem;font-weight:600;cursor:pointer}
+.vacts a.yt{border-color:#E1251B;color:#E1251B}
+.vmsg{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:12px;padding:.7rem .9rem;font-size:.9rem;margin:.8rem 0}
+.vmsg a{color:var(--brass)}
+.vmore{display:block;margin:.9rem auto 0}
 .keys{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:.5rem;align-items:center}
 label{display:block;font-weight:600;font-size:.85rem;margin-bottom:.2rem}
 select,input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--surface);
@@ -473,7 +499,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
   main{padding-bottom:5.5rem}
   .tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;border:0;border-top:1px solid var(--line);border-radius:0;
     padding:4px 2px calc(4px + env(safe-area-inset-bottom,0px));gap:0;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
-  .tabs a{font-size:.56rem;padding:.35rem 0;letter-spacing:-.02em}
+  .tabs a{font-size:.52rem;padding:.35rem 0;letter-spacing:-.03em}
   .tabs a[aria-current="page"]{background:transparent;color:var(--brass)}
   h1{font-size:1.5rem}
   .pad{grid-template-columns:repeat(6,1fr)}
@@ -517,6 +543,7 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <a href="#tuner" id="tabTuner"><svg viewBox="0 0 24 24"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5M6 14l1 .6M18 14l-1 .6M12 8.5V9.7"/></svg><span>Tuner</span></a>
       <a href="#fingering" id="tabFinger"><svg viewBox="0 0 24 24"><rect x="2" y="9" width="20" height="6" rx="3"/><circle cx="8" cy="12" r="1.1"/><circle cx="12" cy="12" r="1.1"/><circle cx="16" cy="12" r="1.1"/></svg><span>Instrument</span></a>
       <a href="#quiz" id="tabQuiz"><svg viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-8l-4 4v-4H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M10 8.2a2 2 0 1 1 2.7 1.9c-.5.2-.7.6-.7 1.1v.3M12 13.6v.2"/></svg><span>Quiz</span></a>
+      <a href="#videos" id="tabVideos"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z"/></svg><span>Videos</span></a>
     </nav>
   </header>
   <p class="tagline" id="tagline"></p>
@@ -593,6 +620,18 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
       <div id="relList"></div>
       <button id="relMore" class="relmore">Show older releases</button>
     </div>
+  </section>
+
+  <section id="viewVideos" hidden>
+    <div class="vbar">
+      <label class="vsearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" id="vSearch" placeholder="Search videos" aria-label="Search videos" autocomplete="off"></label>
+      <select id="vComposer" aria-label="Composer"><option value="">All composers</option></select>
+    </div>
+    <p class="vcount" id="vCount" aria-live="polite"></p>
+    <div id="vMsg"></div>
+    <div class="vlist" id="vList"></div>
+    <button type="button" class="vmore" id="vMore" hidden>Show more</button>
+    <p class="vmsg">New videos appear here as they’re uploaded. <a href="https://www.youtube.com/@nusical-music?sub_confirmation=1" target="_blank" rel="noopener">Subscribe to Nusical on YouTube</a> to hear them first.</p>
   </section>
 
   <section id="viewQuiz" hidden>
@@ -992,9 +1031,9 @@ $('notes').addEventListener('input',()=>{ padState.pick = null; render(); });
 function route(){
   // The score upload is switched off for now; old #score links fall back to the quiz.
   if(location.hash==='#score'){ location.replace('#quiz'); return; }
-  const v = ['#quiz','#chords','#scales','#terms','#metronome','#tuner','#fingering','#about'].includes(location.hash) ? location.hash.slice(1) : 'notes';
+  const v = ['#quiz','#chords','#scales','#terms','#metronome','#tuner','#fingering','#videos','#about'].includes(location.hash) ? location.hash.slice(1) : 'notes';
   $('viewScore').hidden = true;
-  for(const [k,sec,tab] of [['notes','viewNotes','tabNotes'],['quiz','viewQuiz','tabQuiz'],['chords','viewChords','tabChords'],['scales','viewScales','tabScales'],['terms','viewTerms','tabTerms'],['metronome','viewMetro','tabMetro'],['tuner','viewTuner','tabTuner'],['fingering','viewFinger','tabFinger'],['about','viewAbout','tabAbout']]){
+  for(const [k,sec,tab] of [['notes','viewNotes','tabNotes'],['quiz','viewQuiz','tabQuiz'],['chords','viewChords','tabChords'],['scales','viewScales','tabScales'],['terms','viewTerms','tabTerms'],['metronome','viewMetro','tabMetro'],['tuner','viewTuner','tabTuner'],['fingering','viewFinger','tabFinger'],['videos','viewVideos','tabVideos'],['about','viewAbout','tabAbout']]){
     $(sec).hidden = v!==k;
     if(v===k) $(tab).setAttribute('aria-current','page'); else $(tab).removeAttribute('aria-current');
   }
@@ -1007,7 +1046,7 @@ function route(){
   $('aboutTxt').textContent = isAbout ? 'Close' : 'About';
   $('aboutIcon').innerHTML = isAbout ? '<path d="M6 6l12 12M18 6L6 18"/>' : '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>';
   // Chords and scales work on their own, without instrument keys.
-  const solo = ['quiz','chords','scales','terms','metronome','tuner','fingering','about'].includes(v);
+  const solo = ['quiz','chords','scales','terms','metronome','tuner','fingering','videos','about'].includes(v);
   if(v==='fingering' && window.fingerReady) renderFinger();
   if(v!=='tuner' && window.tunerReady){ stopTuner(); if(drone.on) stopDrone(); }
   stopSound();
@@ -1015,7 +1054,8 @@ function route(){
   document.querySelector('.keys').hidden = solo;
   $('interval').hidden = solo;
   if(v==='scales') renderScale();
-  $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Instrument', quiz:'Quiz', about:'About'}[v];
+  if(v==='videos') openVideos(); else pauseVideo();
+  $('title').textContent = {notes:'Transpose', chords:'Chords', scales:'Scales', terms:'Terms', metronome:'Metronome', tuner:'Tuner', fingering:'Instrument', quiz:'Quiz', videos:'Videos', about:'About'}[v];
   if(window.lastTracked !== v){ window.lastTracked = v; track('page_view', {page_title: 'Nusical – ' + $('title').textContent, page_location: location.href, page_path: '/' + v}); }
   $('tagline').textContent = {
     notes:'Convert notes between instruments in different keys.',
@@ -1026,7 +1066,8 @@ function route(){
     fingering:'Pick your instrument once for its practice tips and fingering charts.',
     about:'What this app does, and how to support it.',
     tuner:'Check your tuning with the microphone, or play along with a drone.',
-    quiz:'Test your theory and your ear, by grade or by topic.'
+    quiz:'Test your theory and your ear, by grade or by topic.',
+    videos:'Play along with piano accompaniment, or hear the full piece first.'
   }[v];
 }
 window.addEventListener('hashchange', () => { route(); window.scrollTo(0,0); });
@@ -4082,10 +4123,158 @@ function stopTuner(){
 $('tStart').addEventListener('click', ()=> tuner.stream ? stopTuner() : startTuner());
 window.tunerReady = true;
 
+/* ---------- videos: the Nusical YouTube channel, read with the YouTube Data API ---------- */
+// The key only works from the Nusical website (restricted in Google Cloud), so it is safe to ship in the page.
+const YT_KEY = 'AIzaSyDK-8qRg6VZPrM-Nu9f1Lc1ajcfqddeHtM';
+const YT_HANDLE = '@nusical-music';
+const YT_CACHE_HOURS = 6;   // re-read the channel at most every 6 hours per device, to stay well inside the free quota
+const vid = {list:[], composers:[], cur:null, q:'', composer:'', shown:20, loading:false, loaded:false};
+try{ vid.composer = localStorage.getItem('vidComposer') || ''; }catch(e){}
+const vEsc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function ytGet(path, params){
+  const u = new URL('https://www.googleapis.com/youtube/v3/' + path);
+  for(const [k,v] of Object.entries(params)) u.searchParams.set(k, v);
+  u.searchParams.set('key', YT_KEY);
+  const r = await fetch(u);
+  if(!r.ok) throw new Error('YouTube ' + r.status);
+  return r.json();
+}
+async function ytPlaylistItems(id, max){
+  const out = []; let page = '';
+  do{
+    const j = await ytGet('playlistItems', {part:'snippet', playlistId:id, maxResults:50, ...(page ? {pageToken:page} : {})});
+    for(const it of j.items || []){
+      const s = it.snippet, vId = s.resourceId && s.resourceId.videoId;
+      if(!vId || /^(Private|Deleted) video$/.test(s.title)) continue;
+      const th = s.thumbnails || {};
+      out.push({id:vId, title:s.title, date:s.publishedAt, thumb:(th.medium || th.high || th.default || {}).url || ''});
+    }
+    page = j.nextPageToken || '';
+  } while(page && out.length < max);
+  return out;
+}
+// A video is a play-along if its title says so; everything else is the full solo-and-piano version.
+const vKind = t => /accompaniment|play[\s-]?along|minus[\s-]?one|backing|piano only/i.test(t) ? 'pa' : 'sp';
+const vBase = t => t.toLowerCase().replace(/\(.*?\)|\[.*?\]/g, ' ').replace(/accompaniment|play[\s-]?along|minus[\s-]?one|backing( track)?|piano only|solo (and|&) piano|with piano|\bfor\b|\bonly\b|\btrack\b/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
+// Concert key from the title, e.g. "in G major", "in E-flat", "in Bb minor".
+function vKey(t){
+  const m = t.match(/\bin ([A-G])(\s*-?\s*(flat|sharp)|[b♭#♯](?![a-z]))?\s*(major|minor|maj|min)?\b/);
+  if(!m) return null;
+  const acc = /flat|b|♭/.test(m[2] || '') ? -1 : /sharp|#|♯/.test(m[2] || '') ? 1 : 0;
+  const pc = ({C:0,D:2,E:4,F:5,G:7,A:9,B:11}[m[1]] + acc + 12) % 12;
+  const name = m[1] + (acc < 0 ? '♭' : acc > 0 ? '♯' : '') + (/min/.test(m[4] || '') ? ' minor' : ' major');
+  return {pc, name};
+}
+async function loadVideos(force){
+  if(vid.loading) return;
+  let cache = null;
+  try{ cache = JSON.parse(localStorage.getItem('vidCache') || 'null'); }catch(e){}
+  if(cache && !force && Date.now() - cache.at < YT_CACHE_HOURS*3600e3){ useVideos(cache); return; }
+  vid.loading = true;
+  if(!vid.loaded) vMessage('Loading videos…');
+  try{
+    const ch = await ytGet('channels', {part:'contentDetails', forHandle:YT_HANDLE});
+    const c = (ch.items || [])[0];
+    if(!c) throw new Error('channel not found');
+    const list = await ytPlaylistItems(c.contentDetails.relatedPlaylists.uploads, 500);
+    // The channel's playlists become the composer filter (e.g. "Mozart").
+    const pl = await ytGet('playlists', {part:'snippet', channelId:c.id, maxResults:50});
+    const composers = [];
+    for(const p of (pl.items || []).slice(0, 12)){
+      const ids = (await ytPlaylistItems(p.id, 200)).map(v => v.id);
+      if(ids.length) composers.push({name:p.snippet.title, ids});
+    }
+    const data = {at:Date.now(), list, composers};
+    try{ localStorage.setItem('vidCache', JSON.stringify(data)); }catch(e){}
+    useVideos(data);
+  }catch(e){
+    if(cache) useVideos(cache);   // offline or over quota: show what we had
+    else vMessage('Videos can’t load right now. Check your connection, or <a href="https://www.youtube.com/@nusical-music" target="_blank" rel="noopener">watch on YouTube</a>.', true);
+  }finally{ vid.loading = false; }
+}
+function useVideos(data){
+  vid.list = data.list.map(v => ({...v, kind:vKind(v.title), base:vBase(v.title), key:vKey(v.title)}));
+  vid.composers = data.composers || [];
+  vid.loaded = true;
+  const sel = $('vComposer');
+  sel.innerHTML = '<option value="">All composers</option>' + vid.composers.map(c => `<option>${vEsc(c.name)}</option>`).join('');
+  if(!vid.composers.some(c => c.name === vid.composer)) vid.composer = '';
+  sel.value = vid.composer;
+  sel.hidden = !vid.composers.length;
+  if(!vid.list.length){ vMessage('No videos yet. <a href="https://www.youtube.com/@nusical-music" target="_blank" rel="noopener">Visit the channel</a>.'); return; }
+  renderVideos();
+}
+function vMessage(html){ $('vMsg').innerHTML = `<p class="vmsg">${html}</p>`; }
+// Search matches every word, in any order, ignoring accents and punctuation ("k313 mozart" finds K. 313).
+const vNorm = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ');
+function vVisible(){
+  const comp = vid.composers.find(c => c.name === vid.composer);
+  const words = vNorm(vid.q).split(' ').filter(Boolean);
+  return vid.list.filter(v => {
+    if(comp && !comp.ids.includes(v.id)) return false;
+    const hay = vNorm(v.title + (v.kind === 'pa' ? ' play along accompaniment' : ' solo piano')), tight = hay.replace(/ /g, '');
+    return words.every(w => hay.includes(w) || tight.includes(w));
+  });
+}
+function vCard(v){
+  const on = vid.cur && vid.cur.id === v.id;
+  const other = vid.list.find(x => x.id !== v.id && x.kind !== v.kind && x.base === v.base);
+  const media = on
+    ? `<div class="vthumb"><iframe src="https://www.youtube-nocookie.com/embed/${v.id}?enablejsapi=1&rel=0&playsinline=1&autoplay=1" title="${vEsc(v.title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`
+    : `<button type="button" class="vthumb" data-play="${v.id}" aria-label="Play ${vEsc(v.title)}">${v.thumb ? `<img src="${vEsc(v.thumb)}" alt="" loading="lazy">` : ''}<span class="vplay"><svg viewBox="0 0 24 24"><path d="M7 4l14 8-14 8z"/></svg></span></button>`;
+  const acts = on ? `<div class="vacts">
+      ${other ? `<button type="button" data-play="${other.id}">${v.kind === 'pa' ? 'Hear the solo version' : 'Switch to play-along'}</button>` : ''}
+      ${v.key ? `<button type="button" data-tune="${v.id}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3.5 17a8.5 8.5 0 0 1 17 0M12 17l4-6.5"/></svg>Tune to ${v.key.name.replace(/ (major|minor)$/, '')}</button>` : ''}
+      <a class="yt" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">Open on YouTube</a>
+    </div>` : '';
+  return `<article class="vcard${on ? ' on' : ''}" id="vc-${v.id}">${media}<div class="vbody"><p class="vrt">${vEsc(v.title)}</p><div class="vrm"><span class="vbadge ${v.kind}">${v.kind === 'pa' ? 'Play-along' : 'Solo & piano'}</span>${v.key ? v.key.name : ''}</div>${acts}</div></article>`;
+}
+function renderVideos(){
+  $('vMsg').innerHTML = '';
+  const list = vVisible();
+  $('vCount').textContent = vid.q || vid.composer ? `${list.length} of ${vid.list.length} videos` : `${vid.list.length} videos`;
+  if(!list.length) vMessage('No videos match your search yet.');
+  $('vList').innerHTML = list.slice(0, vid.shown).map(vCard).join('');
+  $('vMore').hidden = list.length <= vid.shown;
+}
+function playVideo(id){
+  const v = vid.list.find(x => x.id === id); if(!v) return;
+  stopSound();
+  if(window.metroReady && metro.playing) stopMetro();
+  vid.cur = v;
+  // make sure the chosen video is in the list (e.g. the other version hidden by a search)
+  if(!vVisible().slice(0, vid.shown).includes(v)){ vid.q = ''; $('vSearch').value = ''; vid.composer = ''; $('vComposer').value = ''; vid.shown = Math.max(vid.shown, vid.list.indexOf(v) + 1); }
+  renderVideos();
+  const el = document.getElementById('vc-' + v.id);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'nearest'});
+  track('video_play', {video_id:v.id, video_title:v.title, video_kind:v.kind});
+}
+function pauseVideo(){
+  const f = $('vList').querySelector('iframe');
+  if(f && f.contentWindow) f.contentWindow.postMessage(JSON.stringify({event:'command', func:'pauseVideo', args:[]}), '*');
+}
+function openVideos(){ if(!vid.loaded) loadVideos(false); else if(Date.now() - (JSON.parse(localStorage.getItem('vidCache') || '{"at":0}').at) > YT_CACHE_HOURS*3600e3) loadVideos(true); }
+$('vList').addEventListener('click', e => {
+  const p = e.target.closest('[data-play]'); if(p){ playVideo(p.dataset.play); return; }
+  const t = e.target.closest('[data-tune]'); if(!t) return;
+  // "Tune to G": opens the Tuner with the drone on the piece's key, written for the player's instrument.
+  const k = vid.list.find(v => v.id === t.dataset.tune).key;
+  pauseVideo();
+  drone.pc = (k.pc + (12 - parse(tuner.inst).pc) % 12) % 12;
+  saveDrone();
+  location.hash = 'tuner';
+  try{ drawDroneNotes(); }catch(e){}
+});
+let vTimer = 0;
+$('vSearch').addEventListener('input', () => { clearTimeout(vTimer); vTimer = setTimeout(() => { vid.q = $('vSearch').value; vid.shown = 20; renderVideos(); }, 150); });
+$('vComposer').addEventListener('change', () => { vid.composer = $('vComposer').value; vid.shown = 20; try{ localStorage.setItem('vidComposer', vid.composer); }catch(e){} renderVideos(); });
+$('vMore').addEventListener('click', () => { vid.shown += 20; renderVideos(); });
+
 /* ---------- release notes: the newest is featured on About, the rest are listed below ---------- */
 // Add every change at the TOP: the newest is featured on About and every release is listed in the history.
 // Versions: a new feature bumps the middle number, a fix bumps the last.
 const RELEASES = [
+  {v:'1.12', date:'2026-11-20', title:'Videos', text:'Watch Nusical’s YouTube videos in the app, and play along with piano accompaniment.', notes:['New videos appear by themselves as they’re uploaded','Search by title, or filter by composer','Switch between the play-along and solo versions of a piece','Tune to the piece’s key with one tap'], go:'videos'},
   {v:'1.11.1', date:'2026-11-16', title:'Privacy policy', notes:['Added a privacy policy, linked at the bottom of About']},
   {v:'1.11', date:'2026-11-16', title:'Tips for your instrument', text:'The Fingering tab is now Instrument: pick your instrument once to see its practice tips and fingering charts.', notes:['Over 120 tips from teachers and method books for every woodwind, brass and string instrument','Filter by tone, air, technique, intonation, practice or care','Tips for your instrument first, then its family, then every instrument'], go:'fingering', then:() => { fView = 'tips'; renderFinger(); }},
   {v:'1.10.1', date:'2026-11-06', title:'Articulation diagrams', text:'Articulation signs in Terms now show stems pointing down, with the sign above the note, as printed music does for higher notes.', notes:['Staccato, accent, tenuto and other articulation diagrams now use stems down with the sign above'], go:'terms', then:() => setTermsMode('signs')},
