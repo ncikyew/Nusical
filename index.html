@@ -653,34 +653,6 @@ input[type=search]{width:100%;font:inherit;color:var(--ink);background:var(--sur
     <div id="quizRun" hidden></div>
   </section>
 
-  <section id="viewScore" hidden>
-    <div class="drop" id="drop">
-      <div class="row" style="justify-content:center">
-        <span class="btn file">Choose score
-          <input type="file" id="fileIn" accept=".pdf,.musicxml,.xml,.mxl,application/pdf">
-        </span>
-      </div>
-      <p style="margin:.6rem 0 0">PDF, MusicXML or .mxl. You can also drop a file here.</p>
-    </div>
-
-    <div id="scoreTools" hidden>
-      <div class="row" style="margin-top:.8rem">
-        <span class="fname" id="fname"></span>
-        <button class="primary" id="dl" disabled>Download PDF</button>
-      </div>
-      <div class="row" style="margin-top:.6rem;justify-content:space-between">
-        <div class="dir" role="radiogroup" aria-label="Direction">
-          <label><input type="radio" name="dir" value="up" id="dirUp"><span id="dirUpTxt">Up</span></label>
-          <label><input type="radio" name="dir" value="down" id="dirDown"><span id="dirDownTxt">Down</span></label>
-        </div>
-        <label class="check"><input type="checkbox" id="showOrig"> Show original</label>
-      </div>
-    </div>
-
-    <p class="status" id="status" aria-live="polite"></p>
-    <div class="pages" id="pages"></div>
-  </section>
-
   <section id="viewChords" hidden>
     <div class="seg">
       <button id="modePick" aria-pressed="true">Pick notes</button>
@@ -800,9 +772,6 @@ if(GA_ID && !window.gtag){
     document.head.appendChild(s);
   }catch(e){}
 }
-// Address of your PDF recognition server (see omr-server/README.md). Leave empty to disable PDF upload.
-const OMR_URL = 'https://transpose-1.onrender.com';
-const OMR_TOKEN = 'nusical-halabobo';
 
 /* ---------- music logic ---------- */
 const LETTERS = ['C','D','E','F','G','A','B'];
@@ -988,10 +957,6 @@ function render(){
   drawPad();
   renderNoteMap(src, tgt, sh, toks.map(parse).filter(Boolean));
 
-  // score direction labels
-  $('dirUpTxt').textContent = sh.semis===0 ? 'No change' : `Up a ${up}`;
-  $('dirDownTxt').textContent = sh.semis===0 ? 'No change' : `Down a ${down}`;
-  $('dirDown').closest('label').hidden = sh.semis===0;
   save();
 }
 
@@ -1029,7 +994,6 @@ function route(){
   // The score upload is switched off for now; old #score links fall back to the quiz.
   if(location.hash==='#score'){ location.replace('#quiz'); return; }
   const v = ['#quiz','#chords','#scales','#terms','#metronome','#tuner','#fingering','#videos','#about'].includes(location.hash) ? location.hash.slice(1) : 'notes';
-  $('viewScore').hidden = true;
   for(const [k,sec,tab] of [['notes','viewNotes','tabNotes'],['quiz','viewQuiz','tabQuiz'],['chords','viewChords','tabChords'],['scales','viewScales','tabScales'],['terms','viewTerms','tabTerms'],['metronome','viewMetro','tabMetro'],['tuner','viewTuner','tabTuner'],['fingering','viewFinger','tabFinger'],['videos','viewVideos','tabVideos'],['about','viewAbout','tabAbout']]){
     $(sec).hidden = v!==k;
     if(v===k) $(tab).setAttribute('aria-current','page'); else $(tab).removeAttribute('aria-current');
@@ -1079,8 +1043,8 @@ document.addEventListener('keydown', e => { if(e.key==='Escape' && location.hash
   }
 })();
 
-/* ---------- score ---------- */
-let tk = null, score = null; // score = {kind:'xml'|'mxl', data, name}
+/* ---------- notation toolkit (used by Scales) ---------- */
+let tk = null;
 function loadScript(src){
   return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=()=>rej(new Error('Could not load '+src)); document.head.appendChild(s); });
 }
@@ -1091,113 +1055,7 @@ function getToolkit(){
     .then(()=> { tk = new window.verovio.toolkit(); return tk; });
   return vrvReady;
 }
-let pdfReady = null;
-function getPdfLibs(){
-  if(!pdfReady) pdfReady = loadScript('https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js')
-    .then(()=> loadScript('https://cdn.jsdelivr.net/npm/svg2pdf.js@2.8.1/dist/svg2pdf.umd.min.js'));
-  return pdfReady;
-}
-function status(msg, err=false){ $('status').textContent = msg; $('status').classList.toggle('err', err); }
-
-function defaultDir(){
-  const sh = shiftOf($('src').value,$('tgt').value);
-  (sh.semis <= 6 ? $('dirUp') : $('dirDown')).checked = true;
-}
-function keysChanged(){ defaultDir(); render(); renderScore(); renderChords(); }
-
-function transposeOpt(){
-  const sh = shiftOf($('src').value,$('tgt').value);
-  if(sh.semis===0 || $('showOrig').checked) return '';
-  return $('dirDown').checked ? '-'+ivDown(sh)[1] : '+'+ivUp(sh)[1];
-}
-function loadIntoToolkit(t, forPdf=false){
-  // Preview pages fit the screen width; PDF pages are A4.
-  const w = forPdf ? 2100 : Math.round(Math.min(2100, Math.max(800, $('pages').clientWidth * 2.2)));
-  t.setOptions({transpose: transposeOpt(), pageWidth:w, pageHeight:2970, scale:100, adjustPageHeight:!forPdf,
-    pageMarginLeft:100, pageMarginRight:100, pageMarginTop:80, pageMarginBottom:80,
-    svgViewBox:true, svgRemoveXlink:true, header:'auto', footer:'none', breaks:'auto', svgCss:''});
-  return score.kind==='mxl' ? t.loadZipDataBuffer(score.data.slice(0)) : t.loadData(score.data);
-}
-async function renderScore(){
-  if(!score) return;
-  status('Preparing score…');
-  try{
-    const t = await getToolkit();
-    if(!loadIntoToolkit(t)) throw new Error('This file couldn’t be read as music notation.');
-    const n = t.getPageCount(), box = $('pages'); box.innerHTML='';
-    for(let i=1;i<=n;i++){ const d=document.createElement('div'); d.className='page'; d.innerHTML=t.renderToSVG(i); box.appendChild(d); }
-    $('dl').disabled = false;
-    const sh = shiftOf($('src').value,$('tgt').value);
-    status($('showOrig').checked ? `Original, ${n} page${n>1?'s':''}. Check the notes before downloading.`
-      : `Transposed for ${pretty($('tgt').value)} instrument, ${n} page${n>1?'s':''}.` + (sh.semis===0?' Same key, so nothing changed.':''));
-  }catch(e){ status(e.message || 'Something went wrong reading the score.', true); $('dl').disabled = true; }
-}
-
-async function handleFile(f){
-  if(f) track('score_upload', {file_type: f.name.toLowerCase().split('.').pop()});
-  if(!f) return;
-  $('pages').innerHTML=''; $('dl').disabled = true; score = null;
-  $('fname').textContent = f.name; $('scoreTools').hidden = false; $('drop').classList.add('small'); defaultDir();
-  const ext = f.name.toLowerCase().split('.').pop();
-  try{
-    if(ext==='pdf'){
-      if(!OMR_URL){ status('Reading PDFs needs the recognition server, which isn’t connected yet. MusicXML and .mxl files work now.', true); return; }
-      status('Reading the notes from your PDF. This can take a minute per page…');
-      const fd = new FormData(); fd.append('file', f);
-      const r = await fetch(OMR_URL.replace(/\/$/,'')+'/omr', {method:'POST', body:fd, headers: OMR_TOKEN?{'X-Token':OMR_TOKEN}:{}});
-      if(!r.ok){ const t = await r.text().catch(()=> ''); throw new Error('The PDF couldn’t be read' + (t?': '+t.slice(0,200):'.') ); }
-      score = {kind:'mxl', data: await r.arrayBuffer(), name:f.name};
-      $('showOrig').checked = true; // review recognition first
-    } else if(ext==='mxl'){
-      score = {kind:'mxl', data: await f.arrayBuffer(), name:f.name};
-    } else {
-      score = {kind:'xml', data: await f.text(), name:f.name};
-    }
-    await renderScore();
-  }catch(e){ status(e.message || 'Couldn’t open that file.', true); }
-}
-$('fileIn').addEventListener('change', e => handleFile(e.target.files[0]));
-const drop = $('drop');
-drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
-drop.addEventListener('dragleave', () => drop.classList.remove('over'));
-drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); handleFile(e.dataTransfer.files[0]); });
-for(const id of ['dirUp','dirDown','showOrig']) $(id).addEventListener('change', renderScore);
-
-async function saveFile(filename, blob){
-  if(window.claude && window.claude.use){
-    const d = await window.claude.use('downloads');
-    if(d){ await d.save({filename, data: blob}); return; }
-  }
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
-  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
-}
-$('dl').addEventListener('click', async () => {
-  if(!score) return;
-  $('dl').disabled = true; status('Making PDF…');
-  try{
-    await getPdfLibs(); const t = await getToolkit();
-    loadIntoToolkit(t, true);
-    const doc = new window.jspdf.jsPDF({unit:'mm', format:'a4'});
-    const n = t.getPageCount(); const holder = document.createElement('div');
-    holder.style.cssText='position:absolute;left:-9999px;top:0;width:800px'; document.body.appendChild(holder);
-    for(let i=1;i<=n;i++){
-      if(i>1) doc.addPage();
-      holder.innerHTML = t.renderToSVG(i);
-      const el = holder.querySelector('svg');
-      el.setAttribute('width','2100'); el.setAttribute('height','2970');
-      const inner = el.querySelector('svg.definition-scale');
-      if(inner){ inner.setAttribute('width','2100'); inner.setAttribute('height','2970'); }
-      await doc.svg(el, {x:0, y:0, width:210, height:297});
-    }
-    holder.remove();
-    const base = score.name.replace(/\.[^.]+$/,'');
-    const suffix = $('showOrig').checked ? 'original' : 'in-' + $('tgt').value;
-    await saveFile(`${base}-${suffix}.pdf`, doc.output('blob'));
-    status('PDF ready.');
-  }catch(e){
-    status(e && e.code==='declined' ? 'Download cancelled.' : 'Couldn’t make the PDF' + (e && e.message ? ': '+e.message : '.'), e && e.code!=='declined');
-  }finally{ $('dl').disabled = false; }
-});
+function keysChanged(){ render(); renderChords(); }
 
 /* ---------- chords ---------- */
 const SCALES = {
@@ -4122,7 +3980,7 @@ window.tunerReady = true;
 
 /* ---------- videos: the Nusical YouTube channel, read with the YouTube Data API ---------- */
 // The video list comes from Nusical's own Netlify function (/api/videos), which holds the YouTube key.
-const YT_CACHE_HOURS = 1;   // the function itself is cached for an hour, so this only saves a round trip
+const YT_CACHE_HOURS = 10/60;   // re-check every 10 minutes; the saved list shows instantly meanwhile
 const vid = {list:[], composers:[], cur:null, q:'', composer:'', shown:20, loading:false, loaded:false};
 try{ vid.composer = localStorage.getItem('vidComposer') || ''; }catch(e){}
 const vEsc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -4143,6 +4001,8 @@ async function loadVideos(force){
   let cache = null;
   try{ cache = JSON.parse(localStorage.getItem('vidCache') || 'null'); }catch(e){}
   if(cache && !force && Date.now() - cache.at < YT_CACHE_HOURS*3600e3){ useVideos(cache); return; }
+  // Show the saved list straight away, then replace it with the latest one.
+  if(cache && !vid.loaded) useVideos(cache);
   vid.loading = true;
   if(!vid.loaded) vMessage('Loading videos…');
   try{
@@ -4153,7 +4013,7 @@ async function loadVideos(force){
     try{ localStorage.setItem('vidCache', JSON.stringify(data)); }catch(e){}
     useVideos(data);
   }catch(e){
-    if(cache) useVideos(cache);   // offline or over quota: show what we had
+    if(cache){ useVideos(cache); vMessage('Couldn’t check for new videos just now, so this is the list from your last visit. <a href="https://www.youtube.com/@nusical-music/videos" target="_blank" rel="noopener">See the latest on YouTube</a>.'); }
     else vMessage('Videos can’t load right now. Check your connection, or <a href="https://www.youtube.com/@nusical-music" target="_blank" rel="noopener">watch on YouTube</a>.', true);
   }finally{ vid.loading = false; }
 }
@@ -6187,7 +6047,7 @@ $('copyPay').addEventListener('click', async () => {
 });
 if(location.hash==='#fingering') renderFinger();
 
-load(); defaultDir(); render(); route(); renderChords();
+load(); render(); route(); renderChords();
 </script>
 </body>
 </html>
